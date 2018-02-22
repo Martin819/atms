@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cz.polreich.atms.controller.Controller;
 import cz.polreich.atms.model.Branch;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -58,17 +59,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String apikey = getResources().getString(R.string.apikey);
+        String airbank_apikey = getResources().getString(R.string.airbank_apikey);
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.airbank.cz/").build();
+/*        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.airbank.cz/").build();
 
         AirBankService airBankService = retrofit.create(AirBankService.class);
 
-        Call<List<Branch>> branchesList = airBankService.getBranchesList(apikey);
-        /*Call<List<Branch>> branchesList = airBankService.getBranch("", apikey);*/
+        Call<List<Branch>> branchesList = airBankService.getBranchesList(airbank_apikey);*/
+        /*Call<List<Branch>> branchesList = airBankService.getBranch("", airbank_apikey);*/
+
+        Controller controller = new Controller();
+        controller.start(airbank_apikey);
 
     }
 
