@@ -30,6 +30,8 @@ import cz.polreich.atms.model.Branch;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
+import static cz.polreich.atms.R.string.title_home;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    mTextMessage.setText(title_home);
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
@@ -63,14 +65,6 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-/*        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.airbank.cz/").build();
-
-        AirBankService airBankService = retrofit.create(AirBankService.class);
-
-        Call<List<Branch>> branchesList = airBankService.getBranchesList(airbank_apikey);*/
-        /*Call<List<Branch>> branchesList = airBankService.getBranch("", airbank_apikey);*/
-
         Controller controller = new Controller();
         controller.start(airbank_apikey);
 
