@@ -1,5 +1,6 @@
 package cz.polreich.atms;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -31,6 +32,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private static Context context;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        String apikey = getResources().getString(R.string.apikey);
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -65,8 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         AirBankService airBankService = retrofit.create(AirBankService.class);
 
-        Call<List<Branch>> branchesList = airBankService.listBranches("");
+        Call<List<Branch>> branchesList = airBankService.getBranchesList(apikey);
+        /*Call<List<Branch>> branchesList = airBankService.getBranch("", apikey);*/
 
+    }
+
+    public static Context getContext(){
+        return context;
     }
 
 }
