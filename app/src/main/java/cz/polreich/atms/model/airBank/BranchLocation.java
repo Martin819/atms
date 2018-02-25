@@ -1,4 +1,4 @@
-package cz.polreich.atms.model;
+package cz.polreich.atms.model.airBank;
 
 /**
  * Created by Martin on 21.02.2018.
@@ -8,6 +8,14 @@ public class BranchLocation {
 
     private float longitude;
     private float latitude;
+
+    public BranchLocation() {
+    }
+
+    public BranchLocation(float longitude, float latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public float getLongitude() {
         return longitude;

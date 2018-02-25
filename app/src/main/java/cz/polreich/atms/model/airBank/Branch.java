@@ -1,4 +1,4 @@
-package cz.polreich.atms.model;
+package cz.polreich.atms.model.airBank;
 
 /**
  * Created by Martin on 21.02.2018.
@@ -14,6 +14,20 @@ public class Branch {
     private BranchOpeningHours openingHours;
     private String[] services;
     private String[] pictures;
+
+    public Branch() {
+    }
+
+    public Branch(String id, String name, BranchAddress address, String[] phones, BranchLocation location, BranchOpeningHours openingHours, String[] services, String[] pictures) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phones = phones;
+        this.location = location;
+        this.openingHours = openingHours;
+        this.services = services;
+        this.pictures = pictures;
+    }
 
     public String getId() {
         return id;

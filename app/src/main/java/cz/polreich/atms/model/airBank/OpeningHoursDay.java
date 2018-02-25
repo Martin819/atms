@@ -1,4 +1,4 @@
-package cz.polreich.atms.model;
+package cz.polreich.atms.model.airBank;
 
 /**
  * Created by Martin on 21.02.2018.
@@ -9,6 +9,15 @@ public class OpeningHoursDay {
     private int dayOfWeek;
     private String opening;
     private String closing;
+
+    public OpeningHoursDay() {
+    }
+
+    public OpeningHoursDay(int dayOfWeek, String opening, String closing) {
+        this.dayOfWeek = dayOfWeek;
+        this.opening = opening;
+        this.closing = closing;
+    }
 
     public int getDayOfWeek() {
         return dayOfWeek;

@@ -5,37 +5,32 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.JsonReader;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import cz.polreich.atms.controller.Controller;
-import cz.polreich.atms.model.Branch;
-import retrofit2.Call;
-import retrofit2.Retrofit;
+import cz.polreich.atms.model.airBank.Branch;
 
-import static cz.polreich.atms.R.string.title_home;
+import static cz.polreich.atms.R.string.title_branches;
+import static cz.polreich.atms.R.string.title_dashboard;
+import static cz.polreich.atms.R.string.title_notifications;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private static Context context;
+    private RecyclerView mRecyclerView;
+    private BranchesAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private AirBankService airBankService;
+    private List<Branch> branchesList = new ArrayList<>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -43,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(title_home);
+                case R.id.navigation_atms:
+                    mTextMessage.setText(title_branches);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    mTextMessage.setText(title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    mTextMessage.setText(title_notifications);
                     return true;
             }
             return false;
@@ -62,12 +57,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String airbank_apikey = getResources().getString(R.string.airbank_apikey);
-        mTextMessage = (TextView) findViewById(R.id.message);
+//        mTextMessage = (TextView) findViewById(message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Controller controller = new Controller();
-        controller.start(airbank_apikey);
 
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.branches_list_recycler_view);
+        mAdapter = new BranchesAdapter(branchesList);
+
+
+        Controller controller = new Controller();
+        controller.start(airbank_apikey, mAdapter);
+
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     public static Context getContext(){

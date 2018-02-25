@@ -6,11 +6,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
-
 import cz.polreich.atms.AirBankService;
-import cz.polreich.atms.model.Branch;
-import cz.polreich.atms.model.BranchesList;
+import cz.polreich.atms.BranchesAdapter;
+import cz.polreich.atms.model.airBank.BranchesList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,11 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controller implements Callback<BranchesList> {
 
+    private BranchesAdapter mAdapter;
     private static final String BASE_URL = "https://api.airbank.cz/";
-    private static final String DEBUG_TAG = "Controller";
+    private static final String DEBUG_TAG_INFO = "[INFO     ] Controller";
+    private static final String DEBUG_TAG_ERROR = "[    ERROR] Controller";
 
-    public void start(String apikey) {
-        Log.d(DEBUG_TAG, "Controller.start called");
+    public void start(String apikey, BranchesAdapter mAdapter) {
+        this.mAdapter = mAdapter;
+        Log.d(DEBUG_TAG_INFO, "Controller.start called");
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -41,18 +42,22 @@ public class Controller implements Callback<BranchesList> {
 
         Call<BranchesList> call = airBankService.getBranchesList(apikey);
         call.enqueue(this);
-
     }
 
     @Override
     public void onResponse(@NonNull Call<BranchesList> call, @NonNull Response<BranchesList> response) {
+        Log.d(DEBUG_TAG_INFO, "Controller.onRespose called");
+        Log.d(DEBUG_TAG_INFO, response.toString());
         if(response.isSuccessful()) {
+            Log.d(DEBUG_TAG_INFO, "Controller - response.isSuccessful()");
             BranchesList branchesList = response.body();
             if (branchesList != null) {
-                branchesList.getBranches().forEach(branch -> System.out.println(branch.getName()));
+                Log.d(DEBUG_TAG_INFO, "Controller - branchesList != null");
+                branchesList.getBranches().forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+                mAdapter.updateItems(branchesList.getBranches());
             }
         } else {
-            System.out.println(response.errorBody());
+            Log.d(DEBUG_TAG_ERROR, response.errorBody().toString());
         }
     }
 

@@ -1,4 +1,4 @@
-package cz.polreich.atms.model;
+package cz.polreich.atms.model.airBank;
 
 /**
  * Created by Martin on 21.02.2018.
@@ -9,6 +9,15 @@ public class BranchAddress {
     private String streetAddress;
     private String city;
     private String zip;
+
+    public BranchAddress() {
+    }
+
+    public BranchAddress(String streetAddress, String city, String zip) {
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.zip = zip;
+    }
 
     public String getStreetAddress() {
         return streetAddress;
@@ -32,5 +41,10 @@ public class BranchAddress {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public String getFullAddress(BranchAddress address) {
+        String fullAddress = address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
+        return fullAddress;
     }
 }
