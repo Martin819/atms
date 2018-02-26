@@ -54,10 +54,12 @@ public class Controller implements Callback<BranchesList> {
             if (branchesList != null) {
                 Log.d(DEBUG_TAG_INFO, "Controller - branchesList != null");
                 branchesList.getBranches().forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+                Log.d(DEBUG_TAG_INFO, "Controller - All branches rendered");
                 mAdapter.updateItems(branchesList.getBranches());
+                Log.d(DEBUG_TAG_INFO, "Controller - mAdapter updated");
             }
         } else {
-            Log.d(DEBUG_TAG_ERROR, response.errorBody().toString());
+            Log.e(DEBUG_TAG_ERROR, response.errorBody().toString());
         }
     }
 

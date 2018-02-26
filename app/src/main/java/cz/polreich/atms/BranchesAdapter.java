@@ -5,6 +5,7 @@ package cz.polreich.atms;
  */
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,21 @@ import cz.polreich.atms.model.airBank.Branch;
 
 public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.BranchesViewHolder>{
 
+    private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesAdapter";
+    private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchesAdapter";
     private List<Branch> branchesList;
+    private RecyclerView mRecyclerView;
+/*    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int itemPosition = mRecyclerView.getChildLayoutPosition(v);
+            Branch branch = branchesList.get(itemPosition);
+            String branchId = branch.getId();
+            Log.d(DEBUG_TAG_INFO, "BranchId: " + branchId);
+        }
+    };*/
 
-    public class BranchesViewHolder extends RecyclerView.ViewHolder {
+    public class BranchesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name, address, phone;
 
         public BranchesViewHolder(View view) {
@@ -26,17 +39,27 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
             name = (TextView) view.findViewById(R.id.branch_name);
             address = (TextView) view.findViewById(R.id.branch_address);
             phone = (TextView) view.findViewById(R.id.branch_phone);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int itemPosition = 1;
+            Branch branch = branchesList.get(itemPosition);
+            String branchId = branch.getId();
+            Log.d(DEBUG_TAG_INFO, "BranchId: " + branchId);
         }
     }
 
-    public BranchesAdapter(List<Branch> branchesList) {
+    public BranchesAdapter(List<Branch> branchesList, RecyclerView mRecyclerView) {
         this.branchesList = branchesList;
+        this.mRecyclerView = mRecyclerView;
     }
 
     @Override
     public BranchesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.branch_list_row, parent, false);
-
+/*        itemView.setOnClickListener(mOnClickListener);*/
         return new BranchesViewHolder(itemView);
     }
 

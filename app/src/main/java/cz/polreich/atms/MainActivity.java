@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.branches_list_recycler_view);
-        mAdapter = new BranchesAdapter(branchesList);
+        mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
 
 
         Controller controller = new Controller();
