@@ -1,5 +1,6 @@
-package cz.polreich.atms;
+package cz.polreich.atms.service;
 
+import cz.polreich.atms.model.airBank.Branch;
 import cz.polreich.atms.model.airBank.BranchesList;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,5 +13,5 @@ public interface AirBankService {
     Call<BranchesList> getBranchesList(@Header("apikey") String apikey);
 
     @GET("openapi/public/v1/branches/own/{id}")
-    Call<BranchesList> getBranch(@Path("id") String id, @Header("apikey") String apikey);
+    Call<Branch> getBranch(@Path("id") String id, @Header("apikey") String apikey);
 }

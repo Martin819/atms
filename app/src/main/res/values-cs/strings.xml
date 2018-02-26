@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bankomaty</string>
+    <string name="app_name">Banky</string>
     <string name="title_branches">Pobočky</string>
+    <string name="title_atms">Bankomaty</string>
+    <string name="branch_openingHoursTitle">Otevírací doba:</string>
 </resources>

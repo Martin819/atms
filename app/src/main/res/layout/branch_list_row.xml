@@ -14,47 +14,47 @@
     android:paddingTop="@dimen/row_padding_vertical">
 
     <TextView
-        android:id="@+id/branch_name"
+        android:id="@+id/branchList_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/branch_name"
+        android:textColor="@color/branchList_name"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Branch name"
-        app:layout_constraintBottom_toTopOf="@+id/branch_address"
+        android:text="@string/branchList_name"
+        app:layout_constraintBottom_toTopOf="@+id/branchList_address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/branch_address"
+        android:id="@+id/branchList_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/branch_address"
+        android:layout_below="@id/branchList_address"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:text="Branch Address"
-        app:layout_constraintBottom_toTopOf="@+id/branch_phone"
+        android:text="@string/branchList_address"
+        app:layout_constraintBottom_toTopOf="@+id/branchList_phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/branch_name" />
+        app:layout_constraintTop_toBottomOf="@+id/branchList_name" />
 
     <TextView
-        android:id="@+id/branch_phone"
+        android:id="@+id/branchList_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:textColor="@color/branch_phone"
-        android:text="Branch Phone"
+        android:textColor="@color/branchList_phone"
+        android:text="@string/branchList_phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/branch_address" />
+        app:layout_constraintTop_toBottomOf="@+id/branchList_address" />
 </android.support.constraint.ConstraintLayout>

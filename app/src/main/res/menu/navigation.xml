@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_atms"
+        android:id="@+id/navigation_branches"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_branches" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_atms"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_atms" />
 
     <item
         android:id="@+id/navigation_notifications"

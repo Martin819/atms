@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cz.polreich.atms.activity.BranchActivity;
 import cz.polreich.atms.model.airBank.Branch;
 
 public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.BranchesViewHolder>{
@@ -36,18 +37,22 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
 
         public BranchesViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.branch_name);
-            address = (TextView) view.findViewById(R.id.branch_address);
-            phone = (TextView) view.findViewById(R.id.branch_phone);
+            name = (TextView) view.findViewById(R.id.branchList_name);
+            address = (TextView) view.findViewById(R.id.branchList_address);
+            phone = (TextView) view.findViewById(R.id.branchList_phone);
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            int itemPosition = 1;
+            Log.d(DEBUG_TAG_INFO, "OnClick called");
+            Log.d(DEBUG_TAG_INFO, "AdapterPosition: " + String.valueOf(mRecyclerView.getChildAdapterPosition(v)));
+            Log.d(DEBUG_TAG_INFO, "LayoutPosition: " + String.valueOf(mRecyclerView.getChildLayoutPosition(v)));
+            int itemPosition = mRecyclerView.getChildLayoutPosition(v);
             Branch branch = branchesList.get(itemPosition);
             String branchId = branch.getId();
             Log.d(DEBUG_TAG_INFO, "BranchId: " + branchId);
+            BranchActivity.start(v.getContext(), branchId);
         }
     }
 

@@ -3,6 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="branch_name">#000000</color>
-    <color name="branch_phone">#000000</color>
+    <color name="branchList_name">#000000</color>
+    <color name="branchList_phone">#000000</color>
 </resources>
