@@ -158,15 +158,15 @@
         app:layout_constraintStart_toEndOf="@+id/branch_opening_fridayTitle"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_thursdayValue" />
 
-    <TextView
-    android:id="@+id/branch_opening_saturdayTitle"
-    android:layout_width="100dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="24dp"
-    android:layout_marginTop="4dp"
-    android:text="@string/branch_opening_saturdayTitle"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/branch_opening_fridayTitle" />
+        <TextView
+        android:id="@+id/branch_opening_saturdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/branch_opening_saturdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/branch_opening_fridayTitle" />
 
     <TextView
         android:id="@+id/branch_opening_saturdayValue"
@@ -181,11 +181,9 @@
         android:id="@+id/branch_opening_sundayTitle"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:text="@string/branch_opening_sundayTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_saturdayTitle" />
 
@@ -199,5 +197,65 @@
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_saturdayValue" />
 
 
+    <TextView
+        android:id="@+id/branch_servicesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:textStyle="bold"
+        android:text="@string/branch_servicesTitle"
+        app:layout_constraintTop_toBottomOf="@id/branch_imageView"
+        app:layout_constraintStart_toEndOf="@id/branch_opening_mondayValue"/>
+
+    <ImageView
+        android:id="@+id/branch_services_animalImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/branch_servicesTitle"
+        app:layout_constraintTop_toBottomOf="@+id/branch_servicesTitle"
+        app:srcCompat="@drawable/ic_animal_gray_24dp" />
+
+    <ImageView
+        android:id="@+id/branch_services_childImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/branch_services_animalImageView"
+        app:layout_constraintTop_toBottomOf="@+id/branch_servicesTitle"
+        app:srcCompat="@drawable/ic_child_gray_24dp" />
+
+    <ImageView
+        android:id="@+id/branch_services_foodImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/branch_servicesTitle"
+        app:layout_constraintTop_toBottomOf="@+id/branch_services_animalImageView"
+        app:srcCompat="@drawable/ic_food_gray_24dp" />
+
+    <ImageView
+        android:id="@+id/branch_services_drinkImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/branch_services_foodImageView"
+        app:layout_constraintTop_toBottomOf="@+id/branch_services_childImageView"
+        app:srcCompat="@drawable/ic_drink_gray_24dp" />
+
+    <ImageView
+        android:id="@+id/branch_services_atmImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/branch_servicesTitle"
+        app:layout_constraintTop_toBottomOf="@+id/branch_services_foodImageView"
+        app:srcCompat="@drawable/ic_atm_gray_24dp" />
 
 </android.support.constraint.ConstraintLayout>

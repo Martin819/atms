@@ -41,4 +41,5 @@
     <string name="atm_openingDeposit_fridayTitle">Friday</string>
     <string name="atm_openingDeposit_saturdayTitle">Saturday</string>
     <string name="atm_openingDeposit_sundayTitle">Sunday</string>
+    <string name="branch_servicesTitle">Services:</string>
 </resources>

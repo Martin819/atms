@@ -20,12 +20,8 @@ import cz.polreich.atms.controller.Controller;
 import cz.polreich.atms.model.airBank.Branch;
 import cz.polreich.atms.service.AirBankService;
 
-import static cz.polreich.atms.R.string.title_branches;
-import static cz.polreich.atms.R.string.title_atms;
-import static cz.polreich.atms.R.string.title_notifications;
 
-
-public class MainActivity extends AppCompatActivity {
+public class BranchListActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private static Context context;
@@ -58,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_branch_list);
         String airbank_apikey = getResources().getString(R.string.airbank_apikey);
 //        mTextMessage = (TextView) findViewById(message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
