@@ -9,32 +9,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import cz.polreich.atms.R;
 import cz.polreich.atms.controller.Controller;
 
-public class BranchActivity extends AppCompatActivity {
+public class ATMActivity extends AppCompatActivity {
 
-    private static final String BRANCH_ID = "branchID";
+    private static final String ATM_ID = "ATMID";
     private static final String DEBUG_TAG_INFO = "[INFO     ] BranchActivity";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchActivity";
-    private TextView mBranchName;
-    private TextView mBranchAddress;
-    private TextView mBranchPhone;
-    private String[] mBranchPhoneLinks;
 
-    public static void start(Context context, String branchId) {
-        Intent intent = new Intent(context, BranchActivity.class);
-        intent.putExtra(BRANCH_ID, branchId);
+    public static void start(Context context, String ATMId) {
+        Intent intent = new Intent(context, ATMActivity.class);
+        intent.putExtra(ATM_ID, ATMId);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(DEBUG_TAG_INFO, "BranchActivity.onCreate called");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_branch);
+        setContentView(R.layout.activity_atm);
         String airbank_apikey = getResources().getString(R.string.airbank_apikey);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,16 +43,15 @@ public class BranchActivity extends AppCompatActivity {
         });
 
         Intent intent = this.getIntent();
-        String branchId = intent.getStringExtra(BRANCH_ID);
-        if (branchId.isEmpty()){
-            Log.e(DEBUG_TAG_ERROR, "branchId is empty");
+        String ATMId = intent.getStringExtra(ATM_ID);
+        if (ATMId.isEmpty()){
+            Log.e(DEBUG_TAG_ERROR, "ATMId is empty");
         } else {
-            Log.d(DEBUG_TAG_INFO, "branchId: " + branchId);
+            Log.d(DEBUG_TAG_INFO, "ATMId: " + ATMId);
         }
 
         Controller controller = new Controller(this);
-        controller.getBranch(airbank_apikey, branchId);
-
+        controller.getATM(airbank_apikey, ATMId);
     }
 
 }

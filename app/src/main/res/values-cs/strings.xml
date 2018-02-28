@@ -4,4 +4,12 @@
     <string name="title_branches">Pobočky</string>
     <string name="title_atms">Bankomaty</string>
     <string name="branch_openingHoursTitle">Otevírací doba:</string>
+    <string name="branch_opening_mondayTitle">Pondělí</string>
+    <string name="branch_opening_tuesdayTitle">Úterý</string>
+    <string name="branch_opening_wednesdayTitle">Středa</string>
+    <string name="branch_opening_thursdayTitle">Čtvrtek</string>
+    <string name="branch_opening_fridayTitle">Pátek</string>
+    <string name="branch_opening_saturdayTitle">Sobota</string>
+    <string name="branch_opening_sundayTitle">Neděle</string>
+    <string name="branch_closedTitle">Zavřeno</string>
 </resources>

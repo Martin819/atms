@@ -14,9 +14,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.polreich.atms.BranchesAdapter;
+import cz.polreich.atms.adapter.BranchesAdapter;
 import cz.polreich.atms.R;
-import cz.polreich.atms.controller.BranchController;
+import cz.polreich.atms.controller.Controller;
 import cz.polreich.atms.model.airBank.Branch;
 import cz.polreich.atms.service.AirBankService;
 
@@ -42,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_branches:
-                    mTextMessage.setText(title_branches);
+
                     return true;
                 case R.id.navigation_atms:
-                    mTextMessage.setText(title_atms);
+
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(title_notifications);
+
                     return true;
             }
             return false;
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
 
 
-        BranchController branchController = new BranchController(this);
-        branchController.getBranchesList(airbank_apikey, mAdapter);
+        Controller controller = new Controller(this);
+        controller.getBranchesList(airbank_apikey, mAdapter);
 
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

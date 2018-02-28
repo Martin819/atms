@@ -4,15 +4,15 @@ package cz.polreich.atms.model.airBank;
  * Created by Martin on 21.02.2018.
  */
 
-public class BranchOpeningHours {
+public class OpeningHours {
 
     private boolean isNonstop;
     private OpeningHoursDay[] days;
 
-    public BranchOpeningHours() {
+    public OpeningHours() {
     }
 
-    public BranchOpeningHours(boolean isNonstop, OpeningHoursDay[] days) {
+    public OpeningHours(boolean isNonstop, OpeningHoursDay[] days) {
         this.isNonstop = isNonstop;
         this.days = days;
     }

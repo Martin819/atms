@@ -1,8 +1,11 @@
 package cz.polreich.atms;
 
+import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 
-import cz.polreich.atms.model.airBank.BranchAddress;
+import cz.polreich.atms.model.airBank.Address;
+import cz.polreich.atms.model.airBank.OpeningHoursDay;
 
 /**
  * Created by Martin on 25.02.2018.
@@ -10,7 +13,11 @@ import cz.polreich.atms.model.airBank.BranchAddress;
 
 public class utils {
 
-    public static String getFullAddress(BranchAddress address) {
+    private static final String DEBUG_TAG_INFO = "[INFO     ] Utils";
+    private static final String DEBUG_TAG_ERROR = "[    ERROR] Utils";
+    private static final String DEBUG_TAG_WARNING = "[ WARNING ] Utils";
+
+    public static String getFullAddress(Address address) {
         String fullAddress = address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
         return fullAddress;
     }
@@ -36,5 +43,49 @@ public class utils {
             return "No phone provided.";
         }
 
+    }
+
+    public static String[] getOpeningHours(OpeningHoursDay[] openingHoursDays, Activity activity) {
+        String bct = activity.getResources().getString(R.string.branch_closedTitle);
+        String retDays[] = {bct, bct, bct, bct, bct, bct, bct};
+        for (OpeningHoursDay day : openingHoursDays) {
+            switch (day.getDayOfWeek()) {
+                case 1: {
+                    retDays[0] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                case 2: {
+                    retDays[1] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                case 3: {
+                    retDays[2] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                case 4: {
+                    retDays[3] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                case 5: {
+                    retDays[4] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                case 6: {
+                    retDays[5] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                case 7: {
+                    retDays[6] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
+                    break;
+                }
+                default: {
+                    Log.w(DEBUG_TAG_WARNING, "Default switch-case triggered.");
+                    break;
+                }
+            }
+        }
+
+
+        return retDays;
     }
 }

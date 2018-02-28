@@ -9,30 +9,42 @@
     tools:showIn="@layout/activity_branch">
 
     <TextView
-        android:id="@+id/branch_name"
+        android:id="@+id/branch_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/branch_name"
+        android:layout_marginTop="12dp"
+        android:text="@string/branch_type"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/branch_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/branch_address"
+        app:layout_constraintBottom_toTopOf="@+id/branch_phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/branch_type" />
 
     <TextView
         android:id="@+id/branch_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:text="@string/branch_phone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/branch_name" />
+        app:layout_constraintTop_toBottomOf="@+id/branch_type" />
 
     <ImageView
         android:id="@+id/branch_imageView"
         android:layout_width="match_parent"
-        android:layout_height="196dp"
+        android:layout_height="200dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/branch_images"
         android:src="@drawable/ic_home_black_24dp"
@@ -75,7 +87,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/branch_opening_tuesdayTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_mondayTitle" />
@@ -85,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/branch_opening_tuesdayTitle"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_mondayValue" />
 
@@ -94,7 +106,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/branch_opening_wednesdayTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_tuesdayTitle" />
@@ -104,7 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/branch_opening_wednesdayTitle"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_tuesdayValue" />
 
@@ -113,7 +125,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/branch_opening_thursdayTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_wednesdayTitle" />
@@ -123,7 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/branch_opening_thursdayTitle"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_wednesdayValue" />
 
@@ -132,7 +144,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/branch_opening_fridayTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_thursdayTitle" />
@@ -142,27 +154,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/branch_opening_fridayTitle"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_thursdayValue" />
 
     <TextView
-        android:id="@+id/branch_opening_saturdayTitle"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/branch_opening_saturdayTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/branch_opening_fridayTitle" />
+    android:id="@+id/branch_opening_saturdayTitle"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="4dp"
+    android:text="@string/branch_opening_saturdayTitle"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/branch_opening_fridayTitle" />
 
     <TextView
         android:id="@+id/branch_opening_saturdayValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/branch_opening_saturdayTitle"
         app:layout_constraintTop_toBottomOf="@+id/branch_opening_fridayValue" />
+
+    <TextView
+        android:id="@+id/branch_opening_sundayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/branch_opening_sundayTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/branch_opening_saturdayTitle" />
+
+    <TextView
+        android:id="@+id/branch_opening_sundayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/branch_opening_sundayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/branch_opening_saturdayValue" />
+
+
 
 </android.support.constraint.ConstraintLayout>

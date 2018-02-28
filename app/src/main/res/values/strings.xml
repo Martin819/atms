@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Banks</string>
     <string name="title_branches">Branches</string>
+    <string name="title_branch">Branch</string>
     <string name="title_atms">ATMs</string>
+    <string name="title_atm">ATM</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_branch">BranchActivity</string>
-    <string name="branch_name">Branch name</string>
+    <string name="branch_type">Branch type</string>
     <string name="branch_phone">Branch phone</string>
+    <string name="branch_address">Branch Address</string>
     <string name="branch_images">Branch images</string>
     <string name="branch_openingHoursTitle">Opening hours:</string>
     <string name="branchList_name">Branch name</string>
@@ -18,5 +21,24 @@
     <string name="branch_opening_fridayTitle">Friday</string>
     <string name="branch_opening_saturdayTitle">Saturday</string>
     <string name="branch_opening_sundayTitle">Sunday</string>
-
+    <string name="branch_closedTitle">Closed</string>
+    <string name="branch_nonstopTitle">Nonstop</string>
+    <string name="atm_nonstopTitle">Nonstop</string>
+    <string name="title_activity_atm">ATMActivity</string>
+    <string name="atm_openingWithdrawalHoursTitle">Withdrawal opening hours:</string>
+    <string name="atm_openingWithdrawal_mondayTitle">Monday</string>
+    <string name="atm_openingWithdrawal_tuesdayTitle">Tuesday</string>
+    <string name="atm_openingWithdrawal_wednesdayTitle">Wednesday</string>
+    <string name="atm_openingWithdrawal_thursdayTitle">Thursday</string>
+    <string name="atm_openingWithdrawal_fridayTitle">Friday</string>
+    <string name="atm_openingWithdrawal_saturdayTitle">Saturday</string>
+    <string name="atm_openingWithdrawal_sundayTitle">Sunday</string>
+    <string name="atm_openingDepositHoursTitle">Deposit opening hours:</string>
+    <string name="atm_openingDeposit_mondayTitle">Monday</string>
+    <string name="atm_openingDeposit_tuesdayTitle">Tuesday</string>
+    <string name="atm_openingDeposit_wednesdayTitle">Wednesday</string>
+    <string name="atm_openingDeposit_thursdayTitle">Thursday</string>
+    <string name="atm_openingDeposit_fridayTitle">Friday</string>
+    <string name="atm_openingDeposit_saturdayTitle">Saturday</string>
+    <string name="atm_openingDeposit_sundayTitle">Sunday</string>
 </resources>

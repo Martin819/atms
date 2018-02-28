@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="cz.polreich.atms.activity.ATMActivity"
+    tools:showIn="@layout/activity_atm">
+
+
+    <TextView
+        android:id="@+id/atm_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/atm_openingWithdrawalHoursTitle"
+        />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawalHoursTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/atm_openingWithdrawalHoursTitle"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/atm_address" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_mondayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/atm_openingWithdrawal_mondayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawalHoursTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_mondayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_mondayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawalHoursTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_tuesdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingWithdrawal_tuesdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_mondayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_tuesdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_tuesdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_mondayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_wednesdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingWithdrawal_wednesdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_tuesdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_wednesdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_wednesdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_tuesdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_thursdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingWithdrawal_thursdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_wednesdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_thursdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_thursdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_wednesdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_fridayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingWithdrawal_fridayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_thursdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_fridayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_fridayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_thursdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_saturdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingWithdrawal_saturdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_fridayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_saturdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_saturdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_fridayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_sundayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingWithdrawal_sundayTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_saturdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingWithdrawal_sundayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingWithdrawal_sundayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_saturdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingDepositHoursTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/atm_openingDepositHoursTitle"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_sundayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_mondayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/atm_openingDeposit_mondayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDepositHoursTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_mondayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_mondayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDepositHoursTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_tuesdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingDeposit_tuesdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_mondayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_tuesdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_tuesdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_mondayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_wednesdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingDeposit_wednesdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_tuesdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_wednesdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_wednesdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_tuesdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_thursdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingDeposit_thursdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_wednesdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_thursdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_thursdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_wednesdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_fridayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingDeposit_fridayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_thursdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_fridayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_fridayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_thursdayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_saturdayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingDeposit_saturdayTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_fridayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_saturdayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_saturdayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_fridayValue" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_sundayTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/atm_openingDeposit_sundayTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_saturdayTitle" />
+
+    <TextView
+        android:id="@+id/atm_openingDeposit_sundayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/atm_openingDeposit_sundayTitle"
+        app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_saturdayValue" />
+
+</android.support.constraint.ConstraintLayout>

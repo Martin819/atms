@@ -8,17 +8,17 @@ public class Branch {
 
     private String id;
     private String name;
-    private BranchAddress address;
+    private Address address;
     private String[] phones;
-    private BranchLocation location;
-    private BranchOpeningHours openingHours;
+    private Location location;
+    private OpeningHours openingHours;
     private String[] services;
     private String[] pictures;
 
     public Branch() {
     }
 
-    public Branch(String id, String name, BranchAddress address, String[] phones, BranchLocation location, BranchOpeningHours openingHours, String[] services, String[] pictures) {
+    public Branch(String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -45,11 +45,11 @@ public class Branch {
         this.name = name;
     }
 
-    public BranchAddress getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(BranchAddress address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -61,19 +61,19 @@ public class Branch {
         this.phones = phones;
     }
 
-    public BranchLocation getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(BranchLocation location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
-    public BranchOpeningHours getOpeningHours() {
+    public OpeningHours getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(BranchOpeningHours openingHours) {
+    public void setOpeningHours(OpeningHours openingHours) {
         this.openingHours = openingHours;
     }
 

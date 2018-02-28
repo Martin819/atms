@@ -4,16 +4,16 @@ package cz.polreich.atms.model.airBank;
  * Created by Martin on 21.02.2018.
  */
 
-public class BranchAddress {
+public class Address {
 
     private String streetAddress;
     private String city;
     private String zip;
 
-    public BranchAddress() {
+    public Address() {
     }
 
-    public BranchAddress(String streetAddress, String city, String zip) {
+    public Address(String streetAddress, String city, String zip) {
         this.streetAddress = streetAddress;
         this.city = city;
         this.zip = zip;
@@ -43,7 +43,7 @@ public class BranchAddress {
         this.zip = zip;
     }
 
-    public String getFullAddress(BranchAddress address) {
+    public String getFullAddress(Address address) {
         String fullAddress = address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
         return fullAddress;
     }
