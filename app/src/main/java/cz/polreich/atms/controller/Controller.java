@@ -185,7 +185,7 @@ public class Controller {
             public void onResponse(@NonNull Call<ATMsList> call, @NonNull Response<ATMsList> response) {
                 Log.d(DEBUG_TAG_INFO, "getATMsList.onResponse called");
                 Log.d(DEBUG_TAG_INFO, response.toString());
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     Log.d(DEBUG_TAG_INFO, "getATMsList - response.isSuccessful()");
                     ATMsList atmsList = response.body();
                     if (atmsList != null) {
@@ -206,6 +206,7 @@ public class Controller {
                 t.printStackTrace();
             }
         });
+    }
 
         public void getATM(String apikey, String ATMId) {
         Log.d(DEBUG_TAG_INFO, "Controller.getATM called");
@@ -280,5 +281,5 @@ public class Controller {
             }
         });
     }
-    }
 }
+
