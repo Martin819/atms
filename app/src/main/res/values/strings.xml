@@ -6,14 +6,8 @@
     <string name="title_atm">ATM</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_branch">BranchActivity</string>
-    <string name="branch_type">Branch type</string>
-    <string name="branch_phone">Branch phone</string>
-    <string name="branch_address">Branch Address</string>
     <string name="branch_images">Branch images</string>
     <string name="branch_openingHoursTitle">Opening hours:</string>
-    <string name="branchList_name">Branch name</string>
-    <string name="branchList_address">Branch address</string>
-    <string name="branchList_phone">Branch phone</string>
     <string name="branch_opening_mondayTitle">Monday</string>
     <string name="branch_opening_tuesdayTitle">Tuesday</string>
     <string name="branch_opening_wednesdayTitle">Wednesday</string>
@@ -42,7 +36,4 @@
     <string name="atm_openingDeposit_saturdayTitle">Saturday</string>
     <string name="atm_openingDeposit_sundayTitle">Sunday</string>
     <string name="branch_servicesTitle">Services:</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

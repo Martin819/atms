@@ -12,4 +12,21 @@
     <string name="branch_opening_saturdayTitle">Sobota</string>
     <string name="branch_opening_sundayTitle">Neděle</string>
     <string name="branch_closedTitle">Zavřeno</string>
+    <string name="branch_servicesTitle">Služby:</string>
+    <string name="atm_openingWithdrawal_mondayTitle">Pondělí</string>
+    <string name="atm_openingWithdrawal_tuesdayTitle">Úterý</string>
+    <string name="atm_openingWithdrawal_wednesdayTitle">Středa</string>
+    <string name="atm_openingWithdrawal_thursdayTitle">Čtvrtek</string>
+    <string name="atm_openingWithdrawal_fridayTitle">Pátek</string>
+    <string name="atm_openingWithdrawal_saturdayTitle">Sobota</string>
+    <string name="atm_openingWithdrawal_sundayTitle">Neděle</string>
+    <string name="atm_openingWithdrawalHoursTitle">Otevírací doba pro výběry:</string>
+    <string name="atm_openingDepositHoursTitle">Otevírací doba pro vklady:</string>
+    <string name="atm_openingDeposit_mondayTitle">Pondělí</string>
+    <string name="atm_openingDeposit_tuesdayTitle">Úterý</string>
+    <string name="atm_openingDeposit_wednesdayTitle">Středa</string>
+    <string name="atm_openingDeposit_thursdayTitle">Čtvrtek</string>
+    <string name="atm_openingDeposit_fridayTitle">Pátek</string>
+    <string name="atm_openingDeposit_saturdayTitle">Sobota</string>
+    <string name="atm_openingDeposit_sundayTitle">Neděle</string>
 </resources>
