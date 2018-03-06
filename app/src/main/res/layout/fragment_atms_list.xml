@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cz.polreich.atms.fragments.BranchesListFragment">
+    tools:context="cz.polreich.atms.fragments.ATMsListFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/branches_list_recycler_view"
+        android:id="@+id/atms_list_recycler_view"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

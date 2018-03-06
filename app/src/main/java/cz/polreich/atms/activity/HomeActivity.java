@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.polreich.atms.fragments.ATMsListFragment;
 import cz.polreich.atms.fragments.BranchesListFragment;
 import cz.polreich.atms.adapter.BranchesAdapter;
 import cz.polreich.atms.R;
@@ -21,7 +22,9 @@ import cz.polreich.atms.model.airBank.Branch;
 import cz.polreich.atms.service.AirBankService;
 
 
-public class HomeActivity extends AppCompatActivity implements BranchesListFragment.OnFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements
+        BranchesListFragment.OnFragmentInteractionListener,
+        ATMsListFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
     private static Context context;
@@ -41,7 +44,7 @@ public class HomeActivity extends AppCompatActivity implements BranchesListFragm
                     switchToBranchesList();
                     return true;
                 case R.id.navigation_atms:
-
+                    switchToATMsList();
                     return true;
                 case R.id.navigation_notifications:
 
@@ -66,13 +69,13 @@ public class HomeActivity extends AppCompatActivity implements BranchesListFragm
 
     public void switchToBranchesList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.branchesListFragment, new BranchesListFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, new BranchesListFragment()).commit();
     }
 
-/*    public void switchToATMsList() {
+    public void switchToATMsList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.atmsListFragment, new ATMsListFragment()).commit();
-    }*/
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, new ATMsListFragment()).commit();
+    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {

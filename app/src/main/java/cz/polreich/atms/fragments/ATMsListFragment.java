@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,32 +17,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.polreich.atms.R;
+import cz.polreich.atms.adapter.ATMsAdapter;
 import cz.polreich.atms.adapter.BranchesAdapter;
 import cz.polreich.atms.controller.Controller;
+import cz.polreich.atms.model.airBank.ATM;
 import cz.polreich.atms.model.airBank.Branch;
 import cz.polreich.atms.service.AirBankService;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BranchesListFragment.OnFragmentInteractionListener} interface
+ * {@link ATMsListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BranchesListFragment#newInstance} factory method to
+ * Use the {@link ATMsListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BranchesListFragment extends Fragment {
+public class ATMsListFragment extends Fragment {
 
     private TextView mTextMessage;
     private static Context context;
     private RecyclerView mRecyclerView;
-    private BranchesAdapter mAdapter;
+    private ATMsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
-    private List<Branch> branchesList = new ArrayList<>();
-    private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesListFragment";
-    private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchesListFragment";
-    private static final String DEBUG_TAG_WARNING = "[ WARNING ] BranchesListFragment";
+    private List<ATM> atmsList = new ArrayList<>();
+    private static final String DEBUG_TAG_INFO = "[INFO     ] ATMsListFragment";
+    private static final String DEBUG_TAG_ERROR = "[    ERROR] ATMsListFragment";
+    private static final String DEBUG_TAG_WARNING = "[ WARNING ] ATMsListFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,7 +56,7 @@ public class BranchesListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public BranchesListFragment() {
+    public ATMsListFragment() {
         // Required empty public constructor
     }
 
@@ -66,11 +66,11 @@ public class BranchesListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BranchesListFragment.
+     * @return A new instance of fragment ATMsListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BranchesListFragment newInstance(String param1, String param2) {
-        BranchesListFragment fragment = new BranchesListFragment();
+    public static ATMsListFragment newInstance(String param1, String param2) {
+        ATMsListFragment fragment = new ATMsListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -90,17 +90,17 @@ public class BranchesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_atms_list, container, false);
         String airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.branches_list_recycler_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.atms_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
+        mAdapter = new ATMsAdapter(atmsList, mRecyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
         Controller controller = new Controller(activity);
-        controller.getBranchesList(airbank_apikey, mAdapter);
+        controller.getATMsList(airbank_apikey, mAdapter);
         return view;
     }
 
