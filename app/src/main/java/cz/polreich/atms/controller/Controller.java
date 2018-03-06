@@ -1,6 +1,7 @@
 package cz.polreich.atms.controller;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ public class Controller {
     private static final String DEBUG_TAG_ERROR = "[    ERROR] Controller";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] Controller";
     private Activity activity;
+    private Fragment fragment;
     private TextView mBranchType;
     private TextView mBranchPhone;
     private TextView mBranchAddress;

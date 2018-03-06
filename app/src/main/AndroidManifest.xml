@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.BranchListActivity"
+            android:name=".activity.HomeActivity"
             android:label="@string/app_name"
             android:permission="android.permission.INTERNET">
             <intent-filter>
@@ -30,7 +30,8 @@
         <activity
             android:name=".activity.ATMActivity"
             android:label="@string/title_activity_atm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
