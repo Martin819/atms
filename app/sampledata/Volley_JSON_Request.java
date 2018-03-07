@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import cz.polreich.atms.R;
+import cz.polreich.banks.R;
 
 /**
  * Created by Martin on 21.02.2018.

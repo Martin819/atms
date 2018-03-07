@@ -58,3 +58,4 @@ freeline_project_description.json
 
 # Secrets
 app/src/main/res/values/secrets.xml
+app/src/main/res/values/mock_apikeys.xml

@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cz.polreich.atms.activity.HomeActivity">
+    tools:context="cz.polreich.banks.activity.HomeActivity">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
