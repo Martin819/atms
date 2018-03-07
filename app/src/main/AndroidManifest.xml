@@ -3,8 +3,10 @@
     package="cz.polreich.banks">
 
     <permission android:name="android.permission.INTERNET" />
+    <permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -30,10 +32,13 @@
         <activity
             android:name="cz.polreich.banks.activity.ATMActivity"
             android:label="@string/title_activity_atm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name="cz.polreich.banks.activity.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings">
+        </activity>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/googleMaps_apikey"/>
     </application>
 
 </manifest>

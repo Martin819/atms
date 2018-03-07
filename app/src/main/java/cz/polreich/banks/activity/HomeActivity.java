@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +20,15 @@ import cz.polreich.banks.fragments.ATMsListFragment;
 import cz.polreich.banks.fragments.BranchesListFragment;
 import cz.polreich.banks.adapter.BranchesAdapter;
 import cz.polreich.banks.R;
+import cz.polreich.banks.fragments.MapFragment;
 import cz.polreich.banks.model.airBank.Branch;
 import cz.polreich.banks.service.AirBankService;
 
 
 public class HomeActivity extends AppCompatActivity implements
         BranchesListFragment.OnFragmentInteractionListener,
-        ATMsListFragment.OnFragmentInteractionListener {
+        ATMsListFragment.OnFragmentInteractionListener,
+        MapFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
     private static Context context;
@@ -46,8 +50,8 @@ public class HomeActivity extends AppCompatActivity implements
                 case R.id.navigation_atms:
                     switchToATMsList();
                     return true;
-                case R.id.navigation_notifications:
-
+                case R.id.navigation_map:
+                    switchToMapList();
                     return true;
             }
             return false;
@@ -60,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_home);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        navigation.setSelectedItemId(R.id.navigation_branches);
     }
 
     public static Context getContext(){
@@ -75,6 +79,11 @@ public class HomeActivity extends AppCompatActivity implements
     public void switchToATMsList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new ATMsListFragment()).commit();
+    }
+
+    public void switchToMapList() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
     }
 
     @Override
