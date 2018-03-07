@@ -11,8 +11,6 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.Arrays;
-
 import cz.polreich.atms.R;
 import cz.polreich.atms.adapter.ATMsAdapter;
 import cz.polreich.atms.model.airBank.ATM;

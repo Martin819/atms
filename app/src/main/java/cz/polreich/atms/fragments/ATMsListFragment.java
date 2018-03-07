@@ -18,10 +18,8 @@ import java.util.List;
 
 import cz.polreich.atms.R;
 import cz.polreich.atms.adapter.ATMsAdapter;
-import cz.polreich.atms.adapter.BranchesAdapter;
 import cz.polreich.atms.controller.Controller;
 import cz.polreich.atms.model.airBank.ATM;
-import cz.polreich.atms.model.airBank.Branch;
 import cz.polreich.atms.service.AirBankService;
 
 /**
