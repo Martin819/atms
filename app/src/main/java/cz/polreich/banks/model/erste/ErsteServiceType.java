@@ -1,9 +1,5 @@
 package cz.polreich.banks.model.erste;
 
-/**
- * Created by Martin on 08.03.2018.
- */
-
 public enum ErsteServiceType {
 
     BRANCH_TYPE(1),

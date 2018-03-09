@@ -1,10 +1,8 @@
 package cz.polreich.banks.model.airBank;
 
-/**
- * Created by Martin on 27.02.2018.
- */
+import io.realm.RealmObject;
 
-public class ATM {
+public class ATM  extends RealmObject {
     public String id;
     public Address address;
     public Location location;

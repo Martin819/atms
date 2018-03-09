@@ -1,10 +1,8 @@
 package cz.polreich.banks.model.airBank;
 
-/**
- * Created by Martin on 21.02.2018.
- */
+import io.realm.RealmObject;
 
-public class Location {
+public class Location extends RealmObject {
 
     private float longitude;
     private float latitude;

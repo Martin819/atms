@@ -2,16 +2,22 @@ package cz.polreich.banks.model.erste;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Martin on 08.03.2018.
- */
-
 public class ErsteBranch extends ErstePlace {
 
     private ErsteCashWithdrawal cashWithdrawal;
     private String email;
     private String[] phones;
     private boolean moreBuildings;
+
+    public ErsteBranch() {
+    }
+
+    public ErsteBranch(ErsteCashWithdrawal cashWithdrawal, String email, String[] phones, boolean moreBuildings) {
+        this.cashWithdrawal = cashWithdrawal;
+        this.email = email;
+        this.phones = phones;
+        this.moreBuildings = moreBuildings;
+    }
 
     public ErsteCashWithdrawal getCashWithdrawal() {
         return cashWithdrawal;

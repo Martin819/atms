@@ -4,11 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by Martin on 27.02.2018.
- */
+import io.realm.RealmObject;
 
-public class ATMsList {
+public class ATMsList extends RealmObject {
     @SerializedName("data")
     private List<ATM> atms;
 

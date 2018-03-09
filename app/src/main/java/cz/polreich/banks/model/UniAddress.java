@@ -3,10 +3,6 @@ package cz.polreich.banks.model;
 import cz.polreich.banks.model.airBank.Address;
 import cz.polreich.banks.model.erste.ErsteBranch;
 
-/**
- * Created by Martin on 07.03.2018.
- */
-
 public class UniAddress {
     private String street;
     private String city;
@@ -26,5 +22,45 @@ public class UniAddress {
         this.region = branch.getRegion();
         this.country = branch.getCountry();
         this.zip = branch.getPostCode();
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 }

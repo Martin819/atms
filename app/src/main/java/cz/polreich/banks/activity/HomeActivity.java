@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import cz.polreich.banks.R;
 import cz.polreich.banks.fragments.MapFragment;
 import cz.polreich.banks.model.airBank.Branch;
 import cz.polreich.banks.service.AirBankService;
+import io.realm.Realm;
 
 
 public class HomeActivity extends AppCompatActivity implements
@@ -65,6 +67,10 @@ public class HomeActivity extends AppCompatActivity implements
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_branches);
+        Log.d("XXXXXXXXXXXXXXXXXXXXXXX", this.getClass().getName() + " - " + this.getClass().getSimpleName() + " - " + this.getClass().getCanonicalName());
+        Realm.init(context);
+        Realm realm = Realm.getDefaultInstance();
+
     }
 
     public static Context getContext(){

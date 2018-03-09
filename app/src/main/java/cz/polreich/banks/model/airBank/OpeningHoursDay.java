@@ -1,10 +1,8 @@
 package cz.polreich.banks.model.airBank;
 
-/**
- * Created by Martin on 21.02.2018.
- */
+import io.realm.RealmObject;
 
-public class OpeningHoursDay {
+public class OpeningHoursDay extends RealmObject {
 
     private int dayOfWeek;
     private String opening;

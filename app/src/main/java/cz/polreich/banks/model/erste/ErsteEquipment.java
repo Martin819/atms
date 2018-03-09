@@ -1,10 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-/**
- * Created by Martin on 08.03.2018.
- */
+import io.realm.RealmObject;
 
-public class ErsteEquipment {
+public class ErsteEquipment extends RealmObject {
 
     private int id;
     private String name;

@@ -12,10 +12,6 @@ import cz.polreich.banks.model.airBank.Address;
 import cz.polreich.banks.model.airBank.OpeningHours;
 import cz.polreich.banks.model.airBank.OpeningHoursDay;
 
-/**
- * Created by Martin on 25.02.2018.
- */
-
 public class utils {
 
     private static final String DEBUG_TAG_INFO = "[INFO     ] Utils";
@@ -23,31 +19,15 @@ public class utils {
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] Utils";
 
     public static String getFullAddress(Address address) {
-        String fullAddress = address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
-        return fullAddress;
+        return address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
     }
 
     public static String getAllPhones(String[] phonesArray) {
-/*        if (phonesArray.length > 0) {
-            StringBuilder phonesBuilder = new StringBuilder();
-
-            for (String phone : phonesArray) {
-                phonesBuilder.append("'").append(phone.replace("'", "\\'")).append("',");
-            }
-
-            phonesBuilder.deleteCharAt(phonesBuilder.length() - 1);
-
-            return phonesBuilder.toString();
-        } else {
-            return "No phone number provided.";
-        }*/
-
         if (phonesArray.length > 0) {
             return TextUtils.join(",", phonesArray);
         } else {
             return "No phone provided.";
         }
-
     }
 
     public static void getBranchOpeningHours(OpeningHours openingHours, Activity activity) {

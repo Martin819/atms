@@ -2,11 +2,9 @@ package cz.polreich.banks.model.erste;
 
 import java.util.Date;
 
-/**
- * Created by Martin on 08.03.2018.
- */
+import io.realm.RealmObject;
 
-public class ErsteOutage {
+public class ErsteOutage extends RealmObject {
 
     private String branchId;
     private Date from;

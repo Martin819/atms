@@ -1,9 +1,5 @@
 package cz.polreich.banks.model.erste;
 
-/**
- * Created by Martin on 08.03.2018.
- */
-
 public class ErsteATM extends ErstePlace {
 
     private String bankCode;
