@@ -1,18 +1,40 @@
 package cz.polreich.banks.model.airBank;
 
-import io.realm.RealmObject;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
-public class OpeningHours extends RealmObject {
+@Entity
+public class OpeningHours  {
 
+    @PrimaryKey(autoGenerate = true)
+    private int ohId;
     private boolean isNonstop;
     private OpeningHoursDay[] days;
 
     public OpeningHours() {
     }
 
+    @Ignore
     public OpeningHours(boolean isNonstop, OpeningHoursDay[] days) {
         this.isNonstop = isNonstop;
         this.days = days;
+    }
+
+    @Ignore
+    public OpeningHours(int ohId, boolean isNonstop, OpeningHoursDay[] days) {
+        this.ohId = ohId;
+        this.isNonstop = isNonstop;
+        this.days = days;
+    }
+
+    public int getOhId() {
+        return ohId;
+    }
+
+    public void setOhId(int ohId) {
+        this.ohId = ohId;
     }
 
     public boolean isNonstop() {

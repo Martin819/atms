@@ -1,9 +1,14 @@
 package cz.polreich.banks.model.airBank;
 
-import io.realm.RealmObject;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
-public class OpeningHoursDay extends RealmObject {
+@Entity
+public class OpeningHoursDay  {
 
+    @PrimaryKey(autoGenerate = true)
+    private int ohdId;
     private int dayOfWeek;
     private String opening;
     private String closing;
@@ -11,10 +16,27 @@ public class OpeningHoursDay extends RealmObject {
     public OpeningHoursDay() {
     }
 
+    @Ignore
     public OpeningHoursDay(int dayOfWeek, String opening, String closing) {
         this.dayOfWeek = dayOfWeek;
         this.opening = opening;
         this.closing = closing;
+    }
+
+    @Ignore
+    public OpeningHoursDay(int ohdId, int dayOfWeek, String opening, String closing) {
+        this.ohdId = ohdId;
+        this.dayOfWeek = dayOfWeek;
+        this.opening = opening;
+        this.closing = closing;
+    }
+
+    public int getOhdId() {
+        return ohdId;
+    }
+
+    public void setOhdId(int ohdId) {
+        this.ohdId = ohdId;
     }
 
     public int getDayOfWeek() {

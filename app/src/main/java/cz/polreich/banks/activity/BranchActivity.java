@@ -12,13 +12,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import cz.polreich.banks.R;
-import cz.polreich.banks.controller.Controller;
+import cz.polreich.banks.controller.AirBankController;
 
 public class BranchActivity extends AppCompatActivity {
 
     private static final String BRANCH_ID = "branchID";
-    private static final String DEBUG_TAG_INFO = "[INFO     ] BranchActivity";
-    private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchActivity";
+    private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
     private TextView mBranchName;
     private TextView mBranchAddress;
     private TextView mBranchPhone;
@@ -56,7 +57,7 @@ public class BranchActivity extends AppCompatActivity {
             Log.d(DEBUG_TAG_INFO, "branchId: " + branchId);
         }
 
-        Controller controller = new Controller(this);
+        AirBankController controller = new AirBankController(this);
         controller.getBranch(airbank_apikey, branchId);
 
     }

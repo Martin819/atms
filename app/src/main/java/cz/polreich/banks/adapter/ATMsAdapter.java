@@ -16,8 +16,9 @@ import cz.polreich.banks.utils;
 
 public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder> {
 
-    private static final String DEBUG_TAG_INFO = "[INFO     ] ATMsAdapter";
-    private static final String DEBUG_TAG_ERROR = "[    ERROR] ATMsAdapter";
+    private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
     private List<ATM> ATMsList;
     private RecyclerView mRecyclerView;
 

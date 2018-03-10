@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import io.realm.RealmObject;
-
-public class BranchesList extends RealmObject {
+public class BranchesList {
     @SerializedName("data")
     private List<Branch> branches;
 

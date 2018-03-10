@@ -1,8 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
 
-public class ErsteInterval extends RealmObject {
+
+public class ErsteInterval  {
 
     private String from;
     private String to;

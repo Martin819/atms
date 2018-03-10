@@ -1,8 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
 
-public class ErsteService extends RealmObject {
+
+public class ErsteService  {
 
     private ErsteServiceType type;
     private String flag;

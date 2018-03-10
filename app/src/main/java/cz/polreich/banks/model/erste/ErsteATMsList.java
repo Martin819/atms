@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import io.realm.RealmObject;
 
-public class ErsteATMsList extends RealmObject {
+
+public class ErsteATMsList  {
     @SerializedName("items")
     private List<ErsteATM> amts;
 

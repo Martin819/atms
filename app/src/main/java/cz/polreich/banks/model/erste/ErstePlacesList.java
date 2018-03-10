@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import io.realm.RealmObject;
 
-public class ErstePlacesList extends RealmObject {
+
+public class ErstePlacesList  {
     @SerializedName("items")
     private List<ErstePlace> places;
 

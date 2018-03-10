@@ -1,9 +1,13 @@
 package cz.polreich.banks.model.airBank;
 
-import io.realm.RealmObject;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
-public class Address extends RealmObject {
-
+@Entity
+public class Address {
+    @PrimaryKey(autoGenerate = true)
+    private int addressId;
     private String streetAddress;
     private String city;
     private String zip;
@@ -11,10 +15,27 @@ public class Address extends RealmObject {
     public Address() {
     }
 
+    @Ignore
     public Address(String streetAddress, String city, String zip) {
         this.streetAddress = streetAddress;
         this.city = city;
         this.zip = zip;
+    }
+
+    @Ignore
+    public Address(int addressId, String streetAddress, String city, String zip) {
+        this.addressId = addressId;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.zip = zip;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     public String getStreetAddress() {

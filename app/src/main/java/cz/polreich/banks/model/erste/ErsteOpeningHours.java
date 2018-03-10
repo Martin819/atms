@@ -1,8 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
 
-public class ErsteOpeningHours extends RealmObject {
+
+public class ErsteOpeningHours  {
     private ErsteDay weekday;
     private ErsteInterval[] intervals;
 

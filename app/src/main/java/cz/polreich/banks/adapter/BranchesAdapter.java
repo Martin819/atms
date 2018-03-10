@@ -16,8 +16,9 @@ import cz.polreich.banks.utils;
 
 public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.BranchesViewHolder>{
 
-    private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesAdapter";
-    private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchesAdapter";
+    private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
     private List<Branch> branchesList;
     private RecyclerView mRecyclerView;
 

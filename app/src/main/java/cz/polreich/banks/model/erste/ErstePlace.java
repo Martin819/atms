@@ -2,9 +2,9 @@ package cz.polreich.banks.model.erste;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.realm.RealmObject;
 
-public class ErstePlace extends RealmObject {
+
+public class ErstePlace  {
     private int id;
     private ErsteLocation location;
     private ErstePlaceType type;

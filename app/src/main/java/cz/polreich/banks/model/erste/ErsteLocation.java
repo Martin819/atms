@@ -1,8 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
 
-public class ErsteLocation extends RealmObject {
+
+public class ErsteLocation  {
     private float lat;
     private float lng;
 

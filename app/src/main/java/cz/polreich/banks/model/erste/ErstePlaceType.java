@@ -1,6 +1,6 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
+
 
 public enum ErstePlaceType {
     BRANCH(1),

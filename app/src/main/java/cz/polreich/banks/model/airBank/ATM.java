@@ -1,10 +1,21 @@
 package cz.polreich.banks.model.airBank;
 
-import io.realm.RealmObject;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
-public class ATM  extends RealmObject {
+import org.jetbrains.annotations.NotNull;
+
+@Entity(tableName = "branches")
+public class ATM   {
+
+    @PrimaryKey
+    @NotNull
     public String id;
+    @Embedded
     public Address address;
+    @Embedded
     public Location location;
     public OpeningHours openingHoursWithdrawal;
     public OpeningHours openingHoursDeposit;
@@ -12,6 +23,7 @@ public class ATM  extends RealmObject {
     public ATM() {
     }
 
+    @Ignore
     public ATM(String id, Address address, Location location, OpeningHours openingHoursWithdrawal, OpeningHours openingHoursDeposit) {
         this.id = id;
         this.address = address;

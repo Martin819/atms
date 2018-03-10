@@ -1,8 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
 
-public class ErsteCashWithdrawal extends RealmObject {
+
+public class ErsteCashWithdrawal  {
     private int limit;
     private String excessDeadline;
 

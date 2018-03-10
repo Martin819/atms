@@ -1,8 +1,8 @@
 package cz.polreich.banks.model.erste;
 
-import io.realm.RealmObject;
 
-public class ErsteManager extends RealmObject {
+
+public class ErsteManager  {
 
     private String name;
     private String[] phones;

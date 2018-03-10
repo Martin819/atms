@@ -18,7 +18,7 @@ import java.util.List;
 
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.BranchesAdapter;
-import cz.polreich.banks.controller.Controller;
+import cz.polreich.banks.controller.AirBankController;
 import cz.polreich.banks.model.airBank.Branch;
 import cz.polreich.banks.service.AirBankService;
 
@@ -98,7 +98,7 @@ public class BranchesListFragment extends Fragment {
         mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
-        Controller controller = new Controller(activity);
+        AirBankController controller = new AirBankController(activity);
         controller.getBranchesList(airbank_apikey, mAdapter);
         return view;
     }

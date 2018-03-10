@@ -11,14 +11,14 @@ import android.util.Log;
 import android.view.View;
 
 import cz.polreich.banks.R;
-import cz.polreich.banks.controller.Controller;
+import cz.polreich.banks.controller.AirBankController;
 
 public class ATMActivity extends AppCompatActivity {
 
     private static final String ATM_ID = "ATMID";
-    private static final String DEBUG_TAG_INFO = "[INFO     ] BranchActivity";
-    private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchActivity";
-
+    private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
     public static void start(Context context, String ATMId) {
         Intent intent = new Intent(context, ATMActivity.class);
         intent.putExtra(ATM_ID, ATMId);
@@ -50,7 +50,7 @@ public class ATMActivity extends AppCompatActivity {
             Log.d(DEBUG_TAG_INFO, "ATMId: " + ATMId);
         }
 
-        Controller controller = new Controller(this);
+        AirBankController controller = new AirBankController(this);
         controller.getATM(airbank_apikey, ATMId);
     }
 

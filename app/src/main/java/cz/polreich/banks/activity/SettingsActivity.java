@@ -36,6 +36,11 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
+
+    private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
+    
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.

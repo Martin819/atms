@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
+import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.airBank.ATM;
 import cz.polreich.banks.model.airBank.ATMsList;
 import cz.polreich.banks.model.airBank.Branch;
@@ -27,15 +28,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class Controller {
+public class AirBankController {
 
     private BranchesAdapter branchesAdapter;
     private ATMsAdapter atmsAdapter;
     private Branch retBranch;
     private static final String BASE_URL = "https://api.airbank.cz/";
-    private static final String DEBUG_TAG_INFO = "[INFO     ] Controller";
-    private static final String DEBUG_TAG_ERROR = "[    ERROR] Controller";
-    private static final String DEBUG_TAG_WARNING = "[ WARNING ] Controller";
+    private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
+    private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
     private Activity activity;
     private Fragment fragment;
     private TextView mBranchType;
@@ -54,13 +55,13 @@ public class Controller {
             .build();
 
     private AirBankService airBankService = retrofit.create(AirBankService.class);
-    public Controller(Activity activity) {
+    public AirBankController(Activity activity) {
         this.activity = activity;
     }
 
     public void getBranchesList(String apikey, BranchesAdapter branchesAdapter) {
         this.branchesAdapter = branchesAdapter;
-        Log.d(DEBUG_TAG_INFO, "Controller.getBranchesList called");
+        Log.d(DEBUG_TAG_INFO, "AirBankController.getBranchesList called");
         Call<BranchesList> branchesListCall = airBankService.getBranchesList(apikey);
         branchesListCall.enqueue(new Callback<BranchesList>() {
             @Override
@@ -74,6 +75,7 @@ public class Controller {
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList != null");
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList.size = " + branchesList.getBranches().size());
                         branchesList.getBranches().forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - All branches rendered");
                         branchesAdapter.updateItems(branchesList.getBranches());
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesAdapter updated");
@@ -91,7 +93,7 @@ public class Controller {
     }
 
     public void getBranch(String apikey, String branchId) {
-        Log.d(DEBUG_TAG_INFO, "Controller.getBranch called");
+        Log.d(DEBUG_TAG_INFO, "AirBankController.getBranch called");
         mBranchType = (TextView) activity.findViewById(R.id.branch_type);
         mBranchAddress = (TextView) activity.findViewById(R.id.branch_address);
         mBranchPhone = (TextView) activity.findViewById(R.id.branch_phone);
@@ -143,7 +145,7 @@ public class Controller {
 
     public void getATMsList(String apikey, ATMsAdapter atmsAdapter) {
         this.atmsAdapter = atmsAdapter;
-        Log.d(DEBUG_TAG_INFO, "Controller.getATMsList called");
+        Log.d(DEBUG_TAG_INFO, "AirBankController.getATMsList called");
         Call<ATMsList> atmsListCall = airBankService.getATMsList(apikey);
         atmsListCall.enqueue(new Callback<ATMsList>() {
             @Override
@@ -174,7 +176,7 @@ public class Controller {
     }
 
         public void getATM(String apikey, String ATMId) {
-        Log.d(DEBUG_TAG_INFO, "Controller.getATM called");
+        Log.d(DEBUG_TAG_INFO, "AirBankController.getATM called");
         mATMAddress = (TextView) activity.findViewById(R.id.atm_address);
         String atmNonstopTitle = activity.getResources().getString(R.string.atm_nonstopTitle);
         Call<ATM> ATMCall = airBankService.getATM(ATMId, apikey);
