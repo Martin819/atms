@@ -27,6 +27,11 @@ public class Branch  {
     public Branch() {
     }
 
+    public Branch(@NotNull String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Ignore
     public Branch(String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures) {
         this.id = id;

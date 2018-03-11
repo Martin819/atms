@@ -1,8 +1,10 @@
 package cz.polreich.banks;
 
 import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
+import android.content.Context;
 
 import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.airBank.*;
@@ -11,6 +13,7 @@ import cz.polreich.banks.model.airBank.*;
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
+    private static AppDatabase INSTANCE;
     private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();

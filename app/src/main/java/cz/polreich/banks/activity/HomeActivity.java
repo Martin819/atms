@@ -20,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.polreich.banks.App;
 import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.AppDatabase_Impl;
 import cz.polreich.banks.fragments.ATMsListFragment;
@@ -45,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
     private List<Branch> branchesList = new ArrayList<>();
+    private AppDatabase database;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,7 +75,11 @@ public class HomeActivity extends AppCompatActivity implements
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_branches);
-        AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "banksDB").build();
+        new Thread(() -> {
+            App.getApp().getDatabase().branchDao().insertBranch(new Branch("TestID", "TestName"));
+            branchesList = App.getApp().getDatabase().branchDao().getAllBranches();
+            branchesList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+        }).start();
     }
 
     public static Context getContext(){

@@ -11,9 +11,15 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
+import cz.polreich.banks.App;
+import cz.polreich.banks.AppDatabase;
+import cz.polreich.banks.AppDatabase_Impl;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.dao.BranchDao;
+import cz.polreich.banks.dao.BranchDao_Impl;
 import cz.polreich.banks.model.airBank.ATM;
 import cz.polreich.banks.model.airBank.ATMsList;
 import cz.polreich.banks.model.airBank.Branch;
@@ -44,6 +50,7 @@ public class AirBankController {
     private TextView mBranchAddress;
     private TextView mATMAddress;
     private ImageView mBranchImage;
+    private BranchDao branchDao = App.getApp().getDatabase().branchDao();
 
     private Gson gson = new GsonBuilder()
             .setLenient()
@@ -73,12 +80,23 @@ public class AirBankController {
                     BranchesList branchesList = response.body();
                     if (branchesList != null) {
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList != null");
-                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList.size = " + branchesList.getBranches().size());
+                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList.size = " + branchesList.getBranches().size());/*
                         branchesList.getBranches().forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
 
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - All branches rendered");
                         branchesAdapter.updateItems(branchesList.getBranches());
-                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesAdapter updated");
+                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesAdapter updated");*/
+
+                        Log.d(DEBUG_TAG_INFO, "return from DB: ");
+
+                        new Thread(() -> {
+                            branchDao.insertBranches(branchesList.getBranches());
+                            List<Branch> testList = branchDao.getAllBranches();
+                            testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+                            testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+                            activity.runOnUiThread(() -> branchesAdapter.updateItems(testList));
+                        }).start();
+
                     }
                 } else {
                     Log.e(DEBUG_TAG_ERROR, response.errorBody().toString());
