@@ -13,9 +13,7 @@ public class ATM   {
     @PrimaryKey
     @NotNull
     public String id;
-    @Embedded
     public Address address;
-    @Embedded
     public Location location;
     public OpeningHours openingHoursWithdrawal;
     public OpeningHours openingHoursDeposit;
@@ -24,7 +22,7 @@ public class ATM   {
     }
 
     @Ignore
-    public ATM(String id, Address address, Location location, OpeningHours openingHoursWithdrawal, OpeningHours openingHoursDeposit) {
+    public ATM(@NotNull String id, Address address, Location location, OpeningHours openingHoursWithdrawal, OpeningHours openingHoursDeposit) {
         this.id = id;
         this.address = address;
         this.location = location;

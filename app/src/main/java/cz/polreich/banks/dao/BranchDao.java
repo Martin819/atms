@@ -44,9 +44,9 @@ public interface BranchDao {
     @Delete
     public void deleteBranch(Branch branch);
 
-    @Query("SELECT * FROM branches")
+    @Query("SELECT * FROM Branch")
     public List<Branch> getAllBranches();
 
-    @Query("SELECT * FROM branches WHERE id = :id")
+    @Query("SELECT * FROM Branch WHERE id = :id")
     public Branch getBranchById(String id);
 }

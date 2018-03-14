@@ -14,12 +14,9 @@ public class Branch  {
     @NotNull
     private String id;
     private String name;
-    @Embedded
     private Address address;
     private String[] phones;
-    @Embedded
     private Location location;
-    @Embedded
     private OpeningHours openingHours;
     private String[] services;
     private String[] pictures;
@@ -33,7 +30,7 @@ public class Branch  {
     }
 
     @Ignore
-    public Branch(String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures) {
+    public Branch(@NotNull String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures) {
         this.id = id;
         this.name = name;
         this.address = address;

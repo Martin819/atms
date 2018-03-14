@@ -87,7 +87,6 @@ public class AirBankController {
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - All branches rendered");
                         branchesAdapter.updateItems(branchesList.getBranches());
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesAdapter updated");*/
-
                         Log.d(DEBUG_TAG_INFO, "return from DB: ");
 
                         new Thread(() -> {
