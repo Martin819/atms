@@ -55,6 +55,7 @@ dependencies {
     implementation 'android.arch.paging:runtime:1.0.0-alpha6'
     testImplementation 'android.arch.core:core-testing:1.1.0'
     testImplementation 'android.arch.persistence.room:testing:1.0.0'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

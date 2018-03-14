@@ -2,6 +2,7 @@ package cz.polreich.banks.controller;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.arch.persistence.room.Transaction;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
@@ -13,13 +14,10 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import cz.polreich.banks.App;
 import cz.polreich.banks.AppDatabase;
-import cz.polreich.banks.AppDatabase_Impl;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.dao.BranchDao;
-import cz.polreich.banks.dao.BranchDao_Impl;
 import cz.polreich.banks.model.airBank.ATM;
 import cz.polreich.banks.model.airBank.ATMsList;
 import cz.polreich.banks.model.airBank.Branch;
@@ -50,7 +48,8 @@ public class AirBankController {
     private TextView mBranchAddress;
     private TextView mATMAddress;
     private ImageView mBranchImage;
-    private BranchDao branchDao = App.getApp().getDatabase().branchDao();
+    private AppDatabase database;
+    private BranchDao branchDao;
 
     private Gson gson = new GsonBuilder()
             .setLenient()
@@ -68,6 +67,8 @@ public class AirBankController {
 
     public void getBranchesList(String apikey, BranchesAdapter branchesAdapter) {
         this.branchesAdapter = branchesAdapter;
+        database = AppDatabase.getInstance(activity.getApplicationContext());
+        branchDao = database.branchDao();
         Log.d(DEBUG_TAG_INFO, "AirBankController.getBranchesList called");
         Call<BranchesList> branchesListCall = airBankService.getBranchesList(apikey);
         branchesListCall.enqueue(new Callback<BranchesList>() {
@@ -92,6 +93,7 @@ public class AirBankController {
                         new Thread(() -> {
                             branchDao.insertBranches(branchesList.getBranches());
                             List<Branch> testList = branchDao.getAllBranches();
+                            Log.d(DEBUG_TAG_INFO, "Number of returned branched: " + testList.size());
                             testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
                             testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
                             activity.runOnUiThread(() -> branchesAdapter.updateItems(testList));
