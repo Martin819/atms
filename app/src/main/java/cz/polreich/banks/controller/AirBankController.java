@@ -90,8 +90,11 @@ public class AirBankController {
                         Log.d(DEBUG_TAG_INFO, "return from DB: ");
 
                         new Thread(() -> {
+                            Log.d(DEBUG_TAG_INFO, "New thread created.");
                             branchDao.insertBranches(branchesList.getBranches());
+                            Log.d(DEBUG_TAG_INFO, "Branches inserted to DB.");
                             List<Branch> testList = branchDao.getAllBranches();
+                            Log.d(DEBUG_TAG_INFO, "Branches retrieved from DB: ");
                             testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
                             testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
                             activity.runOnUiThread(() -> branchesAdapter.updateItems(testList));
