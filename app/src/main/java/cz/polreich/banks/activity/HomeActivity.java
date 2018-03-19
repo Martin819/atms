@@ -1,8 +1,5 @@
 package cz.polreich.banks.activity;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
@@ -15,14 +12,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.SupportMapFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.polreich.banks.App;
 import cz.polreich.banks.AppDatabase;
-import cz.polreich.banks.AppDatabase_Impl;
 import cz.polreich.banks.fragments.ATMsListFragment;
 import cz.polreich.banks.fragments.BranchesListFragment;
 import cz.polreich.banks.adapter.BranchesAdapter;
@@ -46,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
     private List<Branch> branchesList = new ArrayList<>();
-    private AppDatabase database;
+    private static AppDatabase database;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,14 +69,16 @@ public class HomeActivity extends AppCompatActivity implements
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_branches);
         new Thread(() -> {
-            App.getApp().getDatabase().branchDao().insertBranch(new Branch("TestID", "TestName"));
-            branchesList = App.getApp().getDatabase().branchDao().getAllBranches();
-            branchesList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+            database = AppDatabase.getInstance(this);
         }).start();
     }
 
     public static Context getContext(){
         return context;
+    }
+
+    public static AppDatabase getDatabase() {
+        return database;
     }
 
     public void switchToBranchesList() {

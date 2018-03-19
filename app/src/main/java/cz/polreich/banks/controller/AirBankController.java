@@ -2,6 +2,7 @@ package cz.polreich.banks.controller;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.arch.persistence.room.Transaction;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
@@ -13,13 +14,10 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import cz.polreich.banks.App;
 import cz.polreich.banks.AppDatabase;
-import cz.polreich.banks.AppDatabase_Impl;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.dao.BranchDao;
-import cz.polreich.banks.dao.BranchDao_Impl;
 import cz.polreich.banks.model.airBank.ATM;
 import cz.polreich.banks.model.airBank.ATMsList;
 import cz.polreich.banks.model.airBank.Branch;
@@ -50,7 +48,8 @@ public class AirBankController {
     private TextView mBranchAddress;
     private TextView mATMAddress;
     private ImageView mBranchImage;
-    private BranchDao branchDao = App.getApp().getDatabase().branchDao();
+    private AppDatabase database;
+    private BranchDao branchDao;
 
     private Gson gson = new GsonBuilder()
             .setLenient()
@@ -68,6 +67,8 @@ public class AirBankController {
 
     public void getBranchesList(String apikey, BranchesAdapter branchesAdapter) {
         this.branchesAdapter = branchesAdapter;
+        database = AppDatabase.getInstance(activity.getApplicationContext());
+        branchDao = database.branchDao();
         Log.d(DEBUG_TAG_INFO, "AirBankController.getBranchesList called");
         Call<BranchesList> branchesListCall = airBankService.getBranchesList(apikey);
         branchesListCall.enqueue(new Callback<BranchesList>() {
@@ -86,15 +87,12 @@ public class AirBankController {
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - All branches rendered");
                         branchesAdapter.updateItems(branchesList.getBranches());
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesAdapter updated");*/
-
                         Log.d(DEBUG_TAG_INFO, "return from DB: ");
 
                         new Thread(() -> {
-                            Log.d(DEBUG_TAG_INFO, "New thread created.");
                             branchDao.insertBranches(branchesList.getBranches());
-                            Log.d(DEBUG_TAG_INFO, "Branches inserted to DB.");
                             List<Branch> testList = branchDao.getAllBranches();
-                            Log.d(DEBUG_TAG_INFO, "Branches retrieved from DB: ");
+                            Log.d(DEBUG_TAG_INFO, "Number of returned branched: " + testList.size());
                             testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
                             testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
                             activity.runOnUiThread(() -> branchesAdapter.updateItems(testList));
@@ -147,7 +145,7 @@ public class AirBankController {
                                     .load(branchPictures[0])
                                     .placeholder(R.drawable.ic_home_black_24dp)
                                     .into(mBranchImage);
-                            }
+                        }
                     } else {
                         Log.e(DEBUG_TAG_ERROR, "branch = null");
                     }
@@ -196,7 +194,7 @@ public class AirBankController {
         });
     }
 
-        public void getATM(String apikey, String ATMId) {
+    public void getATM(String apikey, String ATMId) {
         Log.d(DEBUG_TAG_INFO, "AirBankController.getATM called");
         mATMAddress = (TextView) activity.findViewById(R.id.atm_address);
         String atmNonstopTitle = activity.getResources().getString(R.string.atm_nonstopTitle);

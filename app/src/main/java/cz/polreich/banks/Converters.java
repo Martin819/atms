@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cz.polreich.banks.model.airBank.Address;
+import cz.polreich.banks.model.airBank.Location;
 import cz.polreich.banks.model.airBank.OpeningHours;
 import cz.polreich.banks.model.airBank.OpeningHoursDay;
 
@@ -78,6 +80,30 @@ public class Converters {
     public OpeningHours toOpeningHours (String mapToJson) {
         OpeningHours oh = objGson.fromJson(mapToJson, OpeningHours.class);
         return oh;
+    }
+
+    @TypeConverter
+    public String fromLocation (Location loc) {
+        String mapToJson = objGson.toJson(loc);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public Location toLocation (String mapToJson) {
+        Location loc = objGson.fromJson(mapToJson, Location.class);
+        return loc;
+    }
+
+    @TypeConverter
+    public String fromAddress (Address address) {
+        String mapToJson = objGson.toJson(address);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public Address toAddress (String mapToJson) {
+        Address address = objGson.fromJson(mapToJson, Address.class);
+        return address;
     }
 
     @TypeConverter
