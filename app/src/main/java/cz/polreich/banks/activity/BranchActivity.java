@@ -61,7 +61,8 @@ public class BranchActivity extends AppCompatActivity {
     public void onCallClick(View view) {
         TextView phoneNumber = findViewById(R.id.branch_phone);
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + phoneNumber.toString()));
+        // TODO: Change to ACTION_CALL - Need to add permissions
+        intent.setData(Uri.parse("tel:" + phoneNumber.getText().toString()));
         view.getContext().startActivity(intent);
     }
 }
