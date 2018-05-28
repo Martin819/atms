@@ -29,4 +29,7 @@
     <string name="atm_openingDeposit_fridayTitle">Pátek</string>
     <string name="atm_openingDeposit_saturdayTitle">Sobota</string>
     <string name="atm_openingDeposit_sundayTitle">Neděle</string>
+    <string name="title_atm">Bankomat</string>
+    <string name="title_map">Mapa</string>
+    <string name="title_branch">Pobočka</string>
 </resources>

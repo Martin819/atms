@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-@Entity(tableName = "branches")
+@Entity
 public class ATM   {
 
     @PrimaryKey

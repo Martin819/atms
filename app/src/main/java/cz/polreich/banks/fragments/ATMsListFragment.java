@@ -5,9 +5,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +24,18 @@ import cz.polreich.banks.controller.AirBankController;
 import cz.polreich.banks.model.airBank.ATM;
 import cz.polreich.banks.service.AirBankService;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ATMsListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ATMsListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ATMsListFragment extends Fragment {
+public class ATMsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private TextView mTextMessage;
     private static Context context;
+    private AirBankController controller;
+    private String airbank_apikey;
     private RecyclerView mRecyclerView;
     private ATMsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
     private List<ATM> atmsList = new ArrayList<>();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final String DEBUG_TAG_INFO = "[INFO     ] ATMsListFragment";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] ATMsListFragment";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] ATMsListFragment";
@@ -55,18 +52,9 @@ public class ATMsListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public ATMsListFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ATMsListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ATMsListFragment newInstance(String param1, String param2) {
         ATMsListFragment fragment = new ATMsListFragment();
         Bundle args = new Bundle();
@@ -89,7 +77,7 @@ public class ATMsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_atms_list, container, false);
-        String airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
+        airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.atms_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
@@ -97,9 +85,16 @@ public class ATMsListFragment extends Fragment {
         mAdapter = new ATMsAdapter(atmsList, mRecyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
-        AirBankController controller = new AirBankController(activity);
-        controller.getATMsList(airbank_apikey, mAdapter);
+        controller = new AirBankController(activity);
+        controller.getATMsList(airbank_apikey, mAdapter, true);
+        mSwipeRefreshLayout = view.findViewById(R.id.atms_list_swipe_refresh);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        controller.getATMsList(airbank_apikey, mAdapter, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -126,16 +121,18 @@ public class ATMsListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onRefresh() {
+        new Thread(() -> {
+            mSwipeRefreshLayout.setRefreshing(true);
+            Log.d(DEBUG_TAG_INFO, "Preparing to Refresh...");
+            controller.getATMsList(airbank_apikey, mAdapter, true);
+            Log.d(DEBUG_TAG_INFO, "Refreshing...");
+            mSwipeRefreshLayout.setRefreshing(false);
+            getActivity().runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
+        }).start();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

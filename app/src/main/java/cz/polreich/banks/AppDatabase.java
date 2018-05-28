@@ -6,10 +6,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.airBank.*;
 
-@Database(version = 1, entities = {Address.class, ATM.class, Branch.class, Location.class, OpeningHours.class, OpeningHoursDay.class})
+@Database(version = 2, entities = {Address.class, ATM.class, Branch.class, Location.class, OpeningHours.class, OpeningHoursDay.class})
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -20,10 +21,12 @@ public abstract class AppDatabase extends RoomDatabase {
     private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
 
     abstract public BranchDao branchDao();
+    abstract public ATMDao atmDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return INSTANCE;

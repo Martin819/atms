@@ -12,11 +12,14 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
+import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.airBank.ATM;
 import cz.polreich.banks.model.airBank.ATMsList;
@@ -50,6 +53,7 @@ public class AirBankController {
     private ImageView mBranchImage;
     private AppDatabase database;
     private BranchDao branchDao;
+    private ATMDao atmDao;
 
     private Gson gson = new GsonBuilder()
             .setLenient()
@@ -65,50 +69,47 @@ public class AirBankController {
         this.activity = activity;
     }
 
-    public void getBranchesList(String apikey, BranchesAdapter branchesAdapter) {
+    public void getBranchesList(String apikey, BranchesAdapter branchesAdapter, boolean forceFetch) {
         this.branchesAdapter = branchesAdapter;
         database = AppDatabase.getInstance(activity.getApplicationContext());
         branchDao = database.branchDao();
-        Log.d(DEBUG_TAG_INFO, "AirBankController.getBranchesList called");
-        Call<BranchesList> branchesListCall = airBankService.getBranchesList(apikey);
-        branchesListCall.enqueue(new Callback<BranchesList>() {
-            @Override
-            public void onResponse(@NonNull Call<BranchesList> call, @NonNull Response<BranchesList> response) {
-                Log.d(DEBUG_TAG_INFO, "getBranchesList.onResponse called");
-                Log.d(DEBUG_TAG_INFO, response.toString());
-                if(response.isSuccessful()) {
-                    Log.d(DEBUG_TAG_INFO, "getBranchesList - response.isSuccessful()");
-                    BranchesList branchesList = response.body();
-                    if (branchesList != null) {
-                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList != null");
-                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesList.size = " + branchesList.getBranches().size());/*
-                        branchesList.getBranches().forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
+        if (forceFetch) {
+            Log.d(DEBUG_TAG_INFO, "AirBankController.getBranchesList called");
+            Call<BranchesList> branchesListCall = airBankService.getBranchesList(apikey);
+            branchesListCall.enqueue(new Callback<BranchesList>() {
+                @Override
+                public void onResponse(@NonNull Call<BranchesList> call, @NonNull Response<BranchesList> response) {
+                    Log.d(DEBUG_TAG_INFO, "getBranchesList.onResponse called");
+                    Log.d(DEBUG_TAG_INFO, response.toString());
+                    if (response.isSuccessful()) {
+                        Log.d(DEBUG_TAG_INFO, "getBranchesList - response.isSuccessful()");
+                        BranchesList fetchedList = response.body();
+                        if (fetchedList != null) {
+                            new Thread(() -> {
+                                branchDao.insertBranches(fetchedList.getBranches());
+                                List<Branch> branchesList = branchDao.getAllBranches();
+                                activity.runOnUiThread(() -> branchesAdapter.updateItems(branchesList));
+                                Log.d(DEBUG_TAG_INFO, "Branches - successfully fetched and updated");
+                            }).start();
 
-                        Log.d(DEBUG_TAG_INFO, "getBranchesList - All branches rendered");
-                        branchesAdapter.updateItems(branchesList.getBranches());
-                        Log.d(DEBUG_TAG_INFO, "getBranchesList - branchesAdapter updated");*/
-                        Log.d(DEBUG_TAG_INFO, "return from DB: ");
-
-                        new Thread(() -> {
-                            branchDao.insertBranches(branchesList.getBranches());
-                            List<Branch> testList = branchDao.getAllBranches();
-                            Log.d(DEBUG_TAG_INFO, "Number of returned branched: " + testList.size());
-                            testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
-                            testList.forEach(branch -> Log.d(DEBUG_TAG_INFO, branch.getName()));
-                            activity.runOnUiThread(() -> branchesAdapter.updateItems(testList));
-                        }).start();
-
+                        }
+                    } else {
+                        Log.e(DEBUG_TAG_ERROR, response.errorBody().toString());
                     }
-                } else {
-                    Log.e(DEBUG_TAG_ERROR, response.errorBody().toString());
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<BranchesList> call, @NonNull Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<BranchesList> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        } else {
+            new Thread(() -> {
+                List<Branch> branchesList = branchDao.getAllBranches();
+                Log.d(DEBUG_TAG_INFO, "Branches - successfully updated from DB");
+                activity.runOnUiThread(() -> branchesAdapter.updateItems(branchesList));
+            }).start();
+        }
     }
 
     public void getBranch(String apikey, String branchId) {
@@ -162,36 +163,46 @@ public class AirBankController {
         });
     }
 
-    public void getATMsList(String apikey, ATMsAdapter atmsAdapter) {
+    public void getATMsList(String apikey, ATMsAdapter atmsAdapter, boolean forceFetch) {
         this.atmsAdapter = atmsAdapter;
-        Log.d(DEBUG_TAG_INFO, "AirBankController.getATMsList called");
-        Call<ATMsList> atmsListCall = airBankService.getATMsList(apikey);
-        atmsListCall.enqueue(new Callback<ATMsList>() {
-            @Override
-            public void onResponse(@NonNull Call<ATMsList> call, @NonNull Response<ATMsList> response) {
-                Log.d(DEBUG_TAG_INFO, "getATMsList.onResponse called");
-                Log.d(DEBUG_TAG_INFO, response.toString());
-                if (response.isSuccessful()) {
-                    Log.d(DEBUG_TAG_INFO, "getATMsList - response.isSuccessful()");
-                    ATMsList atmsList = response.body();
-                    if (atmsList != null) {
-                        Log.d(DEBUG_TAG_INFO, "getATMsList - atmsList != null");
-                        Log.d(DEBUG_TAG_INFO, "getATMsList - atmsList.size = " + atmsList.getAtms().size());
-                        atmsList.getAtms().forEach(atm -> Log.d(DEBUG_TAG_INFO, utils.getFullAddress(atm.getAddress())));
-                        Log.d(DEBUG_TAG_INFO, "getATMsList - All ATMs rendered");
-                        atmsAdapter.updateItems(atmsList.getAtms());
-                        Log.d(DEBUG_TAG_INFO, "getATMsList - ATMsAdapter updated");
+        database = AppDatabase.getInstance(activity.getApplicationContext());
+        atmDao = database.atmDao();
+        if (forceFetch) {
+            Log.d(DEBUG_TAG_INFO, "AirBankController.getATMsList called");
+            Call<ATMsList> atmsListCall = airBankService.getATMsList(apikey);
+            atmsListCall.enqueue(new Callback<ATMsList>() {
+                @Override
+                public void onResponse(@NonNull Call<ATMsList> call, @NonNull Response<ATMsList> response) {
+                    Log.d(DEBUG_TAG_INFO, "getATMsList.onResponse called");
+                    Log.d(DEBUG_TAG_INFO, response.toString());
+                    if (response.isSuccessful()) {
+                        Log.d(DEBUG_TAG_INFO, "getATMsList - response.isSuccessful()");
+                        ATMsList fetchedList = response.body();
+                        if (fetchedList != null) {
+                            new Thread(() -> {
+                                atmDao.insertATMs(fetchedList.getAtms());
+                                List<ATM> atmsList = atmDao.getAllATMs();
+                                activity.runOnUiThread(() -> atmsAdapter.updateItems(atmsList));
+                                Log.d(DEBUG_TAG_INFO, "ATMs - successfully fetched and updated");
+                            }).start();
+                        }
+                    } else {
+                        Log.e(DEBUG_TAG_ERROR, response.errorBody().toString());
                     }
-                } else {
-                    Log.e(DEBUG_TAG_ERROR, response.errorBody().toString());
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ATMsList> call, @NonNull Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ATMsList> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        } else {
+            new Thread(() -> {
+                List<ATM> atmsList = atmDao.getAllATMs();
+                Log.d(DEBUG_TAG_INFO, "ATMs - successfully updated from DB");
+                activity.runOnUiThread(() -> atmsAdapter.updateItems(atmsList));
+            }).start();
+        }
     }
 
     public void getATM(String apikey, String ATMId) {

@@ -5,9 +5,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,31 +17,28 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.BranchesAdapter;
 import cz.polreich.banks.controller.AirBankController;
 import cz.polreich.banks.model.airBank.Branch;
 import cz.polreich.banks.service.AirBankService;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BranchesListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BranchesListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class BranchesListFragment extends Fragment {
+public class BranchesListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private TextView mTextMessage;
     private static Context context;
+    private AirBankController controller;
+    private String airbank_apikey;
     private RecyclerView mRecyclerView;
     private BranchesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
     private List<Branch> branchesList = new ArrayList<>();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private long lastSuccessfulFetch = 0;
     private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesListFragment";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchesListFragment";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] BranchesListFragment";
@@ -56,18 +55,9 @@ public class BranchesListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public BranchesListFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BranchesListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static BranchesListFragment newInstance(String param1, String param2) {
         BranchesListFragment fragment = new BranchesListFragment();
         Bundle args = new Bundle();
@@ -90,7 +80,7 @@ public class BranchesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
-        String airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
+        airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.branches_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
@@ -98,12 +88,18 @@ public class BranchesListFragment extends Fragment {
         mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
-        AirBankController controller = new AirBankController(activity);
-        controller.getBranchesList(airbank_apikey, mAdapter);
+        controller = new AirBankController(activity);
+        controller.getBranchesList(airbank_apikey, mAdapter, true);
+        mSwipeRefreshLayout = view.findViewById(R.id.branches_list_swipe_refresh);
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    @Override
+    public void onResume() {
+        super.onResume();
+        controller.getBranchesList(airbank_apikey, mAdapter, false);
+    }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -127,16 +123,18 @@ public class BranchesListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onRefresh() {
+        new Thread(() -> {
+            mSwipeRefreshLayout.setRefreshing(true);
+            Log.d(DEBUG_TAG_INFO, "Preparing to Refresh...");
+            controller.getBranchesList(airbank_apikey, mAdapter, true);
+            Log.d(DEBUG_TAG_INFO, "Refreshing...");
+            mSwipeRefreshLayout.setRefreshing(false);
+            getActivity().runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
+        }).start();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
