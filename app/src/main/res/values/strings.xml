@@ -40,7 +40,20 @@
 
     <!-- Strings related to Settings -->
 
+    <string-array name="empty_array">
+    </string-array>
+
+    <string-array name="pref_my_banks_titles">
+        <item>Air Bank</item>
+        <item>Česká Spořitelna</item>
+    </string-array>
+    <string-array name="pref_my_banks_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!-- Example General settings -->
+
     <string name="pref_header_general">General</string>
 
     <string name="pref_title_social_recommendations">Enable social recommendations</string>
@@ -116,4 +129,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="toolbar_settings_title">Preferences</string>
+    <string name="pref_title_my_banks">My Banks</string>
+    <string name="pref_header_my_banks">My Banks</string>
 </resources>

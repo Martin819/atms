@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import cz.polreich.banks.R;
 import cz.polreich.banks.controller.AirBankController;
@@ -40,10 +37,10 @@ public class BranchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch);
         String airbank_apikey = getResources().getString(R.string.airbank_apikey);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.branch_atm_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         Intent intent = this.getIntent();
         String branchId = intent.getStringExtra(BRANCH_ID);

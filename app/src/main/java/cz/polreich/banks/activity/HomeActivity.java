@@ -1,5 +1,6 @@
 package cz.polreich.banks.activity;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
@@ -9,7 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
     private List<Branch> branchesList = new ArrayList<>();
+    private Toolbar mainToolbar;
     private BranchesListFragment blf = new BranchesListFragment();
     private static AppDatabase database;
 
@@ -67,14 +69,33 @@ public class HomeActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        mainToolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(mainToolbar);
+        mainToolbar.setTitle(R.string.title_branches);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_branches);
         new Thread(() -> {
             database = AppDatabase.getInstance(this);
         }).start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.main_toolbar_settings_button: {
+                SettingsActivity.start(this.getApplicationContext());
+                break;
+            }
+            // case blocks for other MenuItems (if any)
+        }
+        return false;
     }
 
     public static Context getContext(){
@@ -88,16 +109,19 @@ public class HomeActivity extends AppCompatActivity implements
     public void switchToBranchesList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, blf).commit();
+        mainToolbar.setTitle(R.string.title_branches);
     }
 
     public void switchToATMsList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new ATMsListFragment()).commit();
+        mainToolbar.setTitle(R.string.title_atms);
     }
 
     public void switchToMapList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
+        mainToolbar.setTitle(R.string.title_map);
     }
 
     @Override

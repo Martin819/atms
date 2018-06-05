@@ -6,4 +6,5 @@
     <color name="branchList_name">#000000</color>
     <color name="branchList_phone">#000000</color>
     <color name="atmsList_name">#000000</color>
+    <color name="toolbarTitle">#FFFFFF</color>
 </resources>
