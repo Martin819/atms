@@ -2,6 +2,7 @@ package cz.polreich.banks.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import cz.polreich.banks.AppDatabase;
@@ -79,6 +81,11 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SharedPreferences prefs = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
+        if (prefs.getBoolean("my_banks_air_bank", true)) {
+            // TODO: SHOW AIRBANK BRANCHES
+            Log.d("XXXXXXXXXXXXXXXX------------------XXXXXXXXXXXXXXXXXX", "my_banks_air_bank");
+        }
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
         airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();

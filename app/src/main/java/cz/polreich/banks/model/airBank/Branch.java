@@ -20,17 +20,20 @@ public class Branch  {
     private OpeningHours openingHours;
     private String[] services;
     private String[] pictures;
+    @Ignore
+    private float distance;
 
     public Branch() {
     }
 
+    @Ignore
     public Branch(@NotNull String id, String name) {
         this.id = id;
         this.name = name;
     }
 
     @Ignore
-    public Branch(@NotNull String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures) {
+    public Branch(@NotNull String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures, float distance) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -39,6 +42,7 @@ public class Branch  {
         this.openingHours = openingHours;
         this.services = services;
         this.pictures = pictures;
+        this.distance = distance;
     }
 
     public String getId() {
@@ -103,5 +107,13 @@ public class Branch  {
 
     public void setPictures(String[] pictures) {
         this.pictures = pictures;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 }

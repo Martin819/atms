@@ -12,22 +12,25 @@ public class ATM   {
 
     @PrimaryKey
     @NotNull
-    public String id;
-    public Address address;
-    public Location location;
-    public OpeningHours openingHoursWithdrawal;
-    public OpeningHours openingHoursDeposit;
+    private String id;
+    private Address address;
+    private Location location;
+    private OpeningHours openingHoursWithdrawal;
+    private OpeningHours openingHoursDeposit;
+    @Ignore
+    private float distance;
 
     public ATM() {
     }
 
     @Ignore
-    public ATM(@NotNull String id, Address address, Location location, OpeningHours openingHoursWithdrawal, OpeningHours openingHoursDeposit) {
+    public ATM(@NotNull String id, Address address, Location location, OpeningHours openingHoursWithdrawal, OpeningHours openingHoursDeposit, float distance) {
         this.id = id;
         this.address = address;
         this.location = location;
         this.openingHoursWithdrawal = openingHoursWithdrawal;
         this.openingHoursDeposit = openingHoursDeposit;
+        this.distance = distance;
     }
 
     public String getId() {
