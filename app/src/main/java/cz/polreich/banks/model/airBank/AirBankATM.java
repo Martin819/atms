@@ -1,6 +1,5 @@
 package cz.polreich.banks.model.airBank;
 
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -8,23 +7,23 @@ import android.arch.persistence.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-public class ATM   {
+public class AirBankATM {
 
     @PrimaryKey
     @NotNull
     private String id;
-    private Address address;
-    private Location location;
-    private OpeningHours openingHoursWithdrawal;
-    private OpeningHours openingHoursDeposit;
+    private AirBankAddress address;
+    private AirBankLocation location;
+    private AirBankOpeningHours openingHoursWithdrawal;
+    private AirBankOpeningHours openingHoursDeposit;
     @Ignore
     private float distance;
 
-    public ATM() {
+    public AirBankATM() {
     }
 
     @Ignore
-    public ATM(@NotNull String id, Address address, Location location, OpeningHours openingHoursWithdrawal, OpeningHours openingHoursDeposit, float distance) {
+    public AirBankATM(@NotNull String id, AirBankAddress address, AirBankLocation location, AirBankOpeningHours openingHoursWithdrawal, AirBankOpeningHours openingHoursDeposit, float distance) {
         this.id = id;
         this.address = address;
         this.location = location;
@@ -41,35 +40,35 @@ public class ATM   {
         this.id = id;
     }
 
-    public Address getAddress() {
+    public AirBankAddress getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AirBankAddress address) {
         this.address = address;
     }
 
-    public Location getLocation() {
+    public AirBankLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(AirBankLocation location) {
         this.location = location;
     }
 
-    public OpeningHours getOpeningHoursWithdrawal() {
+    public AirBankOpeningHours getOpeningHoursWithdrawal() {
         return openingHoursWithdrawal;
     }
 
-    public void setOpeningHoursWithdrawal(OpeningHours openingHoursWithdrawal) {
+    public void setOpeningHoursWithdrawal(AirBankOpeningHours openingHoursWithdrawal) {
         this.openingHoursWithdrawal = openingHoursWithdrawal;
     }
 
-    public OpeningHours getOpeningHoursDeposit() {
+    public AirBankOpeningHours getOpeningHoursDeposit() {
         return openingHoursDeposit;
     }
 
-    public void setOpeningHoursDeposit(OpeningHours openingHoursDeposit) {
+    public void setOpeningHoursDeposit(AirBankOpeningHours openingHoursDeposit) {
         this.openingHoursDeposit = openingHoursDeposit;
     }
 }

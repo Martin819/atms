@@ -1,6 +1,5 @@
 package cz.polreich.banks.model.airBank;
 
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -8,32 +7,32 @@ import android.arch.persistence.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-public class Branch  {
+public class AirBankBranch {
 
     @PrimaryKey
     @NotNull
     private String id;
     private String name;
-    private Address address;
+    private AirBankAddress address;
     private String[] phones;
-    private Location location;
-    private OpeningHours openingHours;
+    private AirBankLocation location;
+    private AirBankOpeningHours openingHours;
     private String[] services;
     private String[] pictures;
     @Ignore
     private float distance;
 
-    public Branch() {
+    public AirBankBranch() {
     }
 
     @Ignore
-    public Branch(@NotNull String id, String name) {
+    public AirBankBranch(@NotNull String id, String name) {
         this.id = id;
         this.name = name;
     }
 
     @Ignore
-    public Branch(@NotNull String id, String name, Address address, String[] phones, Location location, OpeningHours openingHours, String[] services, String[] pictures, float distance) {
+    public AirBankBranch(@NotNull String id, String name, AirBankAddress address, String[] phones, AirBankLocation location, AirBankOpeningHours openingHours, String[] services, String[] pictures, float distance) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -61,11 +60,11 @@ public class Branch  {
         this.name = name;
     }
 
-    public Address getAddress() {
+    public AirBankAddress getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AirBankAddress address) {
         this.address = address;
     }
 
@@ -77,19 +76,19 @@ public class Branch  {
         this.phones = phones;
     }
 
-    public Location getLocation() {
+    public AirBankLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(AirBankLocation location) {
         this.location = location;
     }
 
-    public OpeningHours getOpeningHours() {
+    public AirBankOpeningHours getOpeningHours() {
         return openingHours;
     }
 
-    public void setOpeningHours(OpeningHours openingHours) {
+    public void setOpeningHours(AirBankOpeningHours openingHours) {
         this.openingHours = openingHours;
     }
 

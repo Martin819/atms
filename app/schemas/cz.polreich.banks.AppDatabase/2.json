@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "c5c9c09bb1ec96eeee212b447d356500",
+    "identityHash": "8865303fa9ca18fc7a833d4b275c9a01",
     "entities": [
       {
-        "tableName": "Address",
+        "tableName": "AirBankAddress",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`addressId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `streetAddress` TEXT, `city` TEXT, `zip` TEXT)",
         "fields": [
           {
@@ -43,7 +43,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "ATM",
+        "tableName": "AirBankATM",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `address` TEXT, `location` TEXT, `openingHoursWithdrawal` TEXT, `openingHoursDeposit` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -87,7 +87,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Branch",
+        "tableName": "AirBankBranch",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `address` TEXT, `phones` TEXT, `location` TEXT, `openingHours` TEXT, `services` TEXT, `pictures` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -149,7 +149,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Location",
+        "tableName": "AirBankLocation",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL)",
         "fields": [
           {
@@ -181,7 +181,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "OpeningHours",
+        "tableName": "AirBankOpeningHours",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ohId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `isNonstop` INTEGER NOT NULL, `days` TEXT)",
         "fields": [
           {
@@ -213,7 +213,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "OpeningHoursDay",
+        "tableName": "AirBankOpeningHoursDay",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ohdId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dayOfWeek` INTEGER NOT NULL, `opening` TEXT, `closing` TEXT)",
         "fields": [
           {
@@ -253,7 +253,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c5c9c09bb1ec96eeee212b447d356500\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8865303fa9ca18fc7a833d4b275c9a01\")"
     ]
   }
 }

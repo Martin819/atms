@@ -1,12 +1,20 @@
 package cz.polreich.banks.model;
 
-import cz.polreich.banks.model.airBank.Branch;
-import cz.polreich.banks.model.airBank.OpeningHoursDay;
-import cz.polreich.banks.model.erste.ErsteBranch;
-import cz.polreich.banks.utils;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
+import cz.polreich.banks.model.airBank.AirBankBranch;
+import cz.polreich.banks.model.erste.ErsteBranch;
+
+@Entity
 public class UniBranch {
 
+    @PrimaryKey
+    @NotNull
     private String id;
     private String name;
     private UniAddress address;
@@ -15,15 +23,18 @@ public class UniBranch {
     private UniOpeningHours[] openingHours;
     private String[] images;
     private UniLocation location;
+    private String bank;
+    @Ignore
+    private float distance;
 
-
-    public UniBranch(Branch branch) {
+    public UniBranch(AirBankBranch branch) {
         this.id = branch.getId();
         this.name = branch.getName();
         this.address = new UniAddress(branch.getAddress());
         this.phones = branch.getPhones();
         this.images = branch.getPictures();
         this.location = new UniLocation(branch.getLocation());
+        this.bank = "Air Bank";
     }
 
     public UniBranch(ErsteBranch branch) {
@@ -32,8 +43,10 @@ public class UniBranch {
         this.address = new UniAddress(branch);
         this.phones = branch.getPhones();
         this.location = new UniLocation(branch.getLocation());
+        this.bank = "Erste";
     }
 
+    @NonNull
     public String getId() {
         return id;
     }

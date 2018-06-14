@@ -1,14 +1,17 @@
 package cz.polreich.banks.model;
 
-import cz.polreich.banks.model.airBank.Location;
+import android.arch.persistence.room.Entity;
+
+import cz.polreich.banks.model.airBank.AirBankLocation;
 import cz.polreich.banks.model.erste.ErsteLocation;
 
+@Entity
 public class UniLocation {
 
     private float longitude;
     private float latitude;
 
-    public UniLocation(Location location) {
+    public UniLocation(AirBankLocation location) {
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
     }

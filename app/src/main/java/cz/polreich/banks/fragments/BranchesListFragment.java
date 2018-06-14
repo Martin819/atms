@@ -19,13 +19,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
-import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.BranchesAdapter;
 import cz.polreich.banks.controller.AirBankController;
-import cz.polreich.banks.model.airBank.Branch;
+import cz.polreich.banks.model.UniBranch;
+import cz.polreich.banks.model.airBank.AirBankBranch;
 import cz.polreich.banks.service.AirBankService;
 
 public class BranchesListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -38,7 +37,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     private BranchesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
-    private List<Branch> branchesList = new ArrayList<>();
+    private List<UniBranch> branchesList = new ArrayList<>();
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private long lastSuccessfulFetch = 0;
     private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesListFragment";

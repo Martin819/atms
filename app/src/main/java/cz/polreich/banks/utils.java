@@ -8,9 +8,10 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-import cz.polreich.banks.model.airBank.Address;
-import cz.polreich.banks.model.airBank.OpeningHours;
-import cz.polreich.banks.model.airBank.OpeningHoursDay;
+import cz.polreich.banks.model.UniAddress;
+import cz.polreich.banks.model.airBank.AirBankAddress;
+import cz.polreich.banks.model.airBank.AirBankOpeningHours;
+import cz.polreich.banks.model.airBank.AirBankOpeningHoursDay;
 
 public class utils {
 
@@ -18,8 +19,12 @@ public class utils {
     private static final String DEBUG_TAG_ERROR = "[    ERROR] Utils";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] Utils";
 
-    public static String getFullAddress(Address address) {
+    public static String getFullAddress(AirBankAddress address) {
         return address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
+    }
+
+    public static String getFullAddress(UniAddress address) {
+        return address.getStreet() + ", " + address.getCity() + ", " + address.getZip();
     }
 
     public static String getAllPhones(String[] phonesArray) {
@@ -30,7 +35,7 @@ public class utils {
         }
     }
 
-    public static void getBranchOpeningHours(OpeningHours openingHours, Activity activity) {
+    public static void getBranchOpeningHours(AirBankOpeningHours openingHours, Activity activity) {
         TextView mBranchOpeningMonday = (TextView) activity.findViewById(R.id.branch_opening_mondayValue);
         TextView mBranchOpeningTuesday = (TextView) activity.findViewById(R.id.branch_opening_tuesdayValue);
         TextView mBranchOpeningWednesday = (TextView) activity.findViewById(R.id.branch_opening_wednesdayValue);
@@ -55,7 +60,7 @@ public class utils {
         mBranchOpeningSunday.setText(retDays[6]);
     }
     
-    public static void getATMWithdrawalOpeningHours(OpeningHours openingHours, Activity activity) {
+    public static void getATMWithdrawalOpeningHours(AirBankOpeningHours openingHours, Activity activity) {
         TextView mATMOpeningWithdrawalMonday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_mondayValue);
         TextView mATMOpeningWithdrawalTuesday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_tuesdayValue);
         TextView mATMOpeningWithdrawalWednesday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_wednesdayValue);
@@ -80,7 +85,7 @@ public class utils {
         mATMOpeningWithdrawalSunday.setText(retDays[6]);
     }
 
-    public static void getATMDepositOpeningHours(OpeningHours openingHours, Activity activity) {
+    public static void getATMDepositOpeningHours(AirBankOpeningHours openingHours, Activity activity) {
         TextView mATMOpeningDepositMonday = (TextView) activity.findViewById(R.id.atm_openingDeposit_mondayValue);
         TextView mATMOpeningDepositTuesday = (TextView) activity.findViewById(R.id.atm_openingDeposit_tuesdayValue);
         TextView mATMOpeningDepositWednesday = (TextView) activity.findViewById(R.id.atm_openingDeposit_wednesdayValue);
@@ -105,10 +110,10 @@ public class utils {
         mATMOpeningDepositSunday.setText(retDays[6]);
     }
 
-    private static String[] formatOpeningHours(OpeningHours openingHours) {
+    private static String[] formatOpeningHours(AirBankOpeningHours openingHours) {
         String retDays[] = new String[7];
-        OpeningHoursDay openingHoursDays[] = openingHours.getDays();
-        for (OpeningHoursDay day : openingHoursDays) {
+        AirBankOpeningHoursDay openingHoursDays[] = openingHours.getDays();
+        for (AirBankOpeningHoursDay day : openingHoursDays) {
             switch (day.getDayOfWeek()) {
                 case 1: {
                     retDays[0] = day.getOpening().substring(1, 6) + " - " + day.getClosing().substring(1, 6);
@@ -160,7 +165,7 @@ public class utils {
         if (Arrays.asList(services).contains("CHILDREN")) {
             mChildImageView.setImageResource(R.drawable.ic_child_green_24dp);
         }
-        if (Arrays.asList(services).contains("ATM")) {
+        if (Arrays.asList(services).contains("AirBankATM")) {
             mATMImageView.setImageResource(R.drawable.ic_atm_green_24dp);
         }
         if (Arrays.asList(services).contains("DRINK")) {

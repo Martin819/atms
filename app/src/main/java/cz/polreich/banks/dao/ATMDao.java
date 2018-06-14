@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import cz.polreich.banks.Converters;
-import cz.polreich.banks.model.airBank.ATM;
+import cz.polreich.banks.model.airBank.AirBankATM;
 
 @Dao
 public interface ATMDao {
@@ -18,36 +18,36 @@ public interface ATMDao {
     Converters converters = new Converters();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertATMs(List<ATM> atms);
+    public void insertATMs(List<AirBankATM> atms);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertATMsArray(ATM... atms);
+    public void insertATMsArray(AirBankATM... atms);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertATM(ATM atm);
+    public void insertATM(AirBankATM atm);
 
     @Update
-    public void updateATMs(List<ATM> atms);
+    public void updateATMs(List<AirBankATM> atms);
 
     @Update
-    public void updateATMsArray(ATM... atms);
+    public void updateATMsArray(AirBankATM... atms);
 
     @Update
-    public void updateATM(ATM atm);
+    public void updateATM(AirBankATM atm);
 
     @Delete
-    public void deleteATMs(List<ATM> atms);
+    public void deleteATMs(List<AirBankATM> atms);
 
     @Delete
-    public void deleteATMsArray(ATM... atms);
+    public void deleteATMsArray(AirBankATM... atms);
 
     @Delete
-    public void deleteATM(ATM atm);
+    public void deleteATM(AirBankATM atm);
 
-    @Query("SELECT * FROM ATM")
-    public List<ATM> getAllATMs();
+    @Query("SELECT * FROM AirBankATM")
+    public List<AirBankATM> getAllATMs();
 
-    @Query("SELECT * FROM ATM WHERE id = :id")
-    public ATM getATMById(String id);
+    @Query("SELECT * FROM AirBankATM WHERE id = :id")
+    public AirBankATM getATMById(String id);
 
 }

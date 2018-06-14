@@ -1,7 +1,5 @@
 package cz.polreich.banks.activity;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
@@ -24,7 +22,7 @@ import cz.polreich.banks.fragments.BranchesListFragment;
 import cz.polreich.banks.adapter.BranchesAdapter;
 import cz.polreich.banks.R;
 import cz.polreich.banks.fragments.MapFragment;
-import cz.polreich.banks.model.airBank.Branch;
+import cz.polreich.banks.model.airBank.AirBankBranch;
 import cz.polreich.banks.service.AirBankService;
 
 public class HomeActivity extends AppCompatActivity implements
@@ -41,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements
     private BranchesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
-    private List<Branch> branchesList = new ArrayList<>();
+    private List<AirBankBranch> branchesList = new ArrayList<>();
     private Toolbar mainToolbar;
     private BranchesListFragment blf = new BranchesListFragment();
     private static AppDatabase database;

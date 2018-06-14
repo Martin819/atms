@@ -10,7 +10,7 @@ import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.airBank.*;
 
-@Database(version = 2, entities = {Address.class, ATM.class, Branch.class, Location.class, OpeningHours.class, OpeningHoursDay.class})
+@Database(version = 3, entities = {AirBankAddress.class, AirBankATM.class, AirBankBranch.class, AirBankLocation.class, AirBankOpeningHours.class, AirBankOpeningHoursDay.class})
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

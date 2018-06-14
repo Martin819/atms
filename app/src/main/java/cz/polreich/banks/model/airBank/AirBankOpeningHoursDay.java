@@ -5,7 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
-public class OpeningHoursDay  {
+public class AirBankOpeningHoursDay {
 
     @PrimaryKey(autoGenerate = true)
     private int ohdId;
@@ -13,18 +13,18 @@ public class OpeningHoursDay  {
     private String opening;
     private String closing;
 
-    public OpeningHoursDay() {
+    public AirBankOpeningHoursDay() {
     }
 
     @Ignore
-    public OpeningHoursDay(int dayOfWeek, String opening, String closing) {
+    public AirBankOpeningHoursDay(int dayOfWeek, String opening, String closing) {
         this.dayOfWeek = dayOfWeek;
         this.opening = opening;
         this.closing = closing;
     }
 
     @Ignore
-    public OpeningHoursDay(int ohdId, int dayOfWeek, String opening, String closing) {
+    public AirBankOpeningHoursDay(int ohdId, int dayOfWeek, String opening, String closing) {
         this.ohdId = ohdId;
         this.dayOfWeek = dayOfWeek;
         this.opening = opening;

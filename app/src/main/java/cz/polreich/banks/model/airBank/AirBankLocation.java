@@ -5,25 +5,25 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
-public class Location  {
+public class AirBankLocation {
 
     @PrimaryKey(autoGenerate = true)
     private int locationId;
     private float longitude;
     private float latitude;
 
-    public Location() {
+    public AirBankLocation() {
     }
 
     @Ignore
-    public Location(int locationId, float longitude, float latitude) {
+    public AirBankLocation(int locationId, float longitude, float latitude) {
         this.locationId = locationId;
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
     @Ignore
-    public Location(float longitude, float latitude) {
+    public AirBankLocation(float longitude, float latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }

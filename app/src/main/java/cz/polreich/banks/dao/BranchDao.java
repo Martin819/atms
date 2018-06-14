@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import cz.polreich.banks.Converters;
-import cz.polreich.banks.model.airBank.Branch;
+import cz.polreich.banks.model.airBank.AirBankBranch;
 
 @Dao
 public interface BranchDao {
@@ -18,35 +18,35 @@ public interface BranchDao {
     Converters converters = new Converters();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertBranches(List<Branch> branches);
+    public void insertBranches(List<AirBankBranch> branches);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertBranchesArray(Branch... branches);
+    public void insertBranchesArray(AirBankBranch... branches);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertBranch(Branch branch);
+    public void insertBranch(AirBankBranch branch);
 
     @Update
-    public void updateBranches(List<Branch> branches);
+    public void updateBranches(List<AirBankBranch> branches);
 
     @Update
-    public void updateBranchesArray(Branch... branches);
+    public void updateBranchesArray(AirBankBranch... branches);
 
     @Update
-    public void updateBranch(Branch branch);
+    public void updateBranch(AirBankBranch branch);
 
     @Delete
-    public void deleteBranches(List<Branch> branches);
+    public void deleteBranches(List<AirBankBranch> branches);
 
     @Delete
-    public void deleteBranchesArray(Branch... branches);
+    public void deleteBranchesArray(AirBankBranch... branches);
 
     @Delete
-    public void deleteBranch(Branch branch);
+    public void deleteBranch(AirBankBranch branch);
 
-    @Query("SELECT * FROM Branch")
-    public List<Branch> getAllBranches();
+    @Query("SELECT * FROM AirBankBranch")
+    public List<AirBankBranch> getAllBranches();
 
-    @Query("SELECT * FROM Branch WHERE id = :id")
-    public Branch getBranchById(String id);
+    @Query("SELECT * FROM AirBankBranch WHERE id = :id")
+    public AirBankBranch getBranchById(String id);
 }

@@ -1,29 +1,28 @@
 package cz.polreich.banks.model.airBank;
 
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
-public class OpeningHours  {
+public class AirBankOpeningHours {
 
     @PrimaryKey(autoGenerate = true)
     private int ohId;
     private boolean isNonstop;
-    private OpeningHoursDay[] days;
+    private AirBankOpeningHoursDay[] days;
 
-    public OpeningHours() {
+    public AirBankOpeningHours() {
     }
 
     @Ignore
-    public OpeningHours(boolean isNonstop, OpeningHoursDay[] days) {
+    public AirBankOpeningHours(boolean isNonstop, AirBankOpeningHoursDay[] days) {
         this.isNonstop = isNonstop;
         this.days = days;
     }
 
     @Ignore
-    public OpeningHours(int ohId, boolean isNonstop, OpeningHoursDay[] days) {
+    public AirBankOpeningHours(int ohId, boolean isNonstop, AirBankOpeningHoursDay[] days) {
         this.ohId = ohId;
         this.isNonstop = isNonstop;
         this.days = days;
@@ -45,11 +44,11 @@ public class OpeningHours  {
         isNonstop = nonstop;
     }
 
-    public OpeningHoursDay[] getDays() {
+    public AirBankOpeningHoursDay[] getDays() {
         return days;
     }
 
-    public void setDays(OpeningHoursDay[] days) {
+    public void setDays(AirBankOpeningHoursDay[] days) {
         this.days = days;
     }
 }

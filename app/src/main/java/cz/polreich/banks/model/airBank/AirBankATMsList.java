@@ -6,22 +6,22 @@ import java.util.List;
 
 
 
-public class ATMsList {
+public class AirBankATMsList {
     @SerializedName("data")
-    private List<ATM> atms;
+    private List<AirBankATM> atms;
 
-    public ATMsList() {
+    public AirBankATMsList() {
     }
 
-    public ATMsList(List<ATM> atms) {
+    public AirBankATMsList(List<AirBankATM> atms) {
         this.atms = atms;
     }
 
-    public List<ATM> getAtms() {
+    public List<AirBankATM> getAtms() {
         return atms;
     }
 
-    public void setAtms(List<ATM> atms) {
+    public void setAtms(List<AirBankATM> atms) {
         this.atms = atms;
     }
 }

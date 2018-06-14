@@ -2,7 +2,6 @@ package cz.polreich.banks.controller;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.arch.persistence.room.Transaction;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
@@ -12,8 +11,6 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import cz.polreich.banks.AppDatabase;
@@ -21,12 +18,13 @@ import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
-import cz.polreich.banks.model.airBank.ATM;
-import cz.polreich.banks.model.airBank.ATMsList;
-import cz.polreich.banks.model.airBank.Branch;
+import cz.polreich.banks.model.UniBranchesList;
+import cz.polreich.banks.model.airBank.AirBankATM;
+import cz.polreich.banks.model.airBank.AirBankATMsList;
+import cz.polreich.banks.model.airBank.AirBankBranch;
 import cz.polreich.banks.service.AirBankService;
 import cz.polreich.banks.adapter.BranchesAdapter;
-import cz.polreich.banks.model.airBank.BranchesList;
+import cz.polreich.banks.model.airBank.AirBankBranchesList;
 import cz.polreich.banks.utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +37,7 @@ public class AirBankController {
 
     private BranchesAdapter branchesAdapter;
     private ATMsAdapter atmsAdapter;
-    private Branch retBranch;
+    private AirBankBranch retBranch;
     private static final String BASE_URL = "https://api.airbank.cz/";
     private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
@@ -75,20 +73,20 @@ public class AirBankController {
         branchDao = database.branchDao();
         if (forceFetch) {
             Log.d(DEBUG_TAG_INFO, "AirBankController.getBranchesList called");
-            Call<BranchesList> branchesListCall = airBankService.getBranchesList(apikey);
-            branchesListCall.enqueue(new Callback<BranchesList>() {
+            Call<AirBankBranchesList> branchesListCall = airBankService.getBranchesList(apikey);
+            branchesListCall.enqueue(new Callback<AirBankBranchesList>() {
                 @Override
-                public void onResponse(@NonNull Call<BranchesList> call, @NonNull Response<BranchesList> response) {
+                public void onResponse(@NonNull Call<AirBankBranchesList> call, @NonNull Response<AirBankBranchesList> response) {
                     Log.d(DEBUG_TAG_INFO, "getBranchesList.onResponse called");
                     Log.d(DEBUG_TAG_INFO, response.toString());
                     if (response.isSuccessful()) {
                         Log.d(DEBUG_TAG_INFO, "getBranchesList - response.isSuccessful()");
-                        BranchesList fetchedList = response.body();
+                        AirBankBranchesList fetchedList = response.body();
                         if (fetchedList != null) {
                             new Thread(() -> {
                                 branchDao.insertBranches(fetchedList.getBranches());
-                                List<Branch> branchesList = branchDao.getAllBranches();
-                                activity.runOnUiThread(() -> branchesAdapter.updateItems(branchesList));
+                                List<AirBankBranch> branchesList = branchDao.getAllBranches();
+                                activity.runOnUiThread(() -> branchesAdapter.updateItems(new UniBranchesList(branchesList).getBranches()));
                                 Log.d(DEBUG_TAG_INFO, "Branches - successfully fetched and updated");
                             }).start();
 
@@ -99,15 +97,15 @@ public class AirBankController {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<BranchesList> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<AirBankBranchesList> call, @NonNull Throwable t) {
                     t.printStackTrace();
                 }
             });
         } else {
             new Thread(() -> {
-                List<Branch> branchesList = branchDao.getAllBranches();
+                List<AirBankBranch> branchesList = branchDao.getAllBranches();
                 Log.d(DEBUG_TAG_INFO, "Branches - successfully updated from DB");
-                activity.runOnUiThread(() -> branchesAdapter.updateItems(branchesList));
+                activity.runOnUiThread(() -> branchesAdapter.updateItems(new UniBranchesList(branchesList).getBranches()));
             }).start();
         }
     }
@@ -119,15 +117,15 @@ public class AirBankController {
         mBranchPhone = (TextView) activity.findViewById(R.id.branch_phone);
         mBranchImage = (ImageView) activity.findViewById(R.id.branch_imageView);
 
-        Call<Branch> branchCall = airBankService.getBranch(branchId, apikey);
-        branchCall.enqueue(new Callback<Branch>() {
+        Call<AirBankBranch> branchCall = airBankService.getBranch(branchId, apikey);
+        branchCall.enqueue(new Callback<AirBankBranch>() {
             @Override
-            public void onResponse(@NonNull Call<Branch> call, @NonNull Response<Branch> response) {
+            public void onResponse(@NonNull Call<AirBankBranch> call, @NonNull Response<AirBankBranch> response) {
                 Log.d(DEBUG_TAG_INFO, "getBranch.onResponse called");
                 Log.d(DEBUG_TAG_INFO, response.toString());
                 if(response.isSuccessful()) {
                     Log.d(DEBUG_TAG_INFO, "getBranch - response.isSuccessful()");
-                    Branch branch = response.body();
+                    AirBankBranch branch = response.body();
                     if (branch != null) {
                         Log.d(DEBUG_TAG_INFO, "getBranch - branch != null");
                         Log.d(DEBUG_TAG_INFO, "getBranch - response: " + branch.getName());
@@ -157,7 +155,7 @@ public class AirBankController {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Branch> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<AirBankBranch> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -169,19 +167,19 @@ public class AirBankController {
         atmDao = database.atmDao();
         if (forceFetch) {
             Log.d(DEBUG_TAG_INFO, "AirBankController.getATMsList called");
-            Call<ATMsList> atmsListCall = airBankService.getATMsList(apikey);
-            atmsListCall.enqueue(new Callback<ATMsList>() {
+            Call<AirBankATMsList> atmsListCall = airBankService.getATMsList(apikey);
+            atmsListCall.enqueue(new Callback<AirBankATMsList>() {
                 @Override
-                public void onResponse(@NonNull Call<ATMsList> call, @NonNull Response<ATMsList> response) {
+                public void onResponse(@NonNull Call<AirBankATMsList> call, @NonNull Response<AirBankATMsList> response) {
                     Log.d(DEBUG_TAG_INFO, "getATMsList.onResponse called");
                     Log.d(DEBUG_TAG_INFO, response.toString());
                     if (response.isSuccessful()) {
                         Log.d(DEBUG_TAG_INFO, "getATMsList - response.isSuccessful()");
-                        ATMsList fetchedList = response.body();
+                        AirBankATMsList fetchedList = response.body();
                         if (fetchedList != null) {
                             new Thread(() -> {
                                 atmDao.insertATMs(fetchedList.getAtms());
-                                List<ATM> atmsList = atmDao.getAllATMs();
+                                List<AirBankATM> atmsList = atmDao.getAllATMs();
                                 activity.runOnUiThread(() -> atmsAdapter.updateItems(atmsList));
                                 Log.d(DEBUG_TAG_INFO, "ATMs - successfully fetched and updated");
                             }).start();
@@ -192,13 +190,13 @@ public class AirBankController {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<ATMsList> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<AirBankATMsList> call, @NonNull Throwable t) {
                     t.printStackTrace();
                 }
             });
         } else {
             new Thread(() -> {
-                List<ATM> atmsList = atmDao.getAllATMs();
+                List<AirBankATM> atmsList = atmDao.getAllATMs();
                 Log.d(DEBUG_TAG_INFO, "ATMs - successfully updated from DB");
                 activity.runOnUiThread(() -> atmsAdapter.updateItems(atmsList));
             }).start();
@@ -209,15 +207,15 @@ public class AirBankController {
         Log.d(DEBUG_TAG_INFO, "AirBankController.getATM called");
         mATMAddress = (TextView) activity.findViewById(R.id.atm_address);
         String atmNonstopTitle = activity.getResources().getString(R.string.atm_nonstopTitle);
-        Call<ATM> ATMCall = airBankService.getATM(ATMId, apikey);
-        ATMCall.enqueue(new Callback<ATM>() {
+        Call<AirBankATM> ATMCall = airBankService.getATM(ATMId, apikey);
+        ATMCall.enqueue(new Callback<AirBankATM>() {
             @Override
-            public void onResponse(@NonNull Call<ATM> call, @NonNull Response<ATM> response) {
+            public void onResponse(@NonNull Call<AirBankATM> call, @NonNull Response<AirBankATM> response) {
                 Log.d(DEBUG_TAG_INFO, "getATM.onResponse called");
                 Log.d(DEBUG_TAG_INFO, response.toString());
                 if(response.isSuccessful()) {
                     Log.d(DEBUG_TAG_INFO, "getATM - response.isSuccessful()");
-                    ATM atm = response.body();
+                    AirBankATM atm = response.body();
                     if (atm != null) {
                         Log.d(DEBUG_TAG_INFO, "getATM - branch != null");
                         Log.d(DEBUG_TAG_INFO, "getATM - response: " + utils.getFullAddress(atm.getAddress()));
@@ -235,7 +233,7 @@ public class AirBankController {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ATM> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<AirBankATM> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });

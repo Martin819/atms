@@ -5,25 +5,25 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
-public class Address {
+public class AirBankAddress {
     @PrimaryKey(autoGenerate = true)
     private int addressId;
     private String streetAddress;
     private String city;
     private String zip;
 
-    public Address() {
+    public AirBankAddress() {
     }
 
     @Ignore
-    public Address(String streetAddress, String city, String zip) {
+    public AirBankAddress(String streetAddress, String city, String zip) {
         this.streetAddress = streetAddress;
         this.city = city;
         this.zip = zip;
     }
 
     @Ignore
-    public Address(int addressId, String streetAddress, String city, String zip) {
+    public AirBankAddress(int addressId, String streetAddress, String city, String zip) {
         this.addressId = addressId;
         this.streetAddress = streetAddress;
         this.city = city;
@@ -62,7 +62,7 @@ public class Address {
         this.zip = zip;
     }
 
-    public String getFullAddress(Address address) {
+    public String getFullAddress(AirBankAddress address) {
         String fullAddress = address.getStreetAddress() + ", " + address.getCity() + ", " + address.getZip();
         return fullAddress;
     }

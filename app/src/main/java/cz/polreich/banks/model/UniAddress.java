@@ -1,16 +1,22 @@
 package cz.polreich.banks.model;
 
-import cz.polreich.banks.model.airBank.Address;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+import cz.polreich.banks.model.airBank.AirBankAddress;
 import cz.polreich.banks.model.erste.ErsteBranch;
 
+@Entity
 public class UniAddress {
+    @PrimaryKey(autoGenerate = true)
+    private int addressId;
     private String street;
     private String city;
     private String region;
     private String country;
     private String zip;
 
-    public UniAddress(Address address) {
+    public UniAddress(AirBankAddress address) {
         this.street = address.getStreetAddress();
         this.city = address.getCity();
         this.zip = address.getZip();

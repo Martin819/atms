@@ -1,6 +1,9 @@
 package cz.polreich.banks.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import cz.polreich.banks.model.airBank.AirBankBranch;
 
 public class UniBranchesList {
 
@@ -9,8 +12,11 @@ public class UniBranchesList {
     public UniBranchesList() {
     }
 
-    public UniBranchesList(List<UniBranch> branches) {
-        this.branches = branches;
+    public UniBranchesList(List<AirBankBranch> branches) {
+        this.branches = new ArrayList<>();
+        for (AirBankBranch branch : branches) {
+            this.branches.add(new UniBranch(branch));
+        }
     }
 
     public List<UniBranch> getBranches() {

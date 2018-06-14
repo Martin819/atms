@@ -11,7 +11,7 @@ import java.util.List;
 
 import cz.polreich.banks.R;
 import cz.polreich.banks.activity.ATMActivity;
-import cz.polreich.banks.model.airBank.ATM;
+import cz.polreich.banks.model.airBank.AirBankATM;
 import cz.polreich.banks.utils;
 
 public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder> {
@@ -19,7 +19,7 @@ public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder
     private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
-    private List<ATM> ATMsList;
+    private List<AirBankATM> ATMsList;
     private RecyclerView mRecyclerView;
 
     public class ATMsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -38,14 +38,14 @@ public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder
             Log.d(DEBUG_TAG_INFO, "AdapterPosition: " + String.valueOf(mRecyclerView.getChildAdapterPosition(v)));
             Log.d(DEBUG_TAG_INFO, "LayoutPosition: " + String.valueOf(mRecyclerView.getChildLayoutPosition(v)));
             int itemPosition = mRecyclerView.getChildLayoutPosition(v);
-            ATM atm = ATMsList.get(itemPosition);
+            AirBankATM atm = ATMsList.get(itemPosition);
             String atmId = atm.getId();
             Log.d(DEBUG_TAG_INFO, "ATMId: " + atmId);
             ATMActivity.start(v.getContext(), atmId);
         }
     }
 
-    public ATMsAdapter(List<ATM> ATMsList, RecyclerView mRecyclerView) {
+    public ATMsAdapter(List<AirBankATM> ATMsList, RecyclerView mRecyclerView) {
         this.ATMsList = ATMsList;
         this.mRecyclerView = mRecyclerView;
     }
@@ -58,7 +58,7 @@ public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder
 
     @Override
     public void onBindViewHolder(ATMsViewHolder holder, int position) {
-        ATM atm = ATMsList.get(position);
+        AirBankATM atm = ATMsList.get(position);
         holder.name.setText(R.string.title_atm);
         holder.address.setText(utils.getFullAddress(atm.getAddress()));
     }
@@ -68,7 +68,7 @@ public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder
         return ATMsList.size();
     }
 
-    public void updateItems(List<ATM> ATMsList) {
+    public void updateItems(List<AirBankATM> ATMsList) {
         this.ATMsList = ATMsList;
         notifyDataSetChanged();
     }

@@ -21,7 +21,7 @@ import java.util.List;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.controller.AirBankController;
-import cz.polreich.banks.model.airBank.ATM;
+import cz.polreich.banks.model.airBank.AirBankATM;
 import cz.polreich.banks.service.AirBankService;
 
 public class ATMsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -34,7 +34,7 @@ public class ATMsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private ATMsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
-    private List<ATM> atmsList = new ArrayList<>();
+    private List<AirBankATM> atmsList = new ArrayList<>();
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final String DEBUG_TAG_INFO = "[INFO     ] ATMsListFragment";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] ATMsListFragment";
