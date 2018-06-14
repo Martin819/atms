@@ -5,7 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -25,12 +28,14 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
 
     public class BranchesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name, address, phone;
+        public ImageView logo;
 
         public BranchesViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.branchList_name);
-            address = (TextView) view.findViewById(R.id.branchList_address);
-            phone = (TextView) view.findViewById(R.id.branchList_phone);
+            name = view.findViewById(R.id.branchList_name);
+            address = view.findViewById(R.id.branchList_address);
+            phone = view.findViewById(R.id.branchList_phone);
+            logo = view.findViewById(R.id.branchList_bank_logo);
             view.setOnClickListener(this);
         }
 
@@ -65,6 +70,7 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         holder.name.setText(branch.getName());
         holder.address.setText(utils.getFullAddress(branch.getAddress()));
         holder.phone.setText(utils.getAllPhones(branch.getPhones()));
+        holder.logo.setImageResource(R.drawable.ic_ab_circle);
     }
 
     @Override
