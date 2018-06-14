@@ -1,6 +1,7 @@
 package cz.polreich.banks.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import cz.polreich.banks.model.airBank.AirBankAddress;
@@ -16,18 +17,31 @@ public class UniAddress {
     private String country;
     private String zip;
 
+    public UniAddress() {
+    }
+
+    @Ignore
     public UniAddress(AirBankAddress address) {
         this.street = address.getStreetAddress();
         this.city = address.getCity();
         this.zip = address.getZip();
     }
 
+    @Ignore
     public UniAddress(ErsteBranch branch) {
         this.street = branch.getStreet();
         this.city = branch.getCity();
         this.region = branch.getRegion();
         this.country = branch.getCountry();
         this.zip = branch.getPostCode();
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     public String getStreet() {

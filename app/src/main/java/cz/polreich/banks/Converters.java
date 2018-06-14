@@ -5,6 +5,9 @@ import android.arch.persistence.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import cz.polreich.banks.model.UniAddress;
+import cz.polreich.banks.model.UniLocation;
+import cz.polreich.banks.model.UniOpeningHours;
 import cz.polreich.banks.model.airBank.AirBankAddress;
 import cz.polreich.banks.model.airBank.AirBankLocation;
 import cz.polreich.banks.model.airBank.AirBankOpeningHours;
@@ -40,74 +43,111 @@ public class Converters {
     Gson objGson = new GsonBuilder().setPrettyPrinting().create();
 
     @TypeConverter
-    public String fromOpeningHoursDayArray (AirBankOpeningHoursDay[] ohda) {
+    public String fromOpeningHoursDayArray(AirBankOpeningHoursDay[] ohda) {
         String mapToJson = objGson.toJson(ohda);
         return mapToJson;
     }
 
     @TypeConverter
-    public AirBankOpeningHoursDay[] toOpeningHoursDayArray (String mapToJson) {
+    public AirBankOpeningHoursDay[] toOpeningHoursDayArray(String mapToJson) {
         AirBankOpeningHoursDay[] ohda = objGson.fromJson(mapToJson, AirBankOpeningHoursDay[].class);
         return ohda;
     }
 
     @TypeConverter
-    public String fromOpeningHoursDay (AirBankOpeningHoursDay ohd) {
+    public String fromOpeningHoursDay(AirBankOpeningHoursDay ohd) {
         String mapToJson = objGson.toJson(ohd);
         return mapToJson;
     }
 
     @TypeConverter
-    public AirBankOpeningHoursDay toOpeningHoursDay (String mapToJson) {
+    public AirBankOpeningHoursDay toOpeningHoursDay(String mapToJson) {
         AirBankOpeningHoursDay ohd = objGson.fromJson(mapToJson, AirBankOpeningHoursDay.class);
         return ohd;
     }
 
     @TypeConverter
-    public String fromOpeningHours (AirBankOpeningHours oh) {
+    public String fromOpeningHours(AirBankOpeningHours oh) {
         String mapToJson = objGson.toJson(oh);
         return mapToJson;
     }
 
     @TypeConverter
-    public AirBankOpeningHours toOpeningHours (String mapToJson) {
+    public AirBankOpeningHours toOpeningHours(String mapToJson) {
         AirBankOpeningHours oh = objGson.fromJson(mapToJson, AirBankOpeningHours.class);
         return oh;
     }
 
     @TypeConverter
-    public String fromLocation (AirBankLocation loc) {
+    public String fromLocation(AirBankLocation loc) {
         String mapToJson = objGson.toJson(loc);
         return mapToJson;
     }
 
     @TypeConverter
-    public AirBankLocation toLocation (String mapToJson) {
+    public AirBankLocation toLocation(String mapToJson) {
         AirBankLocation loc = objGson.fromJson(mapToJson, AirBankLocation.class);
         return loc;
     }
 
     @TypeConverter
-    public String fromAddress (AirBankAddress address) {
+    public String fromAddress(AirBankAddress address) {
         String mapToJson = objGson.toJson(address);
         return mapToJson;
     }
 
     @TypeConverter
-    public AirBankAddress toAddress (String mapToJson) {
+    public AirBankAddress toAddress(String mapToJson) {
         AirBankAddress address = objGson.fromJson(mapToJson, AirBankAddress.class);
         return address;
     }
 
     @TypeConverter
-    public String fromStringArray (String[] sa) {
+    public String fromStringArray(String[] sa) {
         String mapToJson = objGson.toJson(sa);
         return mapToJson;
     }
 
     @TypeConverter
-    public String[] toStringArray (String mapToJson) {
+    public String[] toStringArray(String mapToJson) {
         String[] sa = objGson.fromJson(mapToJson, String[].class);
         return sa;
     }
+
+    @TypeConverter
+    public String fromUniAddress(UniAddress address) {
+        String mapToJson = objGson.toJson(address);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public UniAddress toUniAddress(String mapToJson) {
+        UniAddress address = objGson.fromJson(mapToJson, UniAddress.class);
+        return address;
+    }
+
+    @TypeConverter
+    public String fromUniLocation(UniLocation loc) {
+        String mapToJson = objGson.toJson(loc);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public UniLocation toUniLocation(String mapToJson) {
+        UniLocation loc = objGson.fromJson(mapToJson, UniLocation.class);
+        return loc;
+    }
+
+    @TypeConverter
+    public String fromUniOpeningHours(UniOpeningHours[] oh) {
+        String mapToJson = objGson.toJson(oh);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public UniOpeningHours[] toUniOpeningHours(String mapToJson) {
+        UniOpeningHours[] oh = objGson.fromJson(mapToJson, UniOpeningHours[].class);
+        return oh;
+    }
+
 }

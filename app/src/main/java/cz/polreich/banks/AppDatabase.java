@@ -8,9 +8,14 @@ import android.content.Context;
 
 import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
+import cz.polreich.banks.model.UniATM;
+import cz.polreich.banks.model.UniAddress;
+import cz.polreich.banks.model.UniBranch;
+import cz.polreich.banks.model.UniLocation;
+import cz.polreich.banks.model.UniOpeningHours;
 import cz.polreich.banks.model.airBank.*;
 
-@Database(version = 3, entities = {AirBankAddress.class, AirBankATM.class, AirBankBranch.class, AirBankLocation.class, AirBankOpeningHours.class, AirBankOpeningHoursDay.class})
+@Database(version = 4, entities = {AirBankAddress.class, AirBankATM.class, AirBankBranch.class, AirBankLocation.class, AirBankOpeningHours.class, AirBankOpeningHoursDay.class, UniAddress.class, UniATM.class, UniBranch.class, UniLocation.class, UniOpeningHours.class})
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

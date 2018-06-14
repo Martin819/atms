@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
+
 import cz.polreich.banks.model.airBank.AirBankBranch;
 import cz.polreich.banks.model.erste.ErsteBranch;
 
@@ -27,6 +29,10 @@ public class UniBranch {
     @Ignore
     private float distance;
 
+    public UniBranch() {
+    }
+
+    @Ignore
     public UniBranch(AirBankBranch branch) {
         this.id = branch.getId();
         this.name = branch.getName();
@@ -34,9 +40,14 @@ public class UniBranch {
         this.phones = branch.getPhones();
         this.images = branch.getPictures();
         this.location = new UniLocation(branch.getLocation());
+        this.openingHours = new UniOpeningHours[7];
+        for (int i=0; i < branch.getOpeningHours().getDays().length; i++) {
+            this.openingHours[i] = new UniOpeningHours(branch.getOpeningHours().getDays()[i]);
+        }
         this.bank = "Air Bank";
     }
 
+    @Ignore
     public UniBranch(ErsteBranch branch) {
         this.id = Integer.toString(branch.getId());
         this.name = branch.getName();
@@ -45,6 +56,8 @@ public class UniBranch {
         this.location = new UniLocation(branch.getLocation());
         this.bank = "Erste";
     }
+
+    //TODO: Tune Erste Constructor - Opening Hours
 
     @NonNull
     public String getId() {
@@ -101,5 +114,29 @@ public class UniBranch {
 
     public void setLocation(UniLocation location) {
         this.location = location;
+    }
+
+    public UniOpeningHours[] getOpeningHours() {
+        return openingHours;
+    }
+
+    public void setOpeningHours(UniOpeningHours[] openingHours) {
+        this.openingHours = openingHours;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 }

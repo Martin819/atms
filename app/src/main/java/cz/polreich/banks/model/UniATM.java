@@ -22,19 +22,25 @@ public class UniATM {
     @Ignore
     private float distance;
 
+    public UniATM() {
+    }
+
+    @Ignore
     public UniATM(AirBankATM atm) {
         this.id = atm.getId();
         this.address = new UniAddress(atm.getAddress());
         this.location = new UniLocation(atm.getLocation());
+        this.openingHoursWithdrawal = new UniOpeningHours[0];
         for (int i=0; i < atm.getOpeningHoursWithdrawal().getDays().length; i++) {
             this.openingHoursWithdrawal[i] = new UniOpeningHours(atm.getOpeningHoursWithdrawal().getDays()[i]);
         }
+        this.openingHoursDeposit = new UniOpeningHours[0];
         for (int i=0; i < atm.getOpeningHoursDeposit().getDays().length; i++) {
             this.openingHoursDeposit[i] = new UniOpeningHours(atm.getOpeningHoursDeposit().getDays()[i]);
         }
     }
 
-    // TODO: Constructors
+    // TODO: Erste Constructor
 
     public String getId() {
         return id;
