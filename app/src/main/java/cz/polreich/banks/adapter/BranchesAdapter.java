@@ -70,7 +70,9 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         holder.name.setText(branch.getName());
         holder.address.setText(utils.getFullAddress(branch.getAddress()));
         holder.phone.setText(utils.getAllPhones(branch.getPhones()));
-        holder.logo.setImageResource(R.drawable.ic_ab_circle);
+        if (branch.getBank().equals("Air Bank")) {
+            holder.logo.setImageResource(R.drawable.ic_ab_circle);
+        }
     }
 
     @Override

@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -78,7 +80,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         SharedPreferences prefs = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
         if (prefs.getBoolean("my_banks_air_bank", true)) {
@@ -88,12 +90,14 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
         airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.branches_list_recycler_view);
+        mRecyclerView = view.findViewById(R.id.branches_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()),
+                DividerItemDecoration.VERTICAL));
         controller = new AirBankController(activity);
         controller.getBranchesList(airbank_apikey, mAdapter, true);
         mSwipeRefreshLayout = view.findViewById(R.id.branches_list_swipe_refresh);

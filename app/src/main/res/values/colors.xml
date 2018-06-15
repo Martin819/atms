@@ -7,4 +7,5 @@
     <color name="branchList_phone">#000000</color>
     <color name="atmsList_name">#000000</color>
     <color name="toolbarTitle">#FFFFFF</color>
+    <color name="colorAirBankGreen">#73ff00</color>
 </resources>
