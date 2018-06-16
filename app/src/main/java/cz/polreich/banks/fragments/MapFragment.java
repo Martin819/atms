@@ -37,8 +37,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String DEBUG_TAG_ERROR = "[    ERROR] MapFragment";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] MapFragment";
     private int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 369;
-    MapView mMapView;
-    private GoogleMap googleMap;
+    private MapView mMapView;
+    private GoogleMap mMap;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -87,51 +87,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         // Inflate the layout for this fragment
         Log.i(DEBUG_TAG_INFO, "MapFragment created.");
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        mMapView = (MapView) view.findViewById(R.id.mapView);
+        mMapView = view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                if (ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // Permission is not granted
-                    // Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                            Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        // TODO: Explanation
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(getActivity(),
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                } else {
-                    googleMap.setMyLocationEnabled(true);
-                }
-                LatLng test = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(test).title("Test title"));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(test).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });
+        mMapView.getMapAsync(this);
         return view;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -158,8 +120,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
     }
 
     /**

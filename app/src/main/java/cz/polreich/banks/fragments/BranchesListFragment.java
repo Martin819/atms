@@ -1,11 +1,15 @@
 package cz.polreich.banks.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,18 +51,10 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     private List<UniBranch> branchesList = new ArrayList<>();
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private long lastSuccessfulFetch = 0;
+    private FusedLocationProviderClient mFusedLocationClient;
     private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesListFragment";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchesListFragment";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] BranchesListFragment";
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,8 +65,6 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     public static BranchesListFragment newInstance(String param1, String param2) {
         BranchesListFragment fragment = new BranchesListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,8 +73,6 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -90,6 +87,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
         airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();
+        Location lastLoc = getLastLocation(activity);
         mRecyclerView = view.findViewById(R.id.branches_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -102,6 +100,39 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         controller.getBranchesList(airbank_apikey, mAdapter, true);
         mSwipeRefreshLayout = view.findViewById(R.id.branches_list_swipe_refresh);
         return view;
+    }
+
+    public Location getLastLocation(Activity activity) {
+        final Location[] loc = new Location[1];
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 9);
+            }
+        }
+
+
+
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(activity, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        loc[0] = location;
+                    }
+                })
+                .addOnFailureListener(activity, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+        return loc[0];
     }
 
     @Override
@@ -141,12 +172,36 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
             controller.getBranchesList(airbank_apikey, mAdapter, true);
             Log.d(DEBUG_TAG_INFO, "Refreshing...");
             mSwipeRefreshLayout.setRefreshing(false);
-            getActivity().runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
+            Objects.requireNonNull(getActivity()).runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
         }).start();
     }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 9: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // TODO:
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    //TODO:
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }
