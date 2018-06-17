@@ -106,6 +106,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         database = AppDatabase.getInstance(Objects.requireNonNull(getActivity()).getApplicationContext());
         branchDao = database.branchDao();
+        atmDao = database.atmDao();
         mMapView = view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -151,7 +152,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     mMap.addMarker(new MarkerOptions().position(branchMarker)
                                                       .title(branch.getName())
                                                       .snippet(utils.getFullAddress(branch.getAddress()))
-                                                      .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bank_black_24dp)));
+                                                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                 }
                 for (UniATM atm:atms) {
                     LatLng branchMarker = new LatLng(atm.getLocation().getLatitude(), atm.getLocation().getLongitude());
