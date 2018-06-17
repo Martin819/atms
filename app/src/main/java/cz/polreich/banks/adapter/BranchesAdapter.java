@@ -101,17 +101,12 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         notifyDataSetChanged();
     }
 
-    public void updateItemsFromDB(boolean sort) {
+    public void updateItemsFromDB() {
         database = AppDatabase.getInstance(activity.getApplicationContext());
         branchDao = database.branchDao();
         new Thread(() -> {
-            if (sort) {
-                List<UniBranch> branches = branchDao.getAllBranchesByDistance();
-                activity.runOnUiThread(() -> updateItems(branches));
-            } else {
-                List<UniBranch> branches = branchDao.getAllBranchesByDistance();
-                activity.runOnUiThread(() -> updateItems(branches));
-            }
+            List<UniBranch> branches = branchDao.getAllBranchesByDistance();
+            activity.runOnUiThread(() -> updateItems(branches));
         }).start();
     }
 
