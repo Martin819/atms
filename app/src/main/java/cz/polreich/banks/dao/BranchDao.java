@@ -53,4 +53,7 @@ public interface BranchDao {
 
     @Query("SELECT * FROM UniBranch WHERE id = :id")
     public UniBranch getBranchById(String id);
+
+    @Query("SELECT * FROM UniBranch WHERE name = :name")
+    public UniBranch getBranchByName(String name);
 }

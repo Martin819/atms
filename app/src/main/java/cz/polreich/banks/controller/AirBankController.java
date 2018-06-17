@@ -19,6 +19,8 @@ import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
+import cz.polreich.banks.model.UniATM;
+import cz.polreich.banks.model.UniATMsList;
 import cz.polreich.banks.model.UniBranch;
 import cz.polreich.banks.model.UniBranchesList;
 import cz.polreich.banks.model.airBank.AirBankATM;
@@ -115,10 +117,10 @@ public class AirBankController {
 
     public void getBranch(String apikey, String branchId) {
         Log.d(DEBUG_TAG_INFO, "AirBankController.getBranch called");
-        mBranchType = (TextView) activity.findViewById(R.id.branch_type);
-        mBranchAddress = (TextView) activity.findViewById(R.id.branch_address);
-        mBranchPhone = (TextView) activity.findViewById(R.id.branch_phone);
-        mBranchImage = (ImageView) activity.findViewById(R.id.branch_imageView);
+        mBranchType = activity.findViewById(R.id.branch_type);
+        mBranchAddress = activity.findViewById(R.id.branch_address);
+        mBranchPhone = activity.findViewById(R.id.branch_phone);
+        mBranchImage = activity.findViewById(R.id.branch_imageView);
 
         Call<AirBankBranch> branchCall = airBankService.getBranch(branchId, apikey);
         branchCall.enqueue(new Callback<AirBankBranch>() {
@@ -181,8 +183,9 @@ public class AirBankController {
                         AirBankATMsList fetchedList = response.body();
                         if (fetchedList != null) {
                             new Thread(() -> {
-                                atmDao.insertATMs(fetchedList.getAtms());
-                                List<AirBankATM> atmsList = atmDao.getAllATMs();
+                                UniATMsList uniATMsList = new UniATMsList(fetchedList.getAtms());
+                                atmDao.insertATMs(uniATMsList.getAtms());
+                                List<UniATM> atmsList = atmDao.getAllATMs();
                                 activity.runOnUiThread(() -> atmsAdapter.updateItems(atmsList));
                                 Log.d(DEBUG_TAG_INFO, "ATMs - successfully fetched and updated");
                             }).start();
@@ -199,7 +202,7 @@ public class AirBankController {
             });
         } else {
             new Thread(() -> {
-                List<AirBankATM> atmsList = atmDao.getAllATMs();
+                List<UniATM> atmsList = atmDao.getAllATMs();
                 Log.d(DEBUG_TAG_INFO, "ATMs - successfully updated from DB");
                 activity.runOnUiThread(() -> atmsAdapter.updateItems(atmsList));
             }).start();
@@ -208,7 +211,7 @@ public class AirBankController {
 
     public void getATM(String apikey, String ATMId) {
         Log.d(DEBUG_TAG_INFO, "AirBankController.getATM called");
-        mATMAddress = (TextView) activity.findViewById(R.id.atm_address);
+        mATMAddress = activity.findViewById(R.id.atm_address);
         String atmNonstopTitle = activity.getResources().getString(R.string.atm_nonstopTitle);
         Call<AirBankATM> ATMCall = airBankService.getATM(ATMId, apikey);
         ATMCall.enqueue(new Callback<AirBankATM>() {

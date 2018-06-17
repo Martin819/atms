@@ -73,6 +73,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     private AppDatabase database;
     private BranchDao branchDao;
     private LocationRequest mLocationRequest;
+    private Activity activity;
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
     private int REQUEST_FINE_LOCATION = 9;
@@ -104,14 +105,14 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        SharedPreferences prefs = Objects.requireNonNull(getActivity()).getPreferences(Context.MODE_PRIVATE);
+        activity = getActivity();
+        SharedPreferences prefs = Objects.requireNonNull(activity).getPreferences(Context.MODE_PRIVATE);
         if (prefs.getBoolean("my_banks_air_bank", true)) {
             // TODO: SHOW AIRBANK BRANCHES
             Log.d("XXXXXXXXXXXXXXXX------------------XXXXXXXXXXXXXXXXXX", "my_banks_air_bank");
         }
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
         airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
-        Activity activity = getActivity();
         mRecyclerView = view.findViewById(R.id.branches_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -138,10 +139,10 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         LocationSettingsRequest locationSettingsRequest = builder.build();
-        SettingsClient settingsClient = LocationServices.getSettingsClient(Objects.requireNonNull(getActivity()));
+        SettingsClient settingsClient = LocationServices.getSettingsClient(activity);
         settingsClient.checkLocationSettings(locationSettingsRequest);
         if(checkPermissions()) {
-            getFusedLocationProviderClient(getActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+            getFusedLocationProviderClient(activity).requestLocationUpdates(mLocationRequest, new LocationCallback() {
                         @Override
                         public void onLocationResult(LocationResult locationResult) {
                             // do work here
@@ -155,7 +156,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     @SuppressLint("MissingPermission")
     public void getLastLocation() {
         // Get last known recent location using new Google Play Services SDK (v11+)
-        FusedLocationProviderClient locationClient = getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        FusedLocationProviderClient locationClient = getFusedLocationProviderClient(activity);
         if (checkPermissions()) {
             locationClient.getLastLocation()
                     .addOnSuccessListener(location -> {
@@ -176,7 +177,6 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
         lastLoc.setLatitude(location.getLatitude());
         lastLoc.setLongitude(location.getLongitude());
         calculateDistances();
@@ -184,7 +184,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private boolean checkPermissions() {
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
@@ -194,7 +194,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+        ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 REQUEST_FINE_LOCATION);
     }
@@ -236,7 +236,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
             controller.getBranchesList(airbank_apikey, mAdapter, true);
             Log.d(DEBUG_TAG_INFO, "Refreshing...");
             mSwipeRefreshLayout.setRefreshing(false);
-            Objects.requireNonNull(getActivity()).runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
+            activity.runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));
         }).start();
     }
 
@@ -246,11 +246,11 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     }
 
     public void calculateDistances() {
-        database = AppDatabase.getInstance(Objects.requireNonNull(getActivity()).getApplicationContext());
+        database = AppDatabase.getInstance(activity.getApplicationContext());
         branchDao = database.branchDao();
         new Thread(() -> {
             List<UniBranch> branches = branchDao.getAllBranches();
-            Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+            activity.runOnUiThread(() -> {
                 for (UniBranch branch:branches) {
                     Location locA = lastLoc;
                     Location locB = new Location(LocationManager.GPS_PROVIDER);

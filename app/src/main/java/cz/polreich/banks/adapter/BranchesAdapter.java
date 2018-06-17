@@ -2,6 +2,7 @@ package cz.polreich.banks.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +83,11 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         holder.address.setText(utils.getFullAddress(branch.getAddress()));
         holder.phone.setText(utils.getAllPhones(branch.getPhones()));
         if (branch.getBank().equals("Air Bank")) {
+            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorAirBankGreen));
+            holder.logo.setImageResource(R.drawable.ic_ab_circle);
+        }
+        if (branch.getBank().equals("Ceska Sporitelna")) {
+            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorAirBankGreen));
             holder.logo.setImageResource(R.drawable.ic_ab_circle);
         }
         if (branch.getDistance() != -1) {

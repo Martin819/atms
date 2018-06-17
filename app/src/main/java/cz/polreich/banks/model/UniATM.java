@@ -19,8 +19,8 @@ public class UniATM {
     private UniLocation location;
     private UniOpeningHours[] openingHoursWithdrawal;
     private UniOpeningHours[] openingHoursDeposit;
-    @Ignore
-    private float distance;
+    private String bank;
+    private float distance = -1;
 
     public UniATM() {
     }
@@ -30,14 +30,15 @@ public class UniATM {
         this.id = atm.getId();
         this.address = new UniAddress(atm.getAddress());
         this.location = new UniLocation(atm.getLocation());
-        this.openingHoursWithdrawal = new UniOpeningHours[0];
+        this.openingHoursWithdrawal = new UniOpeningHours[14];
         for (int i=0; i < atm.getOpeningHoursWithdrawal().getDays().length; i++) {
             this.openingHoursWithdrawal[i] = new UniOpeningHours(atm.getOpeningHoursWithdrawal().getDays()[i]);
         }
-        this.openingHoursDeposit = new UniOpeningHours[0];
+        this.openingHoursDeposit = new UniOpeningHours[14];
         for (int i=0; i < atm.getOpeningHoursDeposit().getDays().length; i++) {
             this.openingHoursDeposit[i] = new UniOpeningHours(atm.getOpeningHoursDeposit().getDays()[i]);
         }
+        this.bank = "Air Bank";
     }
 
     // TODO: Erste Constructor
@@ -80,6 +81,14 @@ public class UniATM {
 
     public void setOpeningHoursDeposit(UniOpeningHours[] openingHoursDeposit) {
         this.openingHoursDeposit = openingHoursDeposit;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
     public float getDistance() {

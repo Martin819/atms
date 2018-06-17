@@ -13,6 +13,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/row_padding_vertical">
 
+    <ImageView
+        android:id="@+id/atmsList_bank_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_bank_black_24dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <TextView
         android:id="@+id/atmsList_name"
         android:layout_width="0dp"
@@ -21,12 +34,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
+        android:text="@string/ph_atmsList_name"
         android:textColor="@color/atmsList_name"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/atmsList_address"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/atmsList_bank_logo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -36,9 +50,23 @@
         android:layout_below="@id/atmsList_address"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:text="@string/ph_atmsList_address"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/atmsList_bank_logo"
         app:layout_constraintTop_toBottomOf="@+id/atmsList_name" />
+
+    <TextView
+        android:id="@+id/atmsList_distance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/ph_atmsList_distance"
+        app:layout_constraintTop_toBottomOf="@+id/atmsList_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

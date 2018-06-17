@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -27,8 +30,10 @@ import java.util.Objects;
 
 import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
+import cz.polreich.banks.activity.BranchActivity;
 import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
+import cz.polreich.banks.model.UniATM;
 import cz.polreich.banks.model.UniBranch;
 import cz.polreich.banks.utils;
 
@@ -40,7 +45,7 @@ import cz.polreich.banks.utils;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final String DEBUG_TAG_INFO = "[INFO     ] MapFragment";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] MapFragment";
@@ -94,7 +99,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.i(DEBUG_TAG_INFO, "MapFragment created.");
@@ -139,18 +144,36 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap = map;
         new Thread(() -> {
             List<UniBranch> branches = branchDao.getAllBranches();
+            List<UniATM> atms = atmDao.getAllATMs();
             Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                 for (UniBranch branch:branches) {
                     LatLng branchMarker = new LatLng(branch.getLocation().getLatitude(), branch.getLocation().getLongitude());
                     mMap.addMarker(new MarkerOptions().position(branchMarker)
                                                       .title(branch.getName())
                                                       .snippet(utils.getFullAddress(branch.getAddress()))
-                                                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                                      .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bank_black_24dp)));
+                }
+                for (UniATM atm:atms) {
+                    LatLng branchMarker = new LatLng(atm.getLocation().getLatitude(), atm.getLocation().getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(branchMarker)
+                            .title(atm.getBank())
+                            .snippet(utils.getFullAddress(atm.getAddress()))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                 }
             });
         }).start();
         LatLng cameraCenter = new LatLng(49.742, 15.337);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraCenter, 6));
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        String branchName = marker.getTitle();
+        new Thread(() -> {
+            UniBranch branch = branchDao.getBranchByName(branchName);
+            String branchId = branch.getId();
+            BranchActivity.start(getActivity(), branchId);
+        }).start();
     }
 
     /**

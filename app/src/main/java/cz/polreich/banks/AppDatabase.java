@@ -15,7 +15,7 @@ import cz.polreich.banks.model.UniLocation;
 import cz.polreich.banks.model.UniOpeningHours;
 import cz.polreich.banks.model.airBank.*;
 
-@Database(version = 5, entities = {AirBankAddress.class, AirBankATM.class, AirBankBranch.class, AirBankLocation.class, AirBankOpeningHours.class, AirBankOpeningHoursDay.class, UniAddress.class, UniATM.class, UniBranch.class, UniLocation.class, UniOpeningHours.class})
+@Database(version = 6, entities = {AirBankAddress.class, AirBankATM.class, AirBankBranch.class, AirBankLocation.class, AirBankOpeningHours.class, AirBankOpeningHoursDay.class, UniAddress.class, UniATM.class, UniBranch.class, UniLocation.class, UniOpeningHours.class})
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

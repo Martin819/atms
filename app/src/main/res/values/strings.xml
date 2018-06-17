@@ -137,4 +137,7 @@
     <string name="ph_branchlist_phone">Branch Phone</string>
     <string name="ph_branchList_distance">XX</string>
     <string name="toolbar_position_title">Sort by distance</string>
+    <string name="ph_atmsList_distance">XX</string>
+    <string name="ph_atmsList_address">ATMs Address</string>
+    <string name="ph_atmsList_name">ATMs Name</string>
 </resources>

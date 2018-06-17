@@ -16,7 +16,7 @@ public class AirBankATM {
     private AirBankLocation location;
     private AirBankOpeningHours openingHoursWithdrawal;
     private AirBankOpeningHours openingHoursDeposit;
-    @Ignore
+    private String bank = "Air Bank";
     private float distance;
 
     public AirBankATM() {
@@ -70,5 +70,21 @@ public class AirBankATM {
 
     public void setOpeningHoursDeposit(AirBankOpeningHours openingHoursDeposit) {
         this.openingHoursDeposit = openingHoursDeposit;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 }
