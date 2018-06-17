@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import cz.polreich.banks.model.airBank.AirBankATM;
 import cz.polreich.banks.model.airBank.AirBankOpeningHoursDay;
+import cz.polreich.banks.model.erste.ErsteATM;
 
 @Entity
 public class UniATM {
@@ -41,7 +42,21 @@ public class UniATM {
         this.bank = "Air Bank";
     }
 
-    // TODO: Erste Constructor
+    @Ignore
+    public UniATM(ErsteATM atm) {
+        this.id = Integer.toString(atm.getId());
+        this.address = new UniAddress(atm);
+        this.location = new UniLocation(atm.getLocation());
+        this.openingHoursWithdrawal = new UniOpeningHours[14];
+        for (int i=0; i < atm.getOpeningHours().length; i++) {
+            this.openingHoursWithdrawal[i] = new UniOpeningHours(atm.getOpeningHours()[i].getWeekday().getValue(), atm.getOpeningHours()[i].getIntervals());
+        }
+        this.openingHoursDeposit = new UniOpeningHours[14];
+        for (int i=0; i < atm.getOpeningHours().length; i++) {
+            this.openingHoursDeposit[i] = new UniOpeningHours(atm.getOpeningHours()[i].getWeekday().getValue(), atm.getOpeningHours()[i].getIntervals());
+        }
+        this.bank = "Ceska Sporitelna";
+    }
 
     public String getId() {
         return id;

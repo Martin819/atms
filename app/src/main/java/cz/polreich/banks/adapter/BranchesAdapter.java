@@ -87,8 +87,8 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
             holder.logo.setImageResource(R.drawable.ic_ab_circle);
         }
         if (branch.getBank().equals("Ceska Sporitelna")) {
-            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorAirBankGreen));
-            holder.logo.setImageResource(R.drawable.ic_ab_circle);
+            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorErsteRed));
+            holder.logo.setImageResource(R.drawable.ic_cs_circle);
         }
         if (branch.getDistance() != -1) {
             holder.distance.setText(utils.formatDistance(branch.getDistance()));

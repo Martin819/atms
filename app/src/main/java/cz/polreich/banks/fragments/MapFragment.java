@@ -152,14 +152,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     mMap.addMarker(new MarkerOptions().position(branchMarker)
                                                       .title(branch.getName())
                                                       .snippet(utils.getFullAddress(branch.getAddress()))
-                                                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                                      .zIndex(0.5f));
                 }
                 for (UniATM atm:atms) {
                     LatLng branchMarker = new LatLng(atm.getLocation().getLatitude(), atm.getLocation().getLongitude());
                     mMap.addMarker(new MarkerOptions().position(branchMarker)
                             .title(atm.getBank())
                             .snippet(utils.getFullAddress(atm.getAddress()))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                            .zIndex(0.0f));
                 }
             });
         }).start();

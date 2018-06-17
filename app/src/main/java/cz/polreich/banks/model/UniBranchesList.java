@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.polreich.banks.model.airBank.AirBankBranch;
+import cz.polreich.banks.model.erste.ErsteBranch;
+import cz.polreich.banks.model.erste.ErsteBranchesList;
 
 public class UniBranchesList {
 
@@ -12,6 +14,13 @@ public class UniBranchesList {
     public UniBranchesList(List<AirBankBranch> branches) {
         this.branches = new ArrayList<>();
         for (AirBankBranch branch : branches) {
+            this.branches.add(new UniBranch(branch));
+        }
+    }
+
+    public UniBranchesList(ErsteBranchesList branchesList) {
+        this.branches = new ArrayList<>();
+        for (ErsteBranch branch : branchesList.getBranches()) {
             this.branches.add(new UniBranch(branch));
         }
     }

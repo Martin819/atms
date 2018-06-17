@@ -8,11 +8,6 @@
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="cz.polreich.banks.activity.SettingsActivity$NotificationPreferenceFragment"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/pref_header_notifications" />
-
-    <header
         android:fragment="cz.polreich.banks.activity.SettingsActivity$MyBanksFragment"
         android:icon="@drawable/ic_bank_black_24dp"
         android:title="@string/pref_header_my_banks" />

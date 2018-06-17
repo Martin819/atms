@@ -1,10 +1,15 @@
 package cz.polreich.banks.model.erste;
 
-import com.google.gson.annotations.SerializedName;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import org.jetbrains.annotations.NotNull;
 
 
-
+@Entity
 public class ErstePlace  {
+    @PrimaryKey
+    @NotNull
     private int id;
     private ErsteLocation location;
     private ErstePlaceType type;
@@ -12,7 +17,6 @@ public class ErstePlace  {
     private String stateNote;
     private int distance;
     private String name;
-    @SerializedName("address")
     private String street;
     private String city;
     private String postCode;
@@ -31,6 +35,7 @@ public class ErstePlace  {
     public ErstePlace() {
     }
 
+    @Ignore
     public ErstePlace(int id, ErsteLocation location, ErstePlaceType type, ErstePlaceState state, String stateNote, int distance, String name, String street, String city, String postCode, String country, String region, String district, ErsteService[] services, ErsteOpeningHours[] openingHours, String managerName, String courierCode, String branchNum, ErsteEquipment[] equipment, ErsteManager manager, ErsteOutage[] outages) {
         this.id = id;
         this.location = location;

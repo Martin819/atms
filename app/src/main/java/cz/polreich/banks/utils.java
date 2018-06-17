@@ -14,6 +14,11 @@ import cz.polreich.banks.model.UniAddress;
 import cz.polreich.banks.model.airBank.AirBankAddress;
 import cz.polreich.banks.model.airBank.AirBankOpeningHours;
 import cz.polreich.banks.model.airBank.AirBankOpeningHoursDay;
+import cz.polreich.banks.model.erste.ErsteBranch;
+import cz.polreich.banks.model.erste.ErsteDay;
+import cz.polreich.banks.model.erste.ErsteOpeningHours;
+import cz.polreich.banks.model.erste.ErstePlace;
+import cz.polreich.banks.model.erste.ErsteService;
 
 public class utils {
 
@@ -27,6 +32,10 @@ public class utils {
 
     public static String getFullAddress(UniAddress address) {
         return address.getStreet() + ", " + address.getCity() + ", " + address.getZip();
+    }
+
+    public static String getFullAddress(ErstePlace place) {
+        return place.getStreet() + ", " + place.getCity() + ", " + place.getPostCode();
     }
 
     public static String getAllPhones(String[] phonesArray) {
@@ -167,7 +176,7 @@ public class utils {
         if (Arrays.asList(services).contains("CHILDREN")) {
             mChildImageView.setImageResource(R.drawable.ic_child_green_24dp);
         }
-        if (Arrays.asList(services).contains("AirBankATM")) {
+        if (Arrays.asList(services).contains("ATM")) {
             mATMImageView.setImageResource(R.drawable.ic_atm_green_24dp);
         }
         if (Arrays.asList(services).contains("DRINK")) {
@@ -175,6 +184,82 @@ public class utils {
         }
         if (Arrays.asList(services).contains("FOOD")) {
             mDrinkImageView.setImageResource(R.drawable.ic_drink_green_24dp);
+        }
+    }
+
+    public static void getErstePlaceOpeningHours(ErstePlace place, Activity activity) {
+        ErsteOpeningHours openingHours[] = place.getOpeningHours();
+        TextView mBranchOpeningMonday = activity.findViewById(R.id.branch_opening_mondayValue);
+        TextView mBranchOpeningTuesday = activity.findViewById(R.id.branch_opening_tuesdayValue);
+        TextView mBranchOpeningWednesday = activity.findViewById(R.id.branch_opening_wednesdayValue);
+        TextView mBranchOpeningThursday = activity.findViewById(R.id.branch_opening_thursdayValue);
+        TextView mBranchOpeningFriday = activity.findViewById(R.id.branch_opening_fridayValue);
+        TextView mBranchOpeningSaturday = activity.findViewById(R.id.branch_opening_saturdayValue);
+        TextView mBranchOpeningSunday = activity.findViewById(R.id.branch_opening_sundayValue);
+        String bct = activity.getResources().getString(R.string.branch_closedTitle);
+        String retDays[] = {bct, bct, bct, bct, bct, bct, bct};
+        retDays = formatOpeningHours(openingHours);
+        mBranchOpeningMonday.setText(retDays[0]);
+        mBranchOpeningTuesday.setText(retDays[1]);
+        mBranchOpeningWednesday.setText(retDays[2]);
+        mBranchOpeningThursday.setText(retDays[3]);
+        mBranchOpeningFriday.setText(retDays[4]);
+        mBranchOpeningSaturday.setText(retDays[5]);
+        mBranchOpeningSunday.setText(retDays[6]);
+    }
+
+    private static String[] formatOpeningHours(ErsteOpeningHours openingHours[]) {
+        String retDays[] = new String[7];
+        for (ErsteOpeningHours openingHourDay : openingHours) {
+            switch (openingHourDay.getWeekday().getValue()) {
+                case 1: {
+                    retDays[0] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                case 2: {
+                    retDays[1] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                case 3: {
+                    retDays[2] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                case 4: {
+                    retDays[3] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                case 5: {
+                    retDays[4] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                case 6: {
+                    retDays[5] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                case 7: {
+                    retDays[6] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    break;
+                }
+                default: {
+                    Log.w(DEBUG_TAG_WARNING, "Default switch-case triggered.");
+                    break;
+                }
+            }
+        }
+        return retDays;
+    }
+
+    public static void setServices(ErsteService services[], Activity activity) {
+        ImageView mAnimalsImageView = activity.findViewById(R.id.branch_services_animalImageView);
+        ImageView mChildImageView = activity.findViewById(R.id.branch_services_childImageView);
+        ImageView mATMImageView = activity.findViewById(R.id.branch_services_atmImageView);
+        ImageView mFoodImageView = activity.findViewById(R.id.branch_services_foodImageView);
+        ImageView mDrinkImageView = activity.findViewById(R.id.branch_services_drinkImageView);
+
+        for (ErsteService service:services) {
+            if (service.getFlag().equals("ATM")) {
+                mATMImageView.setImageResource(R.drawable.ic_atm_green_24dp);
+            }
         }
     }
 

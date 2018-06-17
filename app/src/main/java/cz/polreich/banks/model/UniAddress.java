@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 import cz.polreich.banks.model.airBank.AirBankAddress;
 import cz.polreich.banks.model.erste.ErsteBranch;
+import cz.polreich.banks.model.erste.ErstePlace;
 
 @Entity
 public class UniAddress {
@@ -28,12 +29,12 @@ public class UniAddress {
     }
 
     @Ignore
-    public UniAddress(ErsteBranch branch) {
-        this.street = branch.getStreet();
-        this.city = branch.getCity();
-        this.region = branch.getRegion();
-        this.country = branch.getCountry();
-        this.zip = branch.getPostCode();
+    public UniAddress(ErstePlace place) {
+        this.street = place.getStreet();
+        this.city = place.getCity();
+        this.region = place.getRegion();
+        this.country = place.getCountry();
+        this.zip = place.getPostCode();
     }
 
     public int getAddressId() {

@@ -4,12 +4,12 @@ package cz.polreich.banks.model.erste;
 
 public class ErsteOpeningHours  {
     private ErsteDay weekday;
-    private ErsteInterval[] intervals;
+    private ErsteInterval intervals;
 
     public ErsteOpeningHours() {
     }
 
-    public ErsteOpeningHours(ErsteDay weekday, ErsteInterval[] intervals) {
+    public ErsteOpeningHours(ErsteDay weekday, ErsteInterval intervals) {
         this.weekday = weekday;
         this.intervals = intervals;
     }
@@ -22,11 +22,11 @@ public class ErsteOpeningHours  {
         this.weekday = weekday;
     }
 
-    public ErsteInterval[] getIntervals() {
+    public ErsteInterval getIntervals() {
         return intervals;
     }
 
-    public void setIntervals(ErsteInterval[] intervals) {
+    public void setIntervals(ErsteInterval intervals) {
         this.intervals = intervals;
     }
 }

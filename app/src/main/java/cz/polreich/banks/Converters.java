@@ -12,6 +12,14 @@ import cz.polreich.banks.model.airBank.AirBankAddress;
 import cz.polreich.banks.model.airBank.AirBankLocation;
 import cz.polreich.banks.model.airBank.AirBankOpeningHours;
 import cz.polreich.banks.model.airBank.AirBankOpeningHoursDay;
+import cz.polreich.banks.model.erste.ErsteEquipment;
+import cz.polreich.banks.model.erste.ErsteLocation;
+import cz.polreich.banks.model.erste.ErsteManager;
+import cz.polreich.banks.model.erste.ErsteOpeningHours;
+import cz.polreich.banks.model.erste.ErsteOutage;
+import cz.polreich.banks.model.erste.ErstePlaceState;
+import cz.polreich.banks.model.erste.ErstePlaceType;
+import cz.polreich.banks.model.erste.ErsteService;
 
 public class Converters {
 
@@ -148,6 +156,102 @@ public class Converters {
     public UniOpeningHours[] toUniOpeningHours(String mapToJson) {
         UniOpeningHours[] oh = objGson.fromJson(mapToJson, UniOpeningHours[].class);
         return oh;
+    }
+
+    @TypeConverter
+    public String fromErsteLocation(ErsteLocation loc) {
+        String mapToJson = objGson.toJson(loc);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteLocation toErsteLocation(String mapToJson) {
+        ErsteLocation loc = objGson.fromJson(mapToJson, ErsteLocation.class);
+        return loc;
+    }
+
+    @TypeConverter
+    public String fromErstePlaceType(ErstePlaceType ept) {
+        String mapToJson = objGson.toJson(ept);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErstePlaceType toErstePlaceType(String mapToJson) {
+        ErstePlaceType ept = objGson.fromJson(mapToJson, ErstePlaceType.class);
+        return ept;
+    }
+
+    @TypeConverter
+    public String fromErstePlaceState(ErstePlaceState eps) {
+        String mapToJson = objGson.toJson(eps);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErstePlaceState toErstePlaceState(String mapToJson) {
+        ErstePlaceState eps = objGson.fromJson(mapToJson, ErstePlaceState.class);
+        return eps;
+    }
+
+    @TypeConverter
+    public String fromErsteService(ErsteService[] es) {
+        String mapToJson = objGson.toJson(es);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteService[] toErsteService(String mapToJson) {
+        ErsteService[] es = objGson.fromJson(mapToJson, ErsteService[].class);
+        return es;
+    }
+
+    @TypeConverter
+    public String fromErsteOpeningHours(ErsteOpeningHours[] oh) {
+        String mapToJson = objGson.toJson(oh);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteOpeningHours[] toErsteOpeningHours(String mapToJson) {
+        ErsteOpeningHours[] oh = objGson.fromJson(mapToJson, ErsteOpeningHours[].class);
+        return oh;
+    }
+
+    @TypeConverter
+    public String fromErsteEquipment(ErsteEquipment[] ee) {
+        String mapToJson = objGson.toJson(ee);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteEquipment[] toErsteEquipment(String mapToJson) {
+        ErsteEquipment[] ee = objGson.fromJson(mapToJson, ErsteEquipment[].class);
+        return ee;
+    }
+
+    @TypeConverter
+    public String fromErsteManager(ErsteManager em) {
+        String mapToJson = objGson.toJson(em);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteManager toErsteManager(String mapToJson) {
+        ErsteManager em = objGson.fromJson(mapToJson, ErsteManager.class);
+        return em;
+    }
+
+    @TypeConverter
+    public String fromErsteOutage(ErsteOutage[] eo) {
+        String mapToJson = objGson.toJson(eo);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteOutage[] toErsteOutage(String mapToJson) {
+        ErsteOutage[] eo = objGson.fromJson(mapToJson, ErsteOutage[].class);
+        return eo;
     }
 
 }
