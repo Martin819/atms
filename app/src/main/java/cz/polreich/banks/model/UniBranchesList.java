@@ -9,9 +9,6 @@ public class UniBranchesList {
 
     private List<UniBranch> branches;
 
-    public UniBranchesList() {
-    }
-
     public UniBranchesList(List<AirBankBranch> branches) {
         this.branches = new ArrayList<>();
         for (AirBankBranch branch : branches) {

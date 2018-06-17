@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import cz.polreich.banks.model.UniBranch;
+
 public class AirBankBranchesList {
     @SerializedName("data")
     private List<AirBankBranch> branches;

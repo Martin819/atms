@@ -1,11 +1,13 @@
 package cz.polreich.banks;
 
 import android.app.Activity;
+import android.location.Location;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import cz.polreich.banks.model.UniAddress;
@@ -36,13 +38,13 @@ public class utils {
     }
 
     public static void getBranchOpeningHours(AirBankOpeningHours openingHours, Activity activity) {
-        TextView mBranchOpeningMonday = (TextView) activity.findViewById(R.id.branch_opening_mondayValue);
-        TextView mBranchOpeningTuesday = (TextView) activity.findViewById(R.id.branch_opening_tuesdayValue);
-        TextView mBranchOpeningWednesday = (TextView) activity.findViewById(R.id.branch_opening_wednesdayValue);
-        TextView mBranchOpeningThursday = (TextView) activity.findViewById(R.id.branch_opening_thursdayValue);
-        TextView mBranchOpeningFriday = (TextView) activity.findViewById(R.id.branch_opening_fridayValue);
-        TextView mBranchOpeningSaturday = (TextView) activity.findViewById(R.id.branch_opening_saturdayValue);
-        TextView mBranchOpeningSunday = (TextView) activity.findViewById(R.id.branch_opening_sundayValue);
+        TextView mBranchOpeningMonday = activity.findViewById(R.id.branch_opening_mondayValue);
+        TextView mBranchOpeningTuesday = activity.findViewById(R.id.branch_opening_tuesdayValue);
+        TextView mBranchOpeningWednesday = activity.findViewById(R.id.branch_opening_wednesdayValue);
+        TextView mBranchOpeningThursday = activity.findViewById(R.id.branch_opening_thursdayValue);
+        TextView mBranchOpeningFriday = activity.findViewById(R.id.branch_opening_fridayValue);
+        TextView mBranchOpeningSaturday = activity.findViewById(R.id.branch_opening_saturdayValue);
+        TextView mBranchOpeningSunday = activity.findViewById(R.id.branch_opening_sundayValue);
         String bct = activity.getResources().getString(R.string.branch_closedTitle);
         String branchNonstopTitle = activity.getResources().getString(R.string.branch_nonstopTitle);
         String retDays[] = {bct, bct, bct, bct, bct, bct, bct};
@@ -61,13 +63,13 @@ public class utils {
     }
     
     public static void getATMWithdrawalOpeningHours(AirBankOpeningHours openingHours, Activity activity) {
-        TextView mATMOpeningWithdrawalMonday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_mondayValue);
-        TextView mATMOpeningWithdrawalTuesday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_tuesdayValue);
-        TextView mATMOpeningWithdrawalWednesday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_wednesdayValue);
-        TextView mATMOpeningWithdrawalThursday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_thursdayValue);
-        TextView mATMOpeningWithdrawalFriday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_fridayValue);
-        TextView mATMOpeningWithdrawalSaturday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_saturdayValue);
-        TextView mATMOpeningWithdrawalSunday = (TextView) activity.findViewById(R.id.atm_openingWithdrawal_sundayValue);
+        TextView mATMOpeningWithdrawalMonday = activity.findViewById(R.id.atm_openingWithdrawal_mondayValue);
+        TextView mATMOpeningWithdrawalTuesday = activity.findViewById(R.id.atm_openingWithdrawal_tuesdayValue);
+        TextView mATMOpeningWithdrawalWednesday = activity.findViewById(R.id.atm_openingWithdrawal_wednesdayValue);
+        TextView mATMOpeningWithdrawalThursday = activity.findViewById(R.id.atm_openingWithdrawal_thursdayValue);
+        TextView mATMOpeningWithdrawalFriday = activity.findViewById(R.id.atm_openingWithdrawal_fridayValue);
+        TextView mATMOpeningWithdrawalSaturday = activity.findViewById(R.id.atm_openingWithdrawal_saturdayValue);
+        TextView mATMOpeningWithdrawalSunday = activity.findViewById(R.id.atm_openingWithdrawal_sundayValue);
         String bct = activity.getResources().getString(R.string.branch_closedTitle);
         String atmNonstopTitle = activity.getResources().getString(R.string.atm_nonstopTitle);
         String retDays[] = {bct, bct, bct, bct, bct, bct, bct};
@@ -86,13 +88,13 @@ public class utils {
     }
 
     public static void getATMDepositOpeningHours(AirBankOpeningHours openingHours, Activity activity) {
-        TextView mATMOpeningDepositMonday = (TextView) activity.findViewById(R.id.atm_openingDeposit_mondayValue);
-        TextView mATMOpeningDepositTuesday = (TextView) activity.findViewById(R.id.atm_openingDeposit_tuesdayValue);
-        TextView mATMOpeningDepositWednesday = (TextView) activity.findViewById(R.id.atm_openingDeposit_wednesdayValue);
-        TextView mATMOpeningDepositThursday = (TextView) activity.findViewById(R.id.atm_openingDeposit_thursdayValue);
-        TextView mATMOpeningDepositFriday = (TextView) activity.findViewById(R.id.atm_openingDeposit_fridayValue);
-        TextView mATMOpeningDepositSaturday = (TextView) activity.findViewById(R.id.atm_openingDeposit_saturdayValue);
-        TextView mATMOpeningDepositSunday = (TextView) activity.findViewById(R.id.atm_openingDeposit_sundayValue);
+        TextView mATMOpeningDepositMonday = activity.findViewById(R.id.atm_openingDeposit_mondayValue);
+        TextView mATMOpeningDepositTuesday = activity.findViewById(R.id.atm_openingDeposit_tuesdayValue);
+        TextView mATMOpeningDepositWednesday = activity.findViewById(R.id.atm_openingDeposit_wednesdayValue);
+        TextView mATMOpeningDepositThursday = activity.findViewById(R.id.atm_openingDeposit_thursdayValue);
+        TextView mATMOpeningDepositFriday = activity.findViewById(R.id.atm_openingDeposit_fridayValue);
+        TextView mATMOpeningDepositSaturday = activity.findViewById(R.id.atm_openingDeposit_saturdayValue);
+        TextView mATMOpeningDepositSunday = activity.findViewById(R.id.atm_openingDeposit_sundayValue);
         String bct = activity.getResources().getString(R.string.branch_closedTitle);
         String atmNonstopTitle = activity.getResources().getString(R.string.atm_nonstopTitle);
         String retDays[] = {bct, bct, bct, bct, bct, bct, bct};
@@ -153,11 +155,11 @@ public class utils {
     }
 
     public static void setServices(String services[], Activity activity) {
-        ImageView mAnimalsImageView = (ImageView) activity.findViewById(R.id.branch_services_animalImageView);
-        ImageView mChildImageView = (ImageView) activity.findViewById(R.id.branch_services_childImageView);
-        ImageView mATMImageView = (ImageView) activity.findViewById(R.id.branch_services_atmImageView);
-        ImageView mFoodImageView = (ImageView) activity.findViewById(R.id.branch_services_foodImageView);
-        ImageView mDrinkImageView = (ImageView) activity.findViewById(R.id.branch_services_drinkImageView);
+        ImageView mAnimalsImageView = activity.findViewById(R.id.branch_services_animalImageView);
+        ImageView mChildImageView = activity.findViewById(R.id.branch_services_childImageView);
+        ImageView mATMImageView = activity.findViewById(R.id.branch_services_atmImageView);
+        ImageView mFoodImageView = activity.findViewById(R.id.branch_services_foodImageView);
+        ImageView mDrinkImageView = activity.findViewById(R.id.branch_services_drinkImageView);
 
         if (Arrays.asList(services).contains("ANIMALS")) {
             mAnimalsImageView.setImageResource(R.drawable.ic_animal_green_24dp);
@@ -173,6 +175,24 @@ public class utils {
         }
         if (Arrays.asList(services).contains("FOOD")) {
             mDrinkImageView.setImageResource(R.drawable.ic_drink_green_24dp);
+        }
+    }
+
+    public static float getDistance(Location locA, Location locB) {
+        return locA.distanceTo(locB);
+    }
+
+    public static String formatDistance(float number) {
+        DecimalFormat onePlace = new DecimalFormat(".#");
+        DecimalFormat twoPlaces = new DecimalFormat(".##");
+        if (number > 100000.0) {
+            return Math.round(number/1000) + " km";
+        } else {
+            if (number > 1000.0) {
+                return onePlace.format(number/1000) + " km";
+            } else {
+                return Math.round(number) + " m";
+            }
         }
     }
 }

@@ -1,16 +1,20 @@
 package cz.polreich.banks.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -21,9 +25,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -31,12 +44,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.BranchesAdapter;
 import cz.polreich.banks.controller.AirBankController;
+import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.UniBranch;
 import cz.polreich.banks.model.airBank.AirBankBranch;
 import cz.polreich.banks.service.AirBankService;
+import cz.polreich.banks.utils;
+
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class BranchesListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -52,6 +70,13 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private long lastSuccessfulFetch = 0;
     private FusedLocationProviderClient mFusedLocationClient;
+    private AppDatabase database;
+    private BranchDao branchDao;
+    private LocationRequest mLocationRequest;
+    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
+    private int REQUEST_FINE_LOCATION = 9;
+    private Location lastLoc = new Location(LocationManager.GPS_PROVIDER);
     private static final String DEBUG_TAG_INFO = "[INFO     ] BranchesListFragment";
     private static final String DEBUG_TAG_ERROR = "[    ERROR] BranchesListFragment";
     private static final String DEBUG_TAG_WARNING = "[ WARNING ] BranchesListFragment";
@@ -87,11 +112,10 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
         airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
         Activity activity = getActivity();
-        Location lastLoc = getLastLocation(activity);
         mRecyclerView = view.findViewById(R.id.branches_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new BranchesAdapter(branchesList, mRecyclerView);
+        mAdapter = new BranchesAdapter(branchesList, mRecyclerView, activity);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()),
@@ -99,40 +123,80 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         controller = new AirBankController(activity);
         controller.getBranchesList(airbank_apikey, mAdapter, true);
         mSwipeRefreshLayout = view.findViewById(R.id.branches_list_swipe_refresh);
+        startLocationUpdates();
+        Log.d(DEBUG_TAG_INFO, "LastLocation: " + lastLoc.getLatitude() + " " + lastLoc.getLongitude());
         return view;
     }
 
-    public Location getLastLocation(Activity activity) {
-        final Location[] loc = new Location[1];
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 9);
-            }
+    @SuppressLint("MissingPermission")
+    protected void startLocationUpdates() {
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        LocationSettingsRequest locationSettingsRequest = builder.build();
+        SettingsClient settingsClient = LocationServices.getSettingsClient(Objects.requireNonNull(getActivity()));
+        settingsClient.checkLocationSettings(locationSettingsRequest);
+        if(checkPermissions()) {
+            getFusedLocationProviderClient(getActivity()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
+                        @Override
+                        public void onLocationResult(LocationResult locationResult) {
+                            // do work here
+                            onLocationChanged(locationResult.getLastLocation());
+                        }
+                    },
+                    Looper.myLooper());
         }
+    }
 
+    @SuppressLint("MissingPermission")
+    public void getLastLocation() {
+        // Get last known recent location using new Google Play Services SDK (v11+)
+        FusedLocationProviderClient locationClient = getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        if (checkPermissions()) {
+            locationClient.getLastLocation()
+                    .addOnSuccessListener(location -> {
+                        // GPS location can be null if GPS is switched off
+                        if (location != null) {
+                            onLocationChanged(location);
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.d("MapDemoActivity", "Error trying to get last GPS location");
+                        e.printStackTrace();
+                    });
+        }
+    }
 
+    public void onLocationChanged(Location location) {
 
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(activity, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        loc[0] = location;
-                    }
-                })
-                .addOnFailureListener(activity, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-        return loc[0];
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        lastLoc.setLatitude(location.getLatitude());
+        lastLoc.setLongitude(location.getLongitude());
+        calculateDistances();
+        mAdapter.updateItemsFromDB();
+    }
+
+    private boolean checkPermissions() {
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            requestPermissions();
+            return false;
+        }
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_FINE_LOCATION);
     }
 
     @Override
@@ -181,27 +245,21 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         void onFragmentInteraction(Uri uri);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 9: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // TODO:
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                } else {
-                    //TODO:
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+    public void calculateDistances() {
+        database = AppDatabase.getInstance(Objects.requireNonNull(getActivity()).getApplicationContext());
+        branchDao = database.branchDao();
+        new Thread(() -> {
+            List<UniBranch> branches = branchDao.getAllBranches();
+            Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                for (UniBranch branch:branches) {
+                    Location locA = lastLoc;
+                    Location locB = new Location(LocationManager.GPS_PROVIDER);
+                    locB.setLatitude(branch.getLocation().getLatitude());
+                    locB.setLongitude(branch.getLocation().getLongitude());
+                    branch.setDistance(utils.getDistance(locA, locB));
                 }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
-        }
+            });
+            branchDao.updateBranches(branches);
+        }).start();
     }
 }

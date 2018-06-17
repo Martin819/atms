@@ -2,6 +2,7 @@ package cz.polreich.banks.controller;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.ATMsAdapter;
 import cz.polreich.banks.dao.ATMDao;
 import cz.polreich.banks.dao.BranchDao;
+import cz.polreich.banks.model.UniBranch;
 import cz.polreich.banks.model.UniBranchesList;
 import cz.polreich.banks.model.airBank.AirBankATM;
 import cz.polreich.banks.model.airBank.AirBankATMsList;
@@ -84,9 +86,10 @@ public class AirBankController {
                         AirBankBranchesList fetchedList = response.body();
                         if (fetchedList != null) {
                             new Thread(() -> {
-                                branchDao.insertBranches(fetchedList.getBranches());
-                                List<AirBankBranch> branchesList = branchDao.getAllBranches();
-                                activity.runOnUiThread(() -> branchesAdapter.updateItems(new UniBranchesList(branchesList).getBranches()));
+                                UniBranchesList uniBranchesList = new UniBranchesList(fetchedList.getBranches());
+                                branchDao.insertBranches(uniBranchesList.getBranches());
+                                List<UniBranch> branchesList = branchDao.getAllBranches();
+                                activity.runOnUiThread(() -> branchesAdapter.updateItems(branchesList));
                                 Log.d(DEBUG_TAG_INFO, "Branches - successfully fetched and updated");
                             }).start();
 
@@ -103,9 +106,9 @@ public class AirBankController {
             });
         } else {
             new Thread(() -> {
-                List<AirBankBranch> branchesList = branchDao.getAllBranches();
+                List<UniBranch> branchesList = branchDao.getAllBranches();
                 Log.d(DEBUG_TAG_INFO, "Branches - successfully updated from DB");
-                activity.runOnUiThread(() -> branchesAdapter.updateItems(new UniBranchesList(branchesList).getBranches()));
+                activity.runOnUiThread(() -> branchesAdapter.updateItems(branchesList));
             }).start();
         }
     }

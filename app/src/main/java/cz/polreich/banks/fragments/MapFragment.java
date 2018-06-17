@@ -17,11 +17,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+import java.util.Objects;
+
+import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
+import cz.polreich.banks.dao.ATMDao;
+import cz.polreich.banks.dao.BranchDao;
+import cz.polreich.banks.model.UniBranch;
+import cz.polreich.banks.utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +48,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 369;
     private MapView mMapView;
     private GoogleMap mMap;
+    private AppDatabase database;
+    private BranchDao branchDao;
+    private ATMDao atmDao;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -87,10 +99,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         // Inflate the layout for this fragment
         Log.i(DEBUG_TAG_INFO, "MapFragment created.");
         View view = inflater.inflate(R.layout.fragment_map, container, false);
+        database = AppDatabase.getInstance(Objects.requireNonNull(getActivity()).getApplicationContext());
+        branchDao = database.branchDao();
         mMapView = view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.getMapAsync(this);
+        mMapView.invalidate();
         return view;
     }
 
@@ -122,6 +137,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+        new Thread(() -> {
+            List<UniBranch> branches = branchDao.getAllBranches();
+            Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                for (UniBranch branch:branches) {
+                    LatLng branchMarker = new LatLng(branch.getLocation().getLatitude(), branch.getLocation().getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(branchMarker)
+                                                      .title(branch.getName())
+                                                      .snippet(utils.getFullAddress(branch.getAddress()))
+                                                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                }
+            });
+        }).start();
+        LatLng cameraCenter = new LatLng(49.742, 15.337);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraCenter, 6));
     }
 
     /**

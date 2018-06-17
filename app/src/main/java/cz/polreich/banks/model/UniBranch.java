@@ -26,8 +26,7 @@ public class UniBranch {
     private String[] images;
     private UniLocation location;
     private String bank;
-    @Ignore
-    private float distance;
+    private float distance = -1;
 
     public UniBranch() {
     }

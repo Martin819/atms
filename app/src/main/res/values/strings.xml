@@ -135,4 +135,6 @@
     <string name="ph_branchlist_name">Branch Name</string>
     <string name="ph_branchlist_address">Branch Address</string>
     <string name="ph_branchlist_phone">Branch Phone</string>
+    <string name="ph_branchList_distance">XX</string>
+    <string name="toolbar_position_title">Sort by distance</string>
 </resources>
