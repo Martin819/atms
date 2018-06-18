@@ -57,8 +57,9 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
             int itemPosition = mRecyclerView.getChildLayoutPosition(v);
             UniBranch branch = branchesList.get(itemPosition);
             String branchId = branch.getId();
+            String bank = branch.getBank();
             Log.d(DEBUG_TAG_INFO, "BranchId: " + branchId);
-            BranchActivity.start(v.getContext(), branchId);
+            BranchActivity.start(v.getContext(), branchId, bank);
         }
     }
 
@@ -81,14 +82,16 @@ public class BranchesAdapter extends RecyclerView.Adapter<BranchesAdapter.Branch
         UniBranch branch = branchesList.get(position);
         holder.name.setText(branch.getName());
         holder.address.setText(utils.getFullAddress(branch.getAddress()));
-        holder.phone.setText(utils.getAllPhones(branch.getPhones()));
+        if (branch.getPhones() != null) {
+            holder.phone.setText(utils.getAllPhones(branch.getPhones()));
+        }
         if (branch.getBank().equals("Air Bank")) {
             holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorAirBankGreen));
             holder.logo.setImageResource(R.drawable.ic_ab_circle);
         }
         if (branch.getBank().equals("Ceska Sporitelna")) {
-            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorErsteRed));
-            holder.logo.setImageResource(R.drawable.ic_cs_circle);
+            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorErsteBlue));
+            holder.logo.setImageResource(R.drawable.ic_csas_circle);
         }
         if (branch.getDistance() != -1) {
             holder.distance.setText(utils.formatDistance(branch.getDistance()));

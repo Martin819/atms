@@ -9,5 +9,6 @@
     <color name="toolbarTitle">#FFFFFF</color>
     <color name="colorAirBankGreen">#73ff00</color>
     <color name="colorErsteRed">#e13e3e</color>
+    <color name="colorErsteBlue">#75d3ff</color>
     <color name="white">#FFFFFF</color>
 </resources>

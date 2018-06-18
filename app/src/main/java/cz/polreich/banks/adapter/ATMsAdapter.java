@@ -53,8 +53,9 @@ public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder
             int itemPosition = mRecyclerView.getChildLayoutPosition(v);
             UniATM atm = ATMsList.get(itemPosition);
             String atmId = atm.getId();
+            String bank = atm.getBank();
             Log.d(DEBUG_TAG_INFO, "ATMId: " + atmId);
-            ATMActivity.start(v.getContext(), atmId);
+            ATMActivity.start(v.getContext(), atmId, bank);
         }
     }
 
@@ -80,8 +81,8 @@ public class ATMsAdapter extends RecyclerView.Adapter<ATMsAdapter.ATMsViewHolder
             holder.logo.setImageResource(R.drawable.ic_ab_circle);
         }
         if (atm.getBank().equals("Ceska Sporitelna")) {
-            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorErsteRed));
-            holder.logo.setImageResource(R.drawable.ic_cs_circle);
+            holder.logo.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorErsteBlue));
+            holder.logo.setImageResource(R.drawable.ic_csas_circle);
         }
         if (atm.getDistance() != -1) {
             holder.distance.setText(utils.formatDistance(atm.getDistance()));

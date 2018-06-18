@@ -175,7 +175,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         new Thread(() -> {
             UniBranch branch = branchDao.getBranchByName(branchName);
             String branchId = branch.getId();
-            BranchActivity.start(getActivity(), branchId);
+            String bank = branch.getBank();
+            BranchActivity.start(getActivity(), branchId, bank);
         }).start();
     }
 

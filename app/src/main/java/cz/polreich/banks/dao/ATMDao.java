@@ -48,7 +48,7 @@ public interface ATMDao {
     @Query("SELECT * FROM UniATM")
     public List<UniATM> getAllATMs();
 
-    @Query("SELECT * FROM UniBranch ORDER BY distance ASC")
+    @Query("SELECT * FROM UniATM ORDER BY distance ASC")
     public List<UniATM> getAllATMsByDistance();
 
     @Query("SELECT * FROM UniATM WHERE id = :id")

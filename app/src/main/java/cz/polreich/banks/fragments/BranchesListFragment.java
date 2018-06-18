@@ -25,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -34,11 +33,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +42,11 @@ import cz.polreich.banks.AppDatabase;
 import cz.polreich.banks.R;
 import cz.polreich.banks.adapter.BranchesAdapter;
 import cz.polreich.banks.controller.AirBankController;
+import cz.polreich.banks.controller.ErsteController;
 import cz.polreich.banks.dao.BranchDao;
 import cz.polreich.banks.model.UniBranch;
-import cz.polreich.banks.model.airBank.AirBankBranch;
 import cz.polreich.banks.service.AirBankService;
+import cz.polreich.banks.service.ErsteService;
 import cz.polreich.banks.utils;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
@@ -60,12 +55,15 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
 
     private TextView mTextMessage;
     private static Context context;
-    private AirBankController controller;
+    private AirBankController airBankController;
+    private ErsteController ersteController;
     private String airbank_apikey;
+    private String erste_apikey;
     private RecyclerView mRecyclerView;
     private BranchesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AirBankService airBankService;
+    private ErsteService ersteService;
     private List<UniBranch> branchesList = new ArrayList<>();
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private long lastSuccessfulFetch = 0;
@@ -113,6 +111,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         }
         View view = inflater.inflate(R.layout.fragment_branch_list, container, false);
         airbank_apikey = view.getResources().getString(R.string.airbank_apikey);
+        erste_apikey = view.getResources().getString(R.string.erste_apikey);
         mRecyclerView = view.findViewById(R.id.branches_list_recycler_view);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -121,8 +120,10 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()),
                 DividerItemDecoration.VERTICAL));
-        controller = new AirBankController(activity);
-        controller.getBranchesList(airbank_apikey, mAdapter, true);
+        airBankController = new AirBankController(activity);
+        airBankController.getBranchesList(airbank_apikey, mAdapter, true);
+        ersteController = new ErsteController(activity);
+        ersteController.getBranchesList(erste_apikey, mAdapter, true);
         mSwipeRefreshLayout = view.findViewById(R.id.branches_list_swipe_refresh);
         startLocationUpdates();
         Log.d(DEBUG_TAG_INFO, "LastLocation: " + lastLoc.getLatitude() + " " + lastLoc.getLongitude());
@@ -202,7 +203,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void onResume() {
         super.onResume();
-        controller.getBranchesList(airbank_apikey, mAdapter, false);
+        airBankController.getBranchesList(airbank_apikey, mAdapter, false);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -233,7 +234,7 @@ public class BranchesListFragment extends Fragment implements SwipeRefreshLayout
         new Thread(() -> {
             mSwipeRefreshLayout.setRefreshing(true);
             Log.d(DEBUG_TAG_INFO, "Preparing to Refresh...");
-            controller.getBranchesList(airbank_apikey, mAdapter, true);
+            airBankController.getBranchesList(airbank_apikey, mAdapter, true);
             Log.d(DEBUG_TAG_INFO, "Refreshing...");
             mSwipeRefreshLayout.setRefreshing(false);
             activity.runOnUiThread(() -> mSwipeRefreshLayout.setRefreshing(false));

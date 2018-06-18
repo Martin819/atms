@@ -138,10 +138,11 @@ public class ErsteController {
                     if (branch != null) {
                         Log.d(DEBUG_TAG_INFO, "getBranch - branch != null");
                         Log.d(DEBUG_TAG_INFO, "getBranch - response: " + branch.getName());
-                        activity.setTitle(branch.getName());
+                        activity.setTitle(branch.getCity());
                         mBranchType.setText(R.string.title_branch);
                         mBranchAddress.setText(utils.getFullAddress(branch));
                         mBranchPhone.setText(utils.getAllPhones(branch.getPhones()));
+                        Log.e(DEBUG_TAG_ERROR, "XXXXXXXX-XXXXXXXX-XXXXXXXX" + branch.getOpeningHours().toString());
                         utils.getErstePlaceOpeningHours(branch, activity);
                         cz.polreich.banks.model.erste.ErsteService branchServices[] = branch.getServices();
                         Log.d(DEBUG_TAG_INFO, "Found " + branchServices.length + " branch services.");

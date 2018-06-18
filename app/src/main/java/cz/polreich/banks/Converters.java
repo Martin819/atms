@@ -207,13 +207,25 @@ public class Converters {
     }
 
     @TypeConverter
-    public String fromErsteOpeningHours(ErsteOpeningHours[] oh) {
+    public String fromErsteOpeningHours(ErsteOpeningHours oh) {
         String mapToJson = objGson.toJson(oh);
         return mapToJson;
     }
 
     @TypeConverter
-    public ErsteOpeningHours[] toErsteOpeningHours(String mapToJson) {
+    public ErsteOpeningHours toErsteOpeningHours(String mapToJson) {
+        ErsteOpeningHours oh = objGson.fromJson(mapToJson, ErsteOpeningHours.class);
+        return oh;
+    }
+
+    @TypeConverter
+    public String fromErsteOpeningHoursArray(ErsteOpeningHours[] oh) {
+        String mapToJson = objGson.toJson(oh);
+        return mapToJson;
+    }
+
+    @TypeConverter
+    public ErsteOpeningHours[] toErsteOpeningHoursArray(String mapToJson) {
         ErsteOpeningHours[] oh = objGson.fromJson(mapToJson, ErsteOpeningHours[].class);
         return oh;
     }

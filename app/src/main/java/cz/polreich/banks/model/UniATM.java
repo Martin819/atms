@@ -49,11 +49,11 @@ public class UniATM {
         this.location = new UniLocation(atm.getLocation());
         this.openingHoursWithdrawal = new UniOpeningHours[14];
         for (int i=0; i < atm.getOpeningHours().length; i++) {
-            this.openingHoursWithdrawal[i] = new UniOpeningHours(atm.getOpeningHours()[i].getWeekday().getValue(), atm.getOpeningHours()[i].getIntervals());
+            this.openingHoursWithdrawal[i] = new UniOpeningHours(atm.getOpeningHours()[i].getWeekday().getValue(), atm.getOpeningHours()[i].getIntervals()[0]);
         }
         this.openingHoursDeposit = new UniOpeningHours[14];
         for (int i=0; i < atm.getOpeningHours().length; i++) {
-            this.openingHoursDeposit[i] = new UniOpeningHours(atm.getOpeningHours()[i].getWeekday().getValue(), atm.getOpeningHours()[i].getIntervals());
+            this.openingHoursDeposit[i] = new UniOpeningHours(atm.getOpeningHours()[i].getWeekday().getValue(), atm.getOpeningHours()[i].getIntervals()[0]);
         }
         this.bank = "Ceska Sporitelna";
     }

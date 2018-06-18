@@ -213,31 +213,31 @@ public class utils {
         for (ErsteOpeningHours openingHourDay : openingHours) {
             switch (openingHourDay.getWeekday().getValue()) {
                 case 1: {
-                    retDays[0] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[0] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 case 2: {
-                    retDays[1] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[1] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 case 3: {
-                    retDays[2] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[2] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 case 4: {
-                    retDays[3] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[3] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 case 5: {
-                    retDays[4] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[4] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 case 6: {
-                    retDays[5] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[5] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 case 7: {
-                    retDays[6] = openingHourDay.getIntervals().getFrom() + " - " + openingHourDay.getIntervals().getTo();
+                    retDays[6] = openingHourDay.getIntervals()[0].getFrom() + " - " + openingHourDay.getIntervals()[0].getTo();
                     break;
                 }
                 default: {

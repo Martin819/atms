@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import cz.polreich.banks.R;
 import cz.polreich.banks.controller.AirBankController;
+import cz.polreich.banks.controller.ErsteController;
 
 public class BranchActivity extends AppCompatActivity {
 
     private static final String BRANCH_ID = "branchID";
+    private static final String BANK = "bank";
     private final String DEBUG_TAG_INFO = "[INFO     ] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_ERROR = "[    ERROR] " + this.getClass().getSimpleName();
     private final String DEBUG_TAG_WARNING = "[ WARNING ] " + this.getClass().getSimpleName();
@@ -25,9 +27,10 @@ public class BranchActivity extends AppCompatActivity {
     private TextView mBranchPhone;
     private String[] mBranchPhoneLinks;
 
-    public static void start(Context context, String branchId) {
+    public static void start(Context context, String branchId, String bank) {
         Intent intent = new Intent(context, BranchActivity.class);
         intent.putExtra(BRANCH_ID, branchId);
+        intent.putExtra(BANK, bank);
         context.startActivity(intent);
     }
 
@@ -37,6 +40,7 @@ public class BranchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch);
         String airbank_apikey = getResources().getString(R.string.airbank_apikey);
+        String erste_apikey = getResources().getString(R.string.erste_apikey);
         Toolbar toolbar = findViewById(R.id.branch_atm_toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,14 +48,20 @@ public class BranchActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         String branchId = intent.getStringExtra(BRANCH_ID);
+        String bank = intent.getStringExtra(BANK);
         if (branchId.isEmpty()){
             Log.e(DEBUG_TAG_ERROR, "branchId is empty");
         } else {
             Log.d(DEBUG_TAG_INFO, "branchId: " + branchId);
         }
-
-        AirBankController controller = new AirBankController(this);
-        controller.getBranch(airbank_apikey, branchId);
+        if (bank.equals("Ceska Sporitelna")) {
+            ErsteController ersteController = new ErsteController(this);
+            ersteController.getBranch(erste_apikey, branchId);
+        }
+        if (bank.equals("Air Bank")) {
+            AirBankController airBankController = new AirBankController(this);
+            airBankController.getBranch(airbank_apikey, branchId);
+        }
 
     }
 

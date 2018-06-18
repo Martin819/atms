@@ -4,13 +4,13 @@
         android:defaultValue="false"
         android:key="my_banks_air_bank"
         android:title="Air Bank"
-        android:icon="@drawable/ic_animal_black_24dp" />
+        android:icon="@drawable/ic_ab_black" />
 
     <SwitchPreference
         android:defaultValue="false"
         android:key="my_banks_ceska_sporitelna"
         android:title="Česká Spořitelna"
-        android:icon="@drawable/ic_food_black_24dp"/>
+        android:icon="@drawable/ic_csas_black"/>
 
     <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
          design guidelines. -->

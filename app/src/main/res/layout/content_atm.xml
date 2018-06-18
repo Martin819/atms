@@ -16,6 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/atm_openingWithdrawalHoursTitle"
         />
 
@@ -148,11 +149,9 @@
         android:id="@+id/atm_openingWithdrawal_sundayTitle"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:text="@string/atm_openingWithdrawal_sundayTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/atm_openingWithdrawal_saturdayTitle" />
 
@@ -294,11 +293,9 @@
         android:id="@+id/atm_openingDeposit_sundayTitle"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:text="@string/atm_openingDeposit_sundayTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/atm_openingDeposit_saturdayTitle" />
 

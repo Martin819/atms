@@ -53,7 +53,13 @@ public class UniBranch {
         this.address = new UniAddress(branch);
         this.phones = branch.getPhones();
         this.location = new UniLocation(branch.getLocation());
-        this.bank = "Erste";
+        this.openingHours = new UniOpeningHours[14];
+        if (branch.getOpeningHours() != null) {
+            for (int i = 0; i < branch.getOpeningHours().length; i++) {
+                this.openingHours[i] = new UniOpeningHours(branch.getOpeningHours()[i].getWeekday().getValue(), branch.getOpeningHours()[i].getIntervals()[0]);
+            }
+        }
+        this.bank = "Ceska Sporitelna";
     }
 
     //TODO: Tune Erste Constructor - Opening Hours

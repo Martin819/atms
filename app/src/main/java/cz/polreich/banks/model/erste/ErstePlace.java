@@ -3,6 +3,9 @@ package cz.polreich.banks.model.erste;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -17,6 +20,7 @@ public class ErstePlace  {
     private String stateNote;
     private int distance;
     private String name;
+    @SerializedName("address")
     private String street;
     private String city;
     private String postCode;
